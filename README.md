@@ -18,7 +18,7 @@ This prototype kit is used to rapidly create and test user interfaces for insolv
 1. Clone the repository:
    ```bash
    git clone https://github.com/InsolvencyService/inss-digital-services-prototypes.git
-   cd inss-digital-services-prototypes
+   cd c:\Prototypes\inss-digital-services-prototypes
    ```
 
 2. Install dependencies:
