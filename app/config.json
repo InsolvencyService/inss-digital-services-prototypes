@@ -1,5 +1,5 @@
 {
-  "serviceName": "Insolvency digital services prototypes",
+  "serviceName": "Insolvency digital services",
   "plugins": {
     "govuk-frontend": {
       "rebrand": true

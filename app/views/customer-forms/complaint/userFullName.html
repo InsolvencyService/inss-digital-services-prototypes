@@ -1,0 +1,39 @@
+{% extends "layouts/main.html" %}
+
+{% set serviceName = 'Insolvency Service' %}
+
+{% block pageTitle %}
+  Task list template – {{ serviceName }} – Name
+{% endblock %}
+
+{% block beforeContent %}
+
+{{ govukBackLink({
+  text: "Back",
+  href: "start.html"
+}) }}
+{% endblock %}
+
+{% block content %}
+   <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form action="userAddress" method="post" novalidate>
+<div class="govuk-form-group">
+  <span class="govuk-caption-l">Complaints form</span>
+  <h1 class="govuk-label-wrapper">
+    <label class="govuk-label govuk-label--l" for="Value">
+      What is your full name?
+    </label>
+  </h1>
+  <div id="Value-hint" class="govuk-hint">
+    Enter your first name, middle name (if applicable), and last name
+  </div>
+  <input class="govuk-input govuk-input--width-30" id="Value" name="Value" type="text" spellcheck="false" value="" aria-describedby="Value-hint" inputmode="text">
+</div>
+<button class="govuk-button" data-module="govuk-button">
+Continue
+</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

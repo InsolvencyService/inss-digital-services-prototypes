@@ -1,0 +1,33 @@
+{% extends "layouts/main.html" %}
+
+{% set serviceName = 'Insolvency Service' %}
+
+{% block pageTitle %}
+  Task list template – {{ serviceName }} – Start
+{% endblock %}
+
+{% block beforeContent %}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+
+  <h1 class="govuk-heading-l">The Insolvency Service complaints form</h1>
+<p class="govuk-body">We're sorry you feel the need to complain.</p>
+<p class="govuk-body">Before completing this form, you should read our <a href="">complaints guidance</a> which sets out how our complaints process works and what you can expect from us.</p>
+<p class="govuk-body">We can look at complaints where you feel that we've failed to provide our usual standard of service.</p>
+<p class="govuk-body">Our complaints process cannot be used to re-examine a decision about your case, unless there is evidence that we have not followed the correct processes, policies or legislation. Where we think this is the case, we will contact you and we may not progress your complaint any further.</p>
+<p class="govuk-body">If your complaint is about a private sector insolvency practitioner, visit the <a href="">IP Complaints Gateway</a>.</p>
+<p class="govuk-body">Any fields marked with an asterisk (*) must be completed to submit the form.</p>
+
+{{ govukButton({
+  text: "Start now",
+  href: "userFullName.html",
+  isStartButton: true
+}) }}
+     
+    </div>
+  </div>
+{% endblock %}

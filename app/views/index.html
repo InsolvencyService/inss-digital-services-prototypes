@@ -4,16 +4,88 @@
 
 {% block content %}
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
+ <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
 
-    {% include "govuk-prototype-kit/includes/homepage-top.njk" %}
+      <h1 class="govuk-heading-l">{{ serviceName }}</h1>
 
-    <h1 class="govuk-heading-xl">
-      {{ serviceName }}
-    </h1>
+      <h2 class="govuk-heading-m">Prototypes</h2>
 
-    {% include "govuk-prototype-kit/includes/homepage-bottom.njk" %}
+      {% set completedStatus = {
+        text: "Completed"
+      } %}
+
+      {% set incompleteStatus = {
+        tag: {
+          text: "Incomplete",
+          classes: "govuk-tag--blue"
+        }
+      } %}
+
+      {# To switch between the completed and incomplete statues, use some inline logic within the component below, like this: "status: (completedStatus if ... else incompleteStatus)" #}
+
+      {{ govukTaskList({
+        idPrefix: "first-section",
+        items: [
+    {
+          title: {
+            text: "Customer complaint form"
+      },
+      href: "/customer-forms/index.html",
+      status: {
+        tag: {
+          text: "In progress",
+          classes: "govuk-tag--light-blue"
+        }
+      }
+    },{
+      title: {
+        text: "Insolvency practitioner Upload(IP Upload)"
+      },
+      href: "#",
+      status: {
+        tag: {
+          text: "Not yet started",
+          classes: "govuk-tag--blue"
+        }
+      }
+    },{
+      title: {
+        text: "Director's conduct report service(DCRS)"
+      },
+      href: "#",
+      status: {
+        tag: {
+          text: "Not yet started",
+          classes: "govuk-tag--blue"
+        }
+      }
+    },{
+      title: {
+        text: "Dept relief order(DRO)"
+      },
+      href: "#",
+      status: {
+        tag: {
+          text: "Not yet started",
+          classes: "govuk-tag--blue"
+        }
+      }
+    },{
+      title: {
+        text: "Bankruptcy"
+      },
+      href: "#",
+      status: {
+        tag: {
+          text: "Not yet started",
+          classes: "govuk-tag--blue"
+        }
+      }
+    }
+        ]
+      }) }}
+
   </div>
 </div>
 
