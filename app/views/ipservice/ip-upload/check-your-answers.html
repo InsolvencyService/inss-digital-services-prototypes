@@ -1,0 +1,51 @@
+{% extends "layouts/main.html" %}
+
+{% set serviceName = 'Upload redundancy payment forms(RP14/A)' %}
+
+{% block pageTitle %}
+  {{ serviceName }} – check your answers
+{% endblock %}
+
+{% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
+{% block header %}
+  {{ govukHeader() }}
+{{ govukServiceNavigation({
+  serviceName: 'Upload redundancy payment forms(RP14/A)',
+  serviceUrl: "start.html"
+}) }}
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+   <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+  <h1 class="govuk-heading-l">Check your answers before submiting your sending the form</h1>
+
+
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+ Uploaded document
+    </dt>
+    <dd class="govuk-summary-list__value">
+     {{ data['fileUpload1'] }}
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link" href="upload.html">Change<span class="govuk-visually-hidden"> uploaded document</span></a>
+    </dd>
+  </div>
+</dl>
+  {{ govukButton({
+  text: "Send form",
+  href: "confirmation.html"
+}) }}
+
+
+    </div>
+{% endblock %}

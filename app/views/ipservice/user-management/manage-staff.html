@@ -1,0 +1,54 @@
+{% extends "layouts/main.html" %}
+
+{% set serviceName = 'Insolvency practitioner service' %}
+
+{% block pageTitle %}
+  Task list template – {{ serviceName }} – Name
+{% endblock %}
+
+
+{% block header %}
+  {{ govukHeader() }}
+{{ govukServiceNavigation({
+  serviceName: 'Insolvency practitioner service',
+  serviceUrl: "/ipservice/start.html",
+  navigation: [
+    {
+      href: "/ipservice/home.html",
+      text: "Home"
+    },
+    {
+      href: "settings",
+      text: "Settings"
+    }
+  ]
+}) }}
+{% endblock %}
+
+
+{% block beforeContent %}
+  {{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+
+{% block content %}
+   <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+  <h1 class="govuk-heading-l">Manage staff</h1>
+
+  <ul class="govuk-list">
+    <li><p class="govuk-body"><a href="change-password.html">Change password</p></li>
+    <li><p class="govuk-body"><a href="manage-service-managers.html">Manage service managers</p></li>
+    <li><p class="govuk-body"><a href="manage-staff.html">Manage staff</p></li>  
+  </ul>
+
+
+</div>
+
+    </div>
+
+{% endblock %}
