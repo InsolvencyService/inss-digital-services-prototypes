@@ -1,0 +1,66 @@
+{% extends "layouts/main.html" %}
+
+{% set serviceName = 'Upload redundancy payment forms(RP14/A)' %}
+
+{% block pageTitle %}
+  {{ serviceName }} – homepage
+{% endblock %}
+
+{% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
+{% block header %}
+  {{ govukHeader() }}
+{{ govukServiceNavigation({
+  serviceName: 'Upload redundancy payment forms(RP14/A)',
+  serviceUrl: "start.html"
+}) }}
+{% endblock %}
+
+{% block content %}
+   <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+  <h1 class="govuk-heading-l">{{ serviceName }}</h1>
+
+ <!-- {% set html %}
+  <p class="govuk-notification-banner__heading">
+    You have 3 rejected forms. <br>
+    <a class="govuk-notification-banner__link" href="#">View rejected forms</a>
+  </p>
+{% endset %} 
+
+{{ govukNotificationBanner({
+  html: html
+}) }} -->
+
+<p class="">Only licensed insolvency practioners should upload redundancy payment forms(RP14/A)</p>
+
+<h2 class="govuk-heading-m">
+  Declaration
+</h2>
+<p class="govuk-body">
+  This information is required under Sections 169 and 190 of the Employment Rights Act 1996:
+</p>
+<ul class="govuk-list">
+  <li><a href="https://www.legislation.gov.uk/ukpga/1996/18/section/169">Section 169</a></li>
+  <li><a href="https://www.legislation.gov.uk/ukpga/1996/18/section/190">Section 190</a></li>
+</ul>
+<p class="govuk-body">
+Any refusal or wilful neglect to provide any information required by the Secretary of State, and any false statement made knowingly or recklessly in response to this requirement, may amount to a criminal offence under that section.
+</p>
+
+<h3 class="govuk-heading-s">I declare that:</h3>
+<ul class="govuk-list govuk-list--bullet">
+  <li>I am a licensed Insolvency Practitioner and in completing the required forms I have acted in accordance with the professional standards governing insolvency practice and money laundering regulations.</li>
+  <li>The information I have submitted is correct and accurate to the best of my knowledge and belief.</li>
+    <li>I have confirmed claimants were on the payroll and are entitled to make a claim.</li>
+      <li>I understand if I deliberately or recklessly make a false statement or if I refuse or wilfully neglect to provide full and complete information I may have committed an offence.</li>
+        <li>Should I become aware of any changes to the information already submitted, I will immediately inform Redundancy Payments Service in writing on a new RP14/14A.</li>  
+        <li>Should I believe there is relevant information, not provided for within the RP14/14A, that may impact the claims I will immediately inform Redundancy Payments Service in writing to <a href="">RPS.Stakeholder@insolvency.gov.uk</a></li>
+</ul>
+
+  {{ govukButton({
+  text: "Agree and continue",
+  href: "upload.html"
+}) }}
+
+    </div>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends "layouts/main.html" %}
+
+{% set serviceName = 'Insolvency practitioner service' %}
+
+{% block pageTitle %}
+  Task list template – {{ serviceName }} – Name
+{% endblock %}
+
+
+{% block header %}
+  {{ govukHeader() }}
+{{ govukServiceNavigation({
+  serviceName: 'Insolvency practitioner service',
+  serviceUrl: "/ipservice/start.html"
+}) }}
+{% endblock %}
+
+
+{% block beforeContent %}
+  {{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+
+{% block content %}
+   <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+  <h1 class="govuk-heading-l">IP Registration</h1>
+
+  <div class="govuk-form-group">
+
+    <label class="govuk-label govuk-label--s" for="event-name">
+   IP Number
+    </label>
+
+  <div id="event-name-hint" class="govuk-hint">
+   4-6 digit unique identifier
+  </div>
+  <input class="govuk-input" id="event-name" name="eventName" type="text" aria-describedby="event-name-hint">
+</div>
+
+  <div class="govuk-form-group">
+  <label class="govuk-label govuk-label--s" for="email">
+    Email address
+  </label>
+  <input class="govuk-input" id="email" name="email" type="email" spellcheck="false" aria-describedby="email-hint" autocomplete="email">
+</div>
+
+  {{ govukButton({
+  text: "Submit",
+  href: "/ipservice/home.html"
+}) }}
+
+  <p class="govuk-body"><a href="sign-in.html">If you already have an account sign in</p>
+
+</div>
+
+    </div>
+
+{% endblock %}

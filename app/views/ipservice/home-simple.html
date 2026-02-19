@@ -1,0 +1,74 @@
+{% extends "layouts/main.html" %}
+
+{% set serviceName = 'Insolvency practitioner service' %}
+
+{% block pageTitle %}
+  {{ serviceName }} – homepage
+{% endblock %}
+
+{% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
+{% block header %}
+  {{ govukHeader() }}
+{{ govukServiceNavigation({
+  serviceName: 'Insolvency practitioner service',
+  serviceUrl: "#",
+  navigation: [
+    {
+      href: "#",
+      text: "Home",
+      active: true
+    },
+    {
+      href: "#",
+      text: "Settings"
+    }
+  ]
+}) }}
+{% endblock %}
+
+{% block content %}
+   <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+  <h1 class="govuk-heading-l">{{ serviceName }}</h1>
+
+
+
+    <h2 class="govuk-heading-m">
+       Director conduct reports
+    </h2>
+
+<ul class="govuk-list">
+  <li><a href="">View and submit reports</a></li>
+  <li><a href="">Guidance on director conduct reports</a></li>
+</ul> 
+    <h3 class="govuk-heading-s">
+      Get help with director conduct reports
+    </h3>
+<p class="govuk-body"><a href="contact-us.html">Contact us</a></p>
+
+    <h2 class="govuk-heading-m">
+     Redundancy payments forms(RP14/A)
+    </h2>
+<p class="govuk-body"> {{govukTag({
+          text: "4 Rejected forms",
+          classes: "govuk-tag--red"
+        })}}</p>
+<ul class="govuk-list">
+  <li><a href="">View rejected forms</a></li>
+  <li><a href="">Upload form</a></li>
+  <li><a href="">Guidance on redundancy payments forms</a></li>
+</ul> 
+
+<h3 class="govuk-heading-s">
+      Get help with redundancy payments forms
+    </h3>
+    <p class="">Send an email including your contact details to the following email address </p>
+    <ul class="govuk-list">
+  <li><a class="govuk-link" href="#">name@example.com</a></li>
+  <li>We aim to respond within 2 working days</li>
+</ul>
+
+
+
+    </div>
+{% endblock %}

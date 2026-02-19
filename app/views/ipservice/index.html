@@ -1,7 +1,7 @@
 {% extends "layouts/main.html" %}
 
 {% block pageTitle %}
-  Task list template – {{ serviceName }} – GOV.UK Prototype Kit
+   {{ serviceName }} – prototype versions
 {% endblock %}
 
 {% block beforeContent %}
@@ -30,6 +30,12 @@
         }
       } %}
 
+           {% set notStarted = {
+        tag: {
+          text: "Not started",
+        }
+      } %}
+
       {# To switch between the completed and incomplete statues, use some inline logic within the component below, like this: "status: (completedStatus if ... else incompleteStatus)" #}
 
       {{ govukTaskList({
@@ -39,7 +45,7 @@
             title: {
               text: "Version 1"
             },
-            href: "start.html",
+            href: "/ip-upload/home.html",
             status: incompleteStatus
           }
         ]
