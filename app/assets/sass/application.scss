@@ -4,3 +4,45 @@
 // 
 
 // Add extra styles here
+
+.emailTemplate {
+  background-color: #ffffff;
+  
+        .govuk-width-container {
+            margin-right: max(30px, calc(15px + env(safe-area-inset-right)));
+            margin-left: max(30px, calc(15px + env(safe-area-inset-left)));
+        }
+
+        .email {
+            font-size: 18px;
+            margin: 10px 0 0 0;
+            padding: 15px 0;
+        }
+
+
+        .gem-c-organisation-logo__crest--single-identity, .gem-c-organisation-logo__crest--eo, .gem-c-organisation-logo__crest--org {
+    background: url(https://components.publishing.service.gov.uk/assets/govuk_publishing_components/crests/org_crest_18px_x2-143bd44da6bd94c4e6bb9c4d606000e90487638619b58843df3c1af1090eb7d1.png) no-repeat 8px 0;
+    background-size: auto 32px;
+    background-position: 8px 5px;
+    display:block;
+}
+
+.gem-c-organisation-logo__crest {
+    border-left: 2px solid #e52d13;
+    padding: 10px 0 10px 55px;
+}
+
+.govuk-section-break--m {
+    margin-top: 10px;
+}
+
+
+}
+
+
+.timemachine {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    color:#ffffff !important;
+}
