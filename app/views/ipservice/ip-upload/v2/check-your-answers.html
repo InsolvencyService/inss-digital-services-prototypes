@@ -36,7 +36,7 @@
  Uploaded document
     </dt>
     <dd class="govuk-summary-list__value">
-     {{ data['fileUpload1'] }}
+     {{ data['fileUpload1'] | default('Elsarda-ltd.xml')  }}
     </dd>
     <dd class="govuk-summary-list__actions">
       <a class="govuk-link" href="upload.html">Change<span class="govuk-visually-hidden"> uploaded document</span></a>
