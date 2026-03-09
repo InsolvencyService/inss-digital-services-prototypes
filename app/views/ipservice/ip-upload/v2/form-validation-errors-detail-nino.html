@@ -1,0 +1,52 @@
+{% extends "layouts/main.html" %}
+
+{% set serviceName = 'Upload redundancy payment forms(RP14/A)' %}
+
+{% block pageTitle %}
+{{ serviceName }} – check your answers
+{% endblock %}
+
+{% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
+{% block header %}
+{{ govukHeader() }}
+{{ govukServiceNavigation({
+serviceName: 'Upload redundancy payment forms(RP14/A)',
+serviceUrl: "start.html"
+}) }}
+{% endblock %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+text: "Back",
+href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l">National insurance number</h1>
+
+    <p class="govuk-body govuk-hint">The national insurance number must be in the format QQ123456C</p>
+
+    <p class="govuk-body">The national insurance number was invalid for these employees:</p>
+    <ul class="govuk-list">
+      <li>David Miller</li>
+      <li>Amina Khan</li>
+      <li>James Taylor</li>
+      <li>Raj Kumar</li>
+      <li>Emma Wilson</li>
+      <li>Aisha Ahmed</li>
+      <li>John Smith</li>
+      <li>Jane Doe</li>
+      <li>Bob Johnson</li>
+      <li>Alice Williams</li>
+      <li>Michael Brown</li>
+      <li>Priya Patel</li>
+
+    </ul>
+
+</div>
+  </div>
+  {% endblock %}
