@@ -31,7 +31,7 @@
     <div class="govuk-grid-column-two-thirds">
   <h1 class="govuk-heading-l">Your form has errors</h1>
 
-  <p class="govuk-body">You uploaded:<br><strong>{{ data['fileUpload1'] | default('Elsarda-ltd.xml') }}</strong></p>
+  <p class="govuk-body">You uploaded:<br><strong>{{ data['file-upload-1'] | default('Elsarda-ltd.xml') }}</strong></p>
 
   <p class="govuk-body">The following errors were found when validating your form. Check the details and try uploading again.</p>
 <h2 class="govuk-heading-m">Case</h2>
@@ -100,7 +100,7 @@
 
 {{ govukRadios({
   classes: "govuk-radios--inline govuk-visually-hidden",
-  name: "formValidationErrors",
+  name: "form-validation-errors",
   fieldset: {
     legend: {
       text: "Radio for logic only",
