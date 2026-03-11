@@ -29,9 +29,9 @@
 
   
   {% if data['form-validation-errors'] == "yes" %}
-<form class="form" action="check-your-answers" method="post">
+<form class="form" action="/ipservice/ip-upload/v2/upload-success" method="post">
   {% else %}
-<form class="form" action="form-validation-errors" method="post">
+<form class="form" action="/ipservice/ip-upload/v2/upload" method="post">
   {% endif %}
 
 

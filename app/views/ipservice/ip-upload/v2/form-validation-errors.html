@@ -31,7 +31,7 @@
     <div class="govuk-grid-column-two-thirds">
   <h1 class="govuk-heading-l">Your form has errors</h1>
 
-  <p class="govuk-body">You uploaded:<br><strong>{{ data['file-upload-1'] | default('Elsarda-ltd.xml') }}</strong></p>
+  <p class="govuk-body">You uploaded:<br><strong>{{ data['file-upload-1'] | default('Test.xml', true) }}</strong></p>
 
   <p class="govuk-body">The following errors were found when validating your form. Check the details and try uploading again.</p>
 <h2 class="govuk-heading-m">Case</h2>
@@ -94,33 +94,7 @@
 
 
 
-      <form action="upload" method="post" novalidate>
-
-  {% from "govuk/components/radios/macro.njk" import govukRadios %}
-
-{{ govukRadios({
-  classes: "govuk-radios--inline govuk-visually-hidden",
-  name: "form-validation-errors",
-  fieldset: {
-    legend: {
-      text: "Radio for logic only",
-      isPageHeading: true,
-      classes: "govuk-fieldset__legend--l govuk-visually-hidden"
-    }
-  },
-  items: [
-    {
-      value: "yes",
-      text: "Yes",
-      checked: checked
-    },
-    {
-      value: "no",
-      text: "No"
-    }
-  ]
-}) }}      
-
+      <form action="/ipservice/ip-upload/v2/form-validation-errors" method="post" novalidate>
 
   {{ govukButton({
   text: "Continue"
