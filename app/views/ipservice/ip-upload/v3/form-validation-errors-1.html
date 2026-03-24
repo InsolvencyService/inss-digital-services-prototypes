@@ -1,0 +1,621 @@
+{% extends "layouts/main.html" %}
+
+{% set serviceName = 'Upload redundancy payment forms(RP14/A)' %}
+
+{% block pageTitle %}
+  {{ serviceName }} – check your answers
+{% endblock %}
+
+{% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
+{% block header %}
+  {{ govukHeader() }}
+{{ govukServiceNavigation({
+  serviceName: 'Upload redundancy payment forms(RP14/A)',
+  serviceUrl: "start.html"
+}) }}
+
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+
+{{ data['validationErrors'] }}
+
+   <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+  <h1 class="govuk-heading-l">Your form has errors</h1>
+
+  <p class="govuk-body">You uploaded:<br><strong>{{ data['fileUpload1'] | default('Elsarda-ltd.xml') }}</strong></p>
+
+  <p class="govuk-body">The following errors were found when validating your form. Please check the details and try uploading again.</p>
+
+<div class="govuk-summary-card">
+  <div class="govuk-summary-card__title-wrapper">
+    <h2 class="govuk-summary-card__title">
+      Employer Name
+    </h2>
+   <!-- <ul class="govuk-summary-card__actions">
+      <li class="govuk-summary-card__action">
+        <a class="govuk-link" href="#">View detail<span class="govuk-visually-hidden">!!</span></a>
+      </li>
+    </ul>-->
+  </div>  
+  <div class="govuk-summary-card__content">
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+      Employer name 
+        </dt>
+        <dd class="govuk-summary-list__value">
+        Not entrered <br><br>The employer name must be provided and must not exceed 60 characters in length.
+         </dd>
+        </dd>
+      </div>
+    </dl>
+  </div>
+</div>
+
+<div class="govuk-summary-card">
+  <div class="govuk-summary-card__title-wrapper">
+    <h2 class="govuk-summary-card__title">
+      Case reference
+    </h2>
+ <!--  <ul class="govuk-summary-card__actions">
+      <li class="govuk-summary-card__action">
+        <a class="govuk-link" href="#">View detail<span class="govuk-visually-hidden">!!</span></a>
+      </li>
+    </ul> -->
+  </div>
+    <div class="govuk-summary-card__content">
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+      Case reference
+        </dt>
+        <dd class="govuk-summary-list__value">
+        The case reference provided does not match any of our records
+         </dd>
+      </div>
+    </dl>
+  </div>
+</div>
+
+<div class="govuk-summary-card">
+  <div class="govuk-summary-card__title-wrapper">
+    <h2 class="govuk-summary-card__title">
+      Title
+    </h2>
+    <ul class="govuk-summary-card__actions">
+      <li class="govuk-summary-card__action">
+        <a class="govuk-link" href="form-validation-errors-detail.html">View detail<span class="govuk-visually-hidden">!!</span></a>
+      </li>
+    </ul>
+  </div>
+    <div class="govuk-summary-card__content">
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+       Employee title
+        </dt>
+        <dd class="govuk-summary-list__value">
+         This was not provided for 4 out of 60 employees provided in the form
+        </dd>
+      </div>
+    </dl>
+  </div>
+</div>
+
+<div class="govuk-summary-card">
+  <div class="govuk-summary-card__title-wrapper">
+    <h2 class="govuk-summary-card__title">
+     Fornames or given names
+    </h2>
+    <ul class="govuk-summary-card__actions">
+      <li class="govuk-summary-card__action">
+        <a class="govuk-link" href="#">View detail<span class="govuk-visually-hidden">!!</span></a>
+      </li>
+    </ul>
+  </div>
+    <div class="govuk-summary-card__content">
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+       Field
+        </dt>
+        <dd class="govuk-summary-list__value">
+         Error message for the field
+        </dd>
+      </div>
+    </dl>
+  </div>
+</div>
+
+<div class="govuk-summary-card">
+  <div class="govuk-summary-card__title-wrapper">
+    <h2 class="govuk-summary-card__title">
+     Surname or family name
+    </h2>
+    <ul class="govuk-summary-card__actions">
+      <li class="govuk-summary-card__action">
+        <a class="govuk-link" href="#">View detail<span class="govuk-visually-hidden">!!</span></a>
+      </li>
+    </ul>
+  </div>
+    <div class="govuk-summary-card__content">
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+       Field
+        </dt>
+        <dd class="govuk-summary-list__value">
+         Error message for the field
+        </dd>
+      </div>
+    </dl>
+  </div>
+</div>
+
+<div class="govuk-summary-card">
+  <div class="govuk-summary-card__title-wrapper">
+    <h2 class="govuk-summary-card__title">
+     Is claimant a director
+    </h2>
+    <ul class="govuk-summary-card__actions">
+      <li class="govuk-summary-card__action">
+        <a class="govuk-link" href="#">View detail<span class="govuk-visually-hidden">!!</span></a>
+      </li>
+    </ul>
+  </div>
+    <div class="govuk-summary-card__content">
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+       Field
+        </dt>
+        <dd class="govuk-summary-list__value">
+         Error message for the field
+        </dd>
+      </div>
+    </dl>
+  </div>
+</div>
+
+<div class="govuk-summary-card">
+  <div class="govuk-summary-card__title-wrapper">
+    <h2 class="govuk-summary-card__title">
+    Date of birth
+    </h2>
+    <ul class="govuk-summary-card__actions">
+      <li class="govuk-summary-card__action">
+        <a class="govuk-link" href="#">View detail<span class="govuk-visually-hidden">!!</span></a>
+      </li>
+    </ul>
+  </div>
+    <div class="govuk-summary-card__content">
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+       Field
+        </dt>
+        <dd class="govuk-summary-list__value">
+         Error message for the field
+        </dd>
+      </div>
+    </dl>
+  </div>
+</div>
+
+<div class="govuk-summary-card">
+  <div class="govuk-summary-card__title-wrapper">
+    <h2 class="govuk-summary-card__title">
+      National insurance number
+    </h2>
+    <ul class="govuk-summary-card__actions">
+      <li class="govuk-summary-card__action">
+        <a class="govuk-link" href="#">View detail<span class="govuk-visually-hidden">!!</span></a>
+      </li>
+    </ul>
+  </div>
+    <div class="govuk-summary-card__content">
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+       Field
+        </dt>
+        <dd class="govuk-summary-list__value">
+         Error message for the field
+        </dd>
+      </div>
+    </dl>
+  </div>
+</div>
+
+<div class="govuk-summary-card">
+  <div class="govuk-summary-card__title-wrapper">
+    <h2 class="govuk-summary-card__title">
+     National insurance number class
+    </h2>
+    <ul class="govuk-summary-card__actions">
+      <li class="govuk-summary-card__action">
+        <a class="govuk-link" href="#">View detail<span class="govuk-visually-hidden">!!</span></a>
+      </li>
+    </ul>
+  </div>
+    <div class="govuk-summary-card__content">
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+       Field
+        </dt>
+        <dd class="govuk-summary-list__value">
+         Error message for the field
+        </dd>
+      </div>
+    </dl>
+  </div>
+</div>
+
+<div class="govuk-summary-card">
+  <div class="govuk-summary-card__title-wrapper">
+    <h2 class="govuk-summary-card__title">
+      Employer start date
+    </h2>
+    <ul class="govuk-summary-card__actions">
+      <li class="govuk-summary-card__action">
+        <a class="govuk-link" href="#">View detail<span class="govuk-visually-hidden">!!</span></a>
+      </li>
+    </ul>
+  </div>
+    <div class="govuk-summary-card__content">
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+       Field
+        </dt>
+        <dd class="govuk-summary-list__value">
+         Error message for the field
+        </dd>
+      </div>
+    </dl>
+  </div>
+</div>
+
+<div class="govuk-summary-card">
+  <div class="govuk-summary-card__title-wrapper">
+    <h2 class="govuk-summary-card__title">
+      Date notice given
+    </h2>
+    <ul class="govuk-summary-card__actions">
+      <li class="govuk-summary-card__action">
+        <a class="govuk-link" href="#">View detail<span class="govuk-visually-hidden">!!</span></a>
+      </li>
+    </ul>
+  </div>
+    <div class="govuk-summary-card__content">
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+       Field
+        </dt>
+        <dd class="govuk-summary-list__value">
+         Error message for the field
+        </dd>
+      </div>
+    </dl>
+  </div>
+</div>
+
+<div class="govuk-summary-card">
+  <div class="govuk-summary-card__title-wrapper">
+    <h2 class="govuk-summary-card__title">
+      Employment end date
+    </h2>
+    <ul class="govuk-summary-card__actions">
+      <li class="govuk-summary-card__action">
+        <a class="govuk-link" href="#">View detail<span class="govuk-visually-hidden">!!</span></a>
+      </li>
+    </ul>
+  </div>
+    <div class="govuk-summary-card__content">
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+       Field
+        </dt>
+        <dd class="govuk-summary-list__value">
+         Error message for the field
+        </dd>
+      </div>
+    </dl>
+  </div>
+</div>
+
+<div class="govuk-summary-card">
+  <div class="govuk-summary-card__title-wrapper">
+    <h2 class="govuk-summary-card__title">
+      Entitiled to redundancy pay?
+    </h2>
+    <ul class="govuk-summary-card__actions">
+      <li class="govuk-summary-card__action">
+        <a class="govuk-link" href="#">View detail<span class="govuk-visually-hidden">!!</span></a>
+      </li>
+    </ul>
+  </div>
+    <div class="govuk-summary-card__content">
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+       Field
+        </dt>
+        <dd class="govuk-summary-list__value">
+         Error message for the field
+        </dd>
+      </div>
+    </dl>
+  </div>
+</div>
+
+<div class="govuk-summary-card">
+  <div class="govuk-summary-card__title-wrapper">
+    <h2 class="govuk-summary-card__title">
+      Entitled to notice pay?
+    </h2>
+    <ul class="govuk-summary-card__actions">
+      <li class="govuk-summary-card__action">
+        <a class="govuk-link" href="#">View detail<span class="govuk-visually-hidden">!!</span></a>
+      </li>
+    </ul>
+  </div>
+    <div class="govuk-summary-card__content">
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+       Field
+        </dt>
+        <dd class="govuk-summary-list__value">
+         Error message for the field
+        </dd>
+      </div>
+    </dl>
+  </div>
+</div>
+
+<div class="govuk-summary-card">
+  <div class="govuk-summary-card__title-wrapper">
+    <h2 class="govuk-summary-card__title">
+      Employer owed 
+    </h2>
+    <ul class="govuk-summary-card__actions">
+      <li class="govuk-summary-card__action">
+        <a class="govuk-link" href="#">View detail<span class="govuk-visually-hidden">!!</span></a>
+      </li>
+    </ul>
+  </div>
+    <div class="govuk-summary-card__content">
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+       Field
+        </dt>
+        <dd class="govuk-summary-list__value">
+         Error message for the field
+        </dd>
+      </div>
+    </dl>
+  </div>
+</div>
+
+<div class="govuk-summary-card">
+  <div class="govuk-summary-card__title-wrapper">
+    <h2 class="govuk-summary-card__title">
+      Basic weekely pay
+    </h2>
+    <ul class="govuk-summary-card__actions">
+      <li class="govuk-summary-card__action">
+        <a class="govuk-link" href="#">View detail<span class="govuk-visually-hidden">!!</span></a>
+      </li>
+    </ul>
+  </div>
+    <div class="govuk-summary-card__content">
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+       Field
+        </dt>
+        <dd class="govuk-summary-list__value">
+         Error message for the field
+        </dd>
+      </div>
+    </dl>
+  </div>
+</div>
+
+<div class="govuk-summary-card">
+  <div class="govuk-summary-card__title-wrapper">
+    <h2 class="govuk-summary-card__title">
+      Average hours worked
+    </h2>
+    <ul class="govuk-summary-card__actions">
+      <li class="govuk-summary-card__action">
+        <a class="govuk-link" href="#">View detail<span class="govuk-visually-hidden">!!</span></a>
+      </li>
+    </ul>
+  </div>
+    <div class="govuk-summary-card__content">
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+       Field
+        </dt>
+        <dd class="govuk-summary-list__value">
+         Error message for the field
+        </dd>
+      </div>
+    </dl>
+  </div>
+</div>
+
+<div class="govuk-summary-card">
+  <div class="govuk-summary-card__title-wrapper">
+    <h2 class="govuk-summary-card__title">
+      Day of the week paid
+    </h2>
+    <ul class="govuk-summary-card__actions">
+      <li class="govuk-summary-card__action">
+        <a class="govuk-link" href="#">View detail<span class="govuk-visually-hidden">!!</span></a>
+      </li>
+    </ul>
+  </div>
+    <div class="govuk-summary-card__content">
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+       Field
+        </dt>
+        <dd class="govuk-summary-list__value">
+         Error message for the field
+        </dd>
+      </div>
+    </dl>
+  </div>
+</div>
+
+<div class="govuk-summary-card">
+  <div class="govuk-summary-card__title-wrapper">
+    <h2 class="govuk-summary-card__title">
+      Periods of arrears for which pay is owed to this employee
+    </h2>
+    <ul class="govuk-summary-card__actions">
+      <li class="govuk-summary-card__action">
+        <a class="govuk-link" href="#">View detail<span class="govuk-visually-hidden">!!</span></a>
+      </li>
+    </ul>
+  </div>
+    <div class="govuk-summary-card__content">
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+       Arrears of pay from date
+        </dt>
+        <dd class="govuk-summary-list__value">
+         Error message for the field
+        </dd>
+      </div>
+           <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+       Arrears of pay to date
+        </dt>
+        <dd class="govuk-summary-list__value">
+         Error message for the field
+        </dd>
+      </div>
+           <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+       Arrears of pay amount
+        </dt>
+        <dd class="govuk-summary-list__value">
+         Error message for the field
+        </dd>
+      </div>
+           <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+       Arrears of pay type
+        </dt>
+        <dd class="govuk-summary-list__value">
+         Error message for the field
+        </dd>
+      </div>
+    </dl>
+  </div>
+</div>
+
+<div class="govuk-summary-card">
+  <div class="govuk-summary-card__title-wrapper">
+    <h2 class="govuk-summary-card__title">
+     Holiday pay owed to this employee
+    </h2>
+    <ul class="govuk-summary-card__actions">
+      <li class="govuk-summary-card__action">
+        <a class="govuk-link" href="#">View detail<span class="govuk-visually-hidden">!!</span></a>
+      </li>
+    </ul>
+  </div>
+    <div class="govuk-summary-card__content">
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+       Field
+        </dt>
+        <dd class="govuk-summary-list__value">
+         Error message for the field
+        </dd>
+      </div>
+    </dl>
+  </div>
+</div>
+
+<div class="govuk-summary-card">
+  <div class="govuk-summary-card__title-wrapper">
+    <h2 class="govuk-summary-card__title">
+      If this employee has taken holiday for which pay is owed, state the periods of holiday taken
+    </h2>
+    <ul class="govuk-summary-card__actions">
+      <li class="govuk-summary-card__action">
+        <a class="govuk-link" href="#">View detail<span class="govuk-visually-hidden">!!</span></a>
+      </li>
+    </ul>
+  </div>
+    <div class="govuk-summary-card__content">
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+       Field
+        </dt>
+        <dd class="govuk-summary-list__value">
+         Error message for the field
+        </dd>
+      </div>
+    </dl>
+  </div>
+</div>
+      <form action="upload" method="post" novalidate>
+
+  {% from "govuk/components/radios/macro.njk" import govukRadios %}
+
+{{ govukRadios({
+  classes: "govuk-radios--inline govuk-visually-hidden",
+  name: "formValidationErrors",
+  fieldset: {
+    legend: {
+      text: "Radio for logic only",
+      isPageHeading: true,
+      classes: "govuk-fieldset__legend--l govuk-visually-hidden"
+    }
+  },
+  items: [
+    {
+      value: "yes",
+      text: "Yes",
+      checked: checked
+    },
+    {
+      value: "no",
+      text: "No"
+    }
+  ]
+}) }}      
+
+
+  {{ govukButton({
+  text: "Continue"
+}) }}
+</form>
+
+    </div>
+{% endblock %}

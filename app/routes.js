@@ -30,3 +30,26 @@ router.post('/ipservice/ip-upload/v2/upload-success', function (req, res) {
 })
 
 
+// Route from upload to form-validation-errors
+router.post('/ipservice/ip-upload/v3/uploadV3', function (req, res) {
+  // Simulate validation - for demo purposes, always show errors first
+  // In a real app, you'd validate the uploaded file here
+  res.redirect('/ipservice/ip-upload/v3/form-validation-errors')
+})
+
+// Route from form-validation-errors back to upload
+router.post('/ipservice/ip-upload/v3/form-validation-errorsV3', function (req, res) { 
+  req.session.data['form-validation-errorsV3'] = "yes"
+  res.redirect('/ipservice/ip-upload/v3/upload')
+
+
+})
+
+// Route from upload to check-your-answers (when validation passes)
+router.post('/ipservice/ip-upload/v3/upload-successV3', function (req, res) {
+  res.redirect('/ipservice/ip-upload/v3/check-your-answers')
+})
+
+
+
+

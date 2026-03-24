@@ -20,33 +20,15 @@ https://prototype-kit.service.gov.uk/docs/how-to-use-layouts
     <div class="govuk-width-container">
   {{ govukPhaseBanner({
   tag: {
-    text: "Beta"
+    text: "Alpha"
   },
-  html: 'This is a new service. Help us improve it and <a class="govuk-link" href="https://www.smartsurvey.co.uk/s/DirectorConductReportingService/" rel="noreferrer noopener" target="_blank">give your feedback (opens in new tab)</a>.'
+  html: 'This is a prototype, it is not a live service'
 }) }}
     </div>
     {% endblock %}
 {% endblock %}
 
 
-{% block footer %}
-  
-
-{% block footerStart %}
-<div class="govuk-width-container">
-  
-{% include "ipservice/ip-upload/v3/_include-feedback.html" %}
-
-</div>
-
-  {% endblock %}
-
-  {% block govukFooter %}
-  {{ govukFooter({
-    
-  }) }}
-  {% endblock %}
-  {% endblock %}
 
 
 

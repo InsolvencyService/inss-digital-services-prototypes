@@ -1,4 +1,4 @@
-{% extends "layouts/main.html" %}
+{% extends "layouts/version-template.html" %}
 
 {% block pageTitle %}
    {{ serviceName }} – prototype versions
@@ -19,43 +19,62 @@
 
       <h1 class="govuk-heading-l">Upload redundancy payment forms(RP14/A)</h1>
 
-      {% set completedStatus = {
-        text: "Completed"
-      } %}
-
-      {% set incompleteStatus = {
-        tag: {
-          text: "In progress",
-          classes: "govuk-tag--light-blue"
-        }
-      } %}
-
-      {# To switch between the completed and incomplete statues, use some inline logic within the component below, like this: "status: (completedStatus if ... else incompleteStatus)" #}
-
-      {{ govukTaskList({
-        idPrefix: "first-section",
-        items: [
-          {
-            title: {
-              text: "Version 2"
-            },
-             hint: {
-        text: "Includes form validation errors playback page"
-      },
-            href: "v2/home.html",
-            status: incompleteStatus
-          },  
-          {
-            title: {
-              text: "Version 1"
-            },
-            href: "v1/home.html",
-            status: incompleteStatus
-          }
-        ]
-      }) }}
+      <div class="govuk-summary-card">
+  <div class="govuk-summary-card__title-wrapper">
+    <h2 class="govuk-summary-card__title">
+     Version 3
+    </h2>
+  </div>
+  <div class="govuk-summary-card__content">
+  <p class="govuk-body">This version includes the service start page and login screens.</p>
+  <a href="v3/start-dcrs.html" class="govuk-button govuk-button--secondary">View prototype 3</a>
+  <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+  <h3 class="govuk-heading-s">Links to pages</h3>
+  <ul class="govuk-list">
+    <li><a href="v3/base-layout.html">Base layout</a></li>
+    <li><a href="v3/start-dcrs.html">DCRS existing start page</a></li>
+    <li><a href="v3/sign-in.html">Sign in page</a></li>
+    <li><a href="v3/reset-password.html">Reset password page</a></li>
+    <li><a href="v3/reset-password-confirmation.html">Reset password confirmation</a></li>
+    <li><a href="v3/start.html">Service start page</a></li>
+    <li><a href="v3/upload.html">Upload a file</a></li>
+    <li><a href="v3/form-validation-errors.html">Your form has errors</a></li>
+    <li><a href="v3/form-validation-errors-detail.html">Form errors detail</a></li>
+    <li><a href="v3/check-your-answers.html">Check your answers</a></li>
+    <li><a href="v3/confirmation.html">Confirmation page</a></li>
+  </ul>
+  </div>
+</div>
+<div class="govuk-summary-card">
+  <div class="govuk-summary-card__title-wrapper">
+    <h2 class="govuk-summary-card__title">
+     Version 2
+    </h2>
+  </div>
+              <div class="govuk-summary-card__content">
+              <p class="govuk-body">Includes form validation errors playback page</p>
+              <a href="v2/home.html" class="govuk-button govuk-button--secondary">View prototype 2</a>
+              </div>
+</div>
+<div class="govuk-summary-card">
+  <div class="govuk-summary-card__title-wrapper">
+    <h2 class="govuk-summary-card__title">
+     Version 1
+    </h2>
+  </div>
+      <div class="govuk-summary-card__content">
+        
+              <a href="v1/home.html" class="govuk-button govuk-button--secondary">View prototype 1</a>
+              </div>
+  </div>
+</div>
 
      
     </div>
   </div>
+
 {% endblock %}
+
+
+
+
