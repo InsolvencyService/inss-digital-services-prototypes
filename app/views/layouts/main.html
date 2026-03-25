@@ -40,12 +40,25 @@ https://prototype-kit.service.gov.uk/docs/how-to-use-layouts
 </div>
 
   {% endblock %}
-
-  {% block govukFooter %}
-  {{ govukFooter({
-    
-  }) }}
-  {% endblock %}
+ 
+{{ govukFooter({
+  meta: {
+    items: [
+      {
+        href: "https://www.gov.uk/insolvency-service/personal-information-charter",
+        text: "Privacy"
+      },
+      {
+        href: "https://preprod.ui.report-director-conduct.service.gov.uk/cookies",
+        text: "Cookies"
+      },
+      {
+        href: "https://preprod.ui.report-director-conduct.service.gov.uk/users/contact-us",
+        text: "Contact us"
+      }
+    ]
+  }
+}) }}
   {% endblock %}
 
 
