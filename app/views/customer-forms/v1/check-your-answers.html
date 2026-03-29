@@ -1,0 +1,263 @@
+{% extends "layouts/main.html" %}
+
+{% set serviceName = 'Upload redundancy payment forms(RP14/A)' %}
+
+{% block pageTitle %}
+{{ serviceName }} – {{ data.contactReason }} - Check your answers
+{% endblock %}
+
+
+{% block beforeContent %}
+  {{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+   <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+  <h1 class="govuk-heading-l">Check your answers</h1>
+
+  <p class="govuk-body">Check the details below before submitting your form.</p>
+
+<h2 class="govuk-heading-m">Your enquiry or complaint</h2>
+<dl class="govuk-summary-list">
+    <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">  How can we help you?</dt>
+    <dd class="govuk-summary-list__value">
+{{ data.contactReason | default('General enquiry', true) }}
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link" href="start.html">Change<span class="govuk-visually-hidden"> uploaded document</span></a>
+    </dd>
+  </div>
+</dl>
+
+  <h2 class="govuk-heading-m">Your details</h2>
+<dl class="govuk-summary-list">
+    <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+What is your full name?
+    </dt>
+    <dd class="govuk-summary-list__value">
+{{ data['full-name'] | default('John Doe', true) }}
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link" href="your-details.html">Change<span class="govuk-visually-hidden"> uploaded document</span></a>
+    </dd>
+  </div>
+    <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+Email address
+    </dt>
+    <dd class="govuk-summary-list__value">
+{{ data['email'] | default('john.doe@example.com', true) }}
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link" href="your-details.html">Change<span class="govuk-visually-hidden"> uploaded document</span></a>
+    </dd>
+  </div>
+   <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+Phone number
+    </dt>
+    <dd class="govuk-summary-list__value">
+{{ data['phone-number'] | default('01234 567890', true) }}
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link" href="your-details.html">Change<span class="govuk-visually-hidden"> uploaded document</span></a>
+    </dd>
+  </div>
+</dl>
+
+<h2 class="govuk-heading-m">What is your address?</h2>
+<dl class="govuk-summary-list">
+    <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      Address line 1
+    </dt>
+    <dd class="govuk-summary-list__value">
+{{ data['AddressLine1'] | default('123 Example Street', true) }}
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link" href="address.html#address-line-1">Change<span class="govuk-visually-hidden"> uploaded document</span></a>
+    </dd>
+  </div>
+    <div class="govuk-summary-list__row"> 
+    <dt class="govuk-summary-list__key">
+      Address line 2 (optional)
+    </dt>
+    <dd class="govuk-summary-list__value">  
+{{ data['AddressLine2'] | default('Example Town', true) }}
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link" href="address.html#address-line-2">Change<span class="govuk-visually-hidden"> uploaded document</span></a>
+    </dd>
+  </div>
+    <div class="govuk-summary-list__row"> 
+    <dt class="govuk-summary-list__key">
+     Town or city
+    </dt>
+    <dd class="govuk-summary-list__value">
+{{ data['TownCity'] | default('Example Town', true) }}
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link" href="address.html#TownCity">Change<span class="govuk-visually-hidden"> uploaded document</span></a>
+    </dd>
+  </div>
+    <div class="govuk-summary-list__row"> 
+    <dt class="govuk-summary-list__key">
+      County (optional)
+    </dt>
+    <dd class="govuk-summary-list__value">
+{{ data['County'] | default('Example County', true) }}
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link" href="address.html#County">Change<span class="govuk-visually-hidden"> uploaded document</span></a>
+    </dd> 
+  </div>
+      <div class="govuk-summary-list__row"> 
+    <dt class="govuk-summary-list__key">
+      Postcode
+    </dt>
+    <dd class="govuk-summary-list__value">
+{{ data['Postcode'] | default('Example Postcode', true) }}
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link" href="address.html#Postcode">Change<span class="govuk-visually-hidden"> uploaded document</span></a>
+    </dd> 
+  </div>
+</dl>
+
+
+{% if data.contactReason == "General enquiry" %}
+<h2 class="govuk-heading-m">About your enquiry</h2>
+
+ <dl class="govuk-summary-list">
+    <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      What is your complaint about?
+    </dt>
+    <dd class="govuk-summary-list__value">
+{{ data['What is your enquiry about?'] | default('Applying for bankruptcy', true) }}
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link  " href="form-detail-general-enquiry#complaint-about">Change<span class="govuk-visually-hidden"> uploaded document</span></a>
+    </dd>
+  </div>
+
+
+    <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      Do you have a case reference number?
+    </dt> 
+    <dd class="govuk-summary-list__value">
+{{ data['referenceNumber'] | default('No', true) }}
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link" href="form-detail-general-enquiry#referenceNumber">Change<span class="govuk-visually-hidden"> uploaded document</span></a>
+    </dd>
+  </div>
+
+  {% if data['referenceNumber'] == 'Yes' %}
+  
+    <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      What is your case reference number?
+    </dt> 
+    <dd class="govuk-summary-list__value">
+{{ data['casereferenceYes'] | default('123456789', true) }}
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link" href="form-detail-general-enquiry#caseReferenceNumber">Change<span class="govuk-visually-hidden"> uploaded document</span></a>
+    </dd>
+  </div>
+  {% else %}
+  {% endif %}
+<div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+  Are you supplying information that we requested?  
+    </dt>
+    <dd class="govuk-summary-list__value">      
+{{ data['requestedInformation'] | default('No', true) }}
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link" href="form-detail-general-enquiry#requestedInformation">Change<span class="govuk-visually-hidden"> uploaded document</span></a>
+    </dd>
+  </div>
+
+    <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+Add detail about your enquiry
+    </dt>
+    <dd class="govuk-summary-list__value">
+{{ data['moreDetail'] | default('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. Donec et mollis dolor.', true) }}
+    </dd> 
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link" href="form-detail-general-enquiry#more-detail">Change<span class="govuk-visually-hidden"> uploaded document</span></a>
+    </dd>
+  </div>
+</dl>
+
+
+
+{% else %}
+ <h2 class="govuk-heading-m">Add details about your enquiry</h2>
+
+<dl class="govuk-summary-list">
+    <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+Describe your enquiry or complaint
+    </dt>
+    <dd class="govuk-summary-list__value">
+{{ data['more-detail'] | default('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. Donec et mollis dolor.', true) }}
+    </dd> 
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link" href="form-detail-general-enquiry#more-detail">Change<span class="govuk-visually-hidden"> uploaded document</span></a>
+    </dd>
+  </div>
+</dl>
+
+{% endif %}
+
+<h2 class="govuk-heading-m">Upload documents</h2>
+<dl class="govuk-summary-list">
+    <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      Do you want to provide us with any documents to support your enquiry or complaint?
+    </dt>
+    <dd class="govuk-summary-list__value">
+{{ data['uploadDocuments'] | default('No', true) }}
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link" href="uploadGuard.html#uploadDocuments">Change<span class="govuk-visually-hidden"> uploaded document</span></a>
+    </dd>
+  </div>
+{% if data['uploadDocuments'] == 'Yes' %}
+    <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      Uploaded document
+    </dt>
+    <dd class="govuk-summary-list__value">
+{{ data['file-upload-1'] | default('example-document.pdf', true) }}
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link" href="upload.html">Change<span class="govuk-visually-hidden"> uploaded document</span></a>
+    </dd>
+  </div>
+
+{% endif %}
+
+</dl> 
+
+  
+
+  {{ govukButton({
+  text: "Submit",
+  href: "confirmation.html"
+}) }}
+
+
+    </div>
+{% endblock %}

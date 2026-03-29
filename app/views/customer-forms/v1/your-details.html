@@ -1,0 +1,57 @@
+{% extends "layouts/main.html" %}
+
+{% set serviceName = 'Insolvency Service' %}
+
+{% block pageTitle %}
+{{ serviceName }} – {{ data.contactReason }} - Your details
+{% endblock %}
+
+{% block beforeContent %}
+
+{{ govukBackLink({
+  text: "Back",
+  href: "start.html"
+}) }}
+{% endblock %}
+
+{% block content %}
+   <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-l">Your details</h1>
+      <p class="govuk-body">Please provide your details so we can contact you about your complaint.</p>
+      <form action="address" method="post" novalidate>
+<div class="govuk-form-group">
+
+    <label class="govuk-label govuk-label--m" for="full-name">
+      What is your full name?
+    </label>
+  <div id="full-name-hint" class="govuk-hint">
+    Enter your first name, middle name (if applicable), and last name
+  </div>
+  <input class="govuk-input" id="full-name" name="full-name" type="text" spellcheck="false" value="" aria-describedby="Value-hint" inputmode="text">
+</div>
+
+<div class="govuk-form-group">
+  <label class="govuk-label govuk-label--m" for="email">
+    Email address
+  </label>
+  <div id="email-hint" class="govuk-hint">
+    We’ll only use this to contact you about your enquiry or complaint.
+  </div>
+  <input class="govuk-input" id="email" name="email" type="email" spellcheck="false" aria-describedby="email-hint" autocomplete="email">
+</div>
+
+<div class="govuk-form-group">
+  <label class="govuk-label govuk-label--m" for="phone-number">
+    UK phone number (optional)
+  </label>
+  <input class="govuk-input govuk-input--width-20" id="phone-number" name="phoneNumber" type="tel" autocomplete="tel">
+</div>
+
+<button class="govuk-button" data-module="govuk-button">
+Continue
+</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

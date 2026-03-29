@@ -1,0 +1,53 @@
+{% extends "layouts/main.html" %}
+
+{% set serviceName = 'Upload redundancy payment forms(RP14/A)' %}
+
+{% block pageTitle %}
+ {{ serviceName }} – {{ data.contactReason }} - upload a form
+{% endblock %}
+
+
+
+{% block beforeContent %}
+  {{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+   <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+  
+<form class="form" action="check-your-answers" method="post">
+
+
+
+
+<div class="govuk-form-group">
+  <h1 class="govuk-label-wrapper">
+  <label class="govuk-label govuk-label--l" for="file-upload-1">
+    Upload a file
+  </label>
+  </h1>
+    <div id="event-namew-hint" class="govuk-hint">
+  The uploaded file must be XML ending with '.xml'. (Other formats e.g. PDF, XLS are NOT supported).
+  </div>
+  <div
+    class="govuk-drop-zone"
+    data-module="govuk-file-upload">
+    <input class="govuk-file-upload" id="file-upload-1" name="file-upload-1" type="file">
+  </div>
+</div>
+
+
+
+  {{ govukButton({
+  text: "Continue"
+}) }}
+
+</form>
+
+
+{% endblock %}

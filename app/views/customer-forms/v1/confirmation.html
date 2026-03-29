@@ -1,0 +1,39 @@
+{% extends "layouts/main.html" %}
+
+{% set serviceName = 'Insolvency Service' %}
+
+{% block pageTitle %}
+  {{ serviceName }} – confirmation
+{% endblock %}
+
+
+{% block content %}
+   <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+ <div class="govuk-panel govuk-panel--confirmation">
+  {% if data.contactReason == "General enquiry" %}
+    <h1 class="govuk-panel__title">
+           Your enquiry has been submitted
+          </h1>
+{% else %}
+  <h1 class="govuk-panel__title">
+           Your complaint has been submitted
+          </h1>
+{% endif %}
+
+        
+        </div>
+        <h2 class="govuk-heading-m">What happens next</h2>
+        <p class="govuk-body">
+         You will recieve a confirmation email
+    
+        </p>
+
+      </div>
+    </div>
+
+</div>
+    </div>
+    
+
+{% endblock %}

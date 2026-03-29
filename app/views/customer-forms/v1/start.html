@@ -1,0 +1,72 @@
+{% extends "layouts/main.html" %}
+
+{% set serviceName = 'Insolvency Service' %}
+
+{% block pageTitle %}
+{{ serviceName }} – Contact us
+{% endblock %}
+
+
+
+{% block beforeContent %}
+  {{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-l">
+        Contact us 
+      </h1>
+
+      <p class="govuk-body">
+       Use this service for general enquiries, or to register a complaint.
+</p>
+
+      <form action="start-content" method="post" novalidate>
+
+
+        {{ govukRadios({
+          name: "contactReason",
+          fieldset: {
+            legend: {
+              text: "How can we help you?",
+              isPageHeading: false,
+              classes: "govuk-fieldset__legend--m"
+            }
+          },
+          items: [
+            {
+              value: "General enquiry",
+              text: "General enquiry"
+            },
+            {
+              value: "Complain about an insolvency practitioner",
+              text: "Complain about an insolvency practitioner"
+            },
+            {
+              value: "Investigations and Enforcement Services",
+              text: "Investigations and Enforcement Services"
+            },
+            {
+              value: "Complain about The Insolvency Service",
+              text: "Complain about the Insolvency Service"
+            },
+            {
+              value: "Investigations and Enforcement Services Breach Questionnaire",
+              text: "Investigations and Enforcement Services Breach Questionnaire"
+            }
+          ]
+        }) }}
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+      </form>
+    </div>
+  </div>
+{% endblock %}

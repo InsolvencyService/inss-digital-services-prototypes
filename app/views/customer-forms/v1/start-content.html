@@ -1,0 +1,49 @@
+{% extends "layouts/main.html" %}
+
+{% set serviceName = 'Insolvency Service' %}
+
+{% block pageTitle %}
+  {{ serviceName }} – {{ data.contactReason }}
+{% endblock %}
+
+
+
+{% block beforeContent %}
+  {{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+
+
+{% if data.contactReason == "General enquiry" %}
+  {% include "/customer-forms/v1/includes/_start-content-general-enquiry.html" %}
+{% elif data.contactReason == "Complain about an insolvency practitioner" %}
+  {% include "/customer-forms/v1/includes/_start-content-insolvency-practitioner-complaint.html" %}
+{% elif data.contactReason == "Investigations and Enforcement Services" %}
+  {% include "/customer-forms/v1/includes/_start-content-investigations-and-enforcement-services.html" %}
+{% elif data.contactReason == "Complain about The Insolvency Service" %}
+  {% include "/customer-forms/v1/includes/_start-content-the-insolvency-service-complaints-form.html" %}
+{% elif data.contactReason == "Investigations and Enforcement Services Breach Questionnaire" %}
+  {% include "/customer-forms/v1/includes/_start-content-investigations-and-enforcement-services-breach-questionnaire.html" %}
+{% else %}
+  <p>You did not select anything</p>
+{% endif %}
+
+    <form action="your-details" method="post" novalidate>
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+      </form>
+
+    </div>
+  </div>
+
+ 
+{% endblock %}

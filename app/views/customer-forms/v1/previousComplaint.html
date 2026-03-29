@@ -3,46 +3,57 @@
 {% set serviceName = 'Insolvency Service' %}
 
 {% block pageTitle %}
-  Task list template – {{ serviceName }} – Name
+ {{ serviceName }} – {{ data.contactReason }}
 {% endblock %}
 
 {% block beforeContent %}
 
 {{ govukBackLink({
   text: "Back",
-  href: "previousComplaint.html"
+  href: "aboutComplaint.html"
 }) }}
 {% endblock %}
 
 {% block content %}
  <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <form action="/form-handler" method="post" novalidate>
+      <form action="uploadGuard" method="post" novalidate>
   <span class="govuk-caption-l">Complaints form</span>
-{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% set refHtml %}
+{{ govukInput({
+  id: "haveYouComplainedBefore-reference",
+  name: "haveYouComplainedBeforeReference",
+  spellcheck: false,
+  classes: "govuk-!-width-one-third",
+  label: {
+    text: "what was your reference number?	
+"
+  }
+}) }}
+{% endset -%}
 
 {{ govukRadios({
-  classes: "govuk-radios--inline",
-  name: "changedName",
+  name: "contact",
   fieldset: {
     legend: {
-      text: "Do you want to provide us with any documents to support your complaint?",
+      text: "Have you complained before about this?",
       isPageHeading: true,
       classes: "govuk-fieldset__legend--l"
     }
   },
-  hint: {
-    text: "This includes changing your last name or spelling your name differently"
-  },
   items: [
     {
-      value: "yes",
-      text: "Yes"
+      value: "Yes",
+      text: "Yes",
+      conditional: {
+        html: refHtml
+      }
     },
     {
-      value: "no",
+      value: "No",
       text: "No"
     }
+    
   ]
 }) }}
 

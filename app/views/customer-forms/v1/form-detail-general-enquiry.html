@@ -1,0 +1,162 @@
+{% extends "layouts/main.html" %}
+
+{% set serviceName = 'Insolvency Service' %}
+
+{% block pageTitle %}
+{{ serviceName }} – {{ data.contactReason }} - About your complaint
+{% endblock %}
+
+{% block beforeContent %}
+
+{{ govukBackLink({
+  text: "Back",
+  href: "address.html"
+}) }}
+{% endblock %}
+
+{% block content %}
+   <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form action="uploadGuard" method="post" novalidate>
+
+  <h1 class="govuk-heading-l">About your enquiry</h1>
+
+
+<p class="govuk-body">Please provide us with as much information as possible to help us deal with your enquiry. If you are contacting us about a particular case please include the case reference number, if you have it.</p>
+
+{{ govukRadios({
+  name: "What is your enquiry about?",
+  fieldset: {
+    legend: {
+      text: "What is your enquiry about?",
+      isPageHeading: false,
+      classes: "govuk-fieldset__legend--m"
+    }
+  },
+  items: [
+    {
+      value: "Making a redundancy claim (CN)",
+      text: "Making a redundancy claim (CN)"
+    },
+    {
+      value: "Redundancy payments (LN)",
+      text: "Redundancy payments (LN)"
+    },
+    {
+      value: "Debt relief order (DRO)",
+      text: "Debt relief order (DRO)  "
+    },
+    {
+      value: "Applying for bankruptcy",
+      text: "Applying for bankruptcy"
+    }
+    ,
+    {
+      value: "Existing bankruptcy (BKT)",
+      text: "Existing bankruptcy (BKT)"
+    },
+    {
+      value: "Discharge from bankruptcy (BKT)",
+      text: "Discharge from bankruptcy (BKT)"
+    },
+    {
+      value: "Company liquidation (LQD)",
+      text: "Company liquidation (LQD)"
+    },
+    {
+      value: "Payment protection insurance (PPI)",
+      text: "Payment protection insurance (PPI)"
+    },
+    {
+      value: "Breathing space (BSS)",
+      text: "Breathing space (BSS)"
+    },
+    {
+      value: "General",
+      text: "General"
+    }
+  ]
+}) }}
+
+
+{% set refHtml %}
+{{ govukInput({
+  id: "casereferenceYes",
+  name: "casereferenceYes",
+  spellcheck: false,
+  classes: "govuk-!-width-one-third",
+  label: {
+    text: "What was your reference number?	
+"
+  },
+   hint: {
+    text: "This may begin with letters such as LN, DRO, BKT."
+  }
+}) }}
+{% endset -%}
+
+{{ govukRadios({
+  name: "referenceNumber",
+  fieldset: {
+    legend: {
+      text: "Do you have a reference number?",
+      isPageHeading: false,
+      classes: "govuk-fieldset__legend--m"
+    }
+  },
+  items: [
+    {
+      value: "Yes",
+      text: "Yes",
+      conditional: {
+        html: refHtml
+      }
+    },
+    {
+      value: "No",
+      text: "No"
+    }
+    
+  ]
+}) }}
+
+
+
+{{ govukRadios({
+  classes: "govuk-radios--inline",
+  name: "requestedInformation",
+  fieldset: {
+    legend: {
+      text: "Are you supplying information that we requested?",
+      isPageHeading: false,
+      classes: "govuk-fieldset__legend--m"
+    }
+  },
+  items: [
+    {
+      value: "Yes",
+      text: "Yes"
+    },
+    {
+      value: "No",
+      text: "No"
+    }
+    
+  ]
+}) }}
+
+<div class="govuk-form-group">
+
+    <label class="govuk-label govuk-label--m" for="more-detail">
+     Add detail about your enquiry
+    </label>
+  <textarea class="govuk-textarea" id="more-detail" name="moreDetail" rows="8" aria-describedby="more-detail-hint"></textarea>
+</div>
+
+<button class="govuk-button" data-module="govuk-button">
+Continue
+</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}
