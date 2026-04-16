@@ -64,29 +64,60 @@ router.post('/customer-forms/v1/uploadDocumentsQuestion', function(request, resp
 
 
 
-router.post('/customer-forms/v1/formDetail', function(request, response) {
+router.post('/customer-forms/v1/phoneRoute', function(request, response) {
 
     var reason = request.session.data['contactReason']
     if (reason == "General enquiry"){
-        response.redirect("/customer-forms/v1/form-detail-general-enquiry")
+        response.redirect("/customer-forms/v1/general-enquiry/question")
     } 
     
     else if (reason == "Complain about an insolvency practitioner"){
-        response.redirect("/customer-forms/v1/form-detail-insolvency-practitioner-complaint")
+        response.redirect("/customer-forms/v1/ip-complaint/question")
     }
 
       else if (reason == "Investigations and Enforcement Services"){
-        response.redirect("/customer-forms/v1/form-detail-investigations-and-enforcement-services")
+        response.redirect("/customer-forms/v1/ies-complaint/question")
     }
 
         else if (reason == "Complain about The Insolvency Service"){
-        response.redirect("/customer-forms/v1/form-detail-the-complain-about-the-insolvency-service")
+        response.redirect("/customer-forms/v1/is-complaint/question")
     }
 
         else if (reason == "Investigations and Enforcement Services Breach Questionnaire"){
-        response.redirect("/customer-forms/v1/form-detail-investigations-and-enforcement-services-breach-questionnaire")
+        response.redirect("/customer-forms/v1/ies-breach/question")
     }
 })
+
+
+
+router.post('/customer-forms/v1/contentStart', function(request, response) {
+
+    var reason = request.session.data['contactReason']
+    var organisationType = request.session.data['organisationType']
+    if (reason == "General enquiry"){
+
+        response.redirect("/customer-forms/v1/general-enquiry/start-content")
+    } 
+    
+    else if (reason == "Complain about an insolvency practitioner"){
+        response.redirect("/customer-forms/v1/ip-complaint/start-content")
+    }
+
+      else if (reason == "Investigations and Enforcement Services"){
+        response.redirect("/customer-forms/v1/ies-complaint/start-content")
+    }
+
+        else if (reason == "Complain about The Insolvency Service"){
+        response.redirect("/customer-forms/v1/is-complaint/start-content")
+    }
+
+        else if (reason == "Investigations and Enforcement Services Breach Questionnaire"){
+        response.redirect("/customer-forms/v1/ies-breach/start-content")
+    }
+})
+
+
+
 
 
 

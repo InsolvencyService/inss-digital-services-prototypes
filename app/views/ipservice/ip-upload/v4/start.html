@@ -1,0 +1,33 @@
+{% extends "layouts/main.html" %}
+
+{% set serviceName = 'Upload redundancy payment forms(RP14/A)' %}
+
+{% block pageTitle %}
+  {{ serviceName }} – homepage
+{% endblock %}
+
+
+
+
+{% block content %}
+   <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+  <h1 class="govuk-heading-l">Upload redundancy payment forms(RP14/A)</h1>
+
+<p class="govuk-body">Once logged into the system you will be able to upload RP14/A forms.</p>
+
+<p class="govuk-body">Access to this service is restricted to Insolvency Practitioners, authorised Agents acting on their behalf, Service Managers and Staff.</p>
+
+<h2 class="govuk-heading-m">Before you start</h2>
+<p class="govuk-body">Please ensure that you have a unique e-mail address registered with the Insolvency Service.</p>
+
+ 
+{{ govukButton({
+  text: "Start now",
+  href: "sign-in.html",
+  isStartButton: true
+}) }}
+
+    </div>
+{% endblock %}

@@ -8,9 +8,9 @@
 
 {% block beforeContent %}
 
-{{ govukBackLink({
+  {{ govukBackLink({
   text: "Back",
-  href: "address.html"
+  href: "javascript:window.history.back()"
 }) }}
 {% endblock %}
 
@@ -19,7 +19,7 @@
     <div class="govuk-grid-column-two-thirds">
       <form action="uploadGuard" method="post" novalidate>
 
-  <h1 class="govuk-heading-l">Investigations and Enforcement Services</h1>
+  <h1 class="govuk-heading-l">Complain about The Insolvency Service</h1>
 
 <p class="govuk-body">Where possible you should include details like:</p>
 <ul class="govuk-list govuk-list--bullet">

@@ -8,16 +8,16 @@
 
 {% block beforeContent %}
 
-{{ govukBackLink({
+  {{ govukBackLink({
   text: "Back",
-  href: "your-details.html"
+  href: "javascript:window.history.back()"
 }) }}
 {% endblock %}
 
 {% block content %}
    <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <form action="/customer-forms/v1/formDetail" method="post" novalidate>
+      <form action="dob" method="post" novalidate>
 <fieldset class="govuk-fieldset"><legend class="govuk-fieldset__legend govuk-fieldset__legend--l">What is your address?</legend>
     
 

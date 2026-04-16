@@ -1,0 +1,38 @@
+{% extends "layouts/main.html" %}
+
+{% set serviceName = 'Insolvency Service' %}
+
+{% block pageTitle %}
+{{ serviceName }} – {{ data.contactReason }} - Your details
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+   <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form action="email" method="post" novalidate>
+   <div class="govuk-form-group">
+  <h1 class="govuk-label-wrapper">
+    <label class="govuk-label govuk-label--l" for="organisation-name">
+   What is the name of your organisation? (optional)
+    </label>
+  </h1>
+    <div id="organisation-name-hint" class="govuk-hint">
+ If your complaint on behalf of an organisation e.g. bank, council, charity, please provide their name.
+  </div>
+  <input class="govuk-input govuk-input--width-20" id="organisation-name" name="organisationName" type="text" autocomplete="tel">
+</div>
+
+<button class="govuk-button" data-module="govuk-button">
+Continue
+</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

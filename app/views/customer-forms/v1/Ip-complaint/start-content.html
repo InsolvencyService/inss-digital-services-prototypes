@@ -1,0 +1,50 @@
+{% extends "layouts/main.html" %}
+
+{% set serviceName = 'Insolvency Service' %}
+
+{% block pageTitle %}
+  {{ serviceName }} – {{ data.contactReason }}
+{% endblock %}
+
+
+
+{% block beforeContent %}
+  {{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+    <form action="name" method="post" novalidate>
+
+      <h1 class="govuk-heading-l">Complain about an Insolvency Practitioner</h1>
+<p class="govuk-body">
+Before completing this form, read our guidance on complaining about an insolvency practitioner.We can only send your complaint onto the IPs authorising body if:
+</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>
+you have already complained to the IP directly
+</li>
+  <li>
+your complaint has not already been assessed by the authorising body 
+</li>
+  <li>
+your complaint meets the criteria for referral
+</li>
+</ul>
+<p class="govuk-body">
+If you are complaining about the Insolvency Service, go back and choose complain and about the Insolvency Service option</p>
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+      </form>
+
+    </div>
+  </div>
+
+ 
+{% endblock %}

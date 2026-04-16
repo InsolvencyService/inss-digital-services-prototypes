@@ -1,0 +1,46 @@
+{% extends "layouts/main.html" %}
+
+{% set serviceName = 'Upload redundancy payment forms(RP14/A)' %}
+
+{% block pageTitle %}
+  {{ serviceName }} – homepage
+{% endblock %}
+
+
+
+{% block content %}
+   <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+  <div class="govuk-notification-banner__header">
+    <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+      Important
+    </h2>
+  </div>
+  <div class="govuk-notification-banner__content">
+    <p class="govuk-notification-banner__heading">
+    Upload an RP14/A form (Beta)
+    </p>
+    <p class="govuk-notification-banner__paragraph">
+      You can use our new service to upload an RP14/A form while we test it.
+ <a href="start.html" class="govuk-notification-banner__link">Use the beta upload service</a>
+  </div>
+</div>
+  <h1 class="govuk-heading-l">Complete director conduct reports or upload RP14/A forms</h1>
+
+<p class="govuk-body">Once logged into the system you will be able to complete director conduct reports or upload RP14/A forms.</p>
+
+<p class="govuk-body">Access to this service is restricted to Insolvency Practitioners, authorised Agents acting on their behalf, Service Managers and Staff.</p>
+
+<h2 class="govuk-heading-m">Before you start</h2>
+<p class="govuk-body">Please ensure that you have a unique e-mail address registered with the Insolvency Service.</p>
+
+ 
+{{ govukButton({
+  text: "Start now",
+  href: "#",
+  isStartButton: true
+}) }}
+
+    </div>
+{% endblock %}

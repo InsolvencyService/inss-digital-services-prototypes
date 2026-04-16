@@ -7,10 +7,9 @@
 {% endblock %}
 
 {% block beforeContent %}
-
-{{ govukBackLink({
+  {{ govukBackLink({
   text: "Back",
-  href: "address.html"
+  href: "javascript:window.history.back()"
 }) }}
 {% endblock %}
 

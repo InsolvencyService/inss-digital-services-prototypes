@@ -1,0 +1,64 @@
+
+    <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      What is your complaint about?
+    </dt>
+    <dd class="govuk-summary-list__value">
+{{ data['What is your enquiry about?'] | default('Applying for bankruptcy', true) }}
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link  " href="form-detail-general-enquiry#complaint-about">Change<span class="govuk-visually-hidden"> uploaded document</span></a>
+    </dd>
+  </div>
+
+
+    <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      Do you have a case reference number?
+    </dt> 
+    <dd class="govuk-summary-list__value">
+{{ data['referenceNumber'] | default('No', true) }}
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link" href="form-detail-general-enquiry#referenceNumber">Change<span class="govuk-visually-hidden"> uploaded document</span></a>
+    </dd>
+  </div>
+
+  {% if data['referenceNumber'] == 'Yes' %}
+  
+    <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      What is your case reference number?
+    </dt> 
+    <dd class="govuk-summary-list__value">
+{{ data['casereferenceYes'] | default('123456789', true) }}
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link" href="form-detail-general-enquiry#caseReferenceNumber">Change<span class="govuk-visually-hidden"> uploaded document</span></a>
+    </dd>
+  </div>
+  {% else %}
+  {% endif %}
+<div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+  Are you supplying information that we requested?  
+    </dt>
+    <dd class="govuk-summary-list__value">      
+{{ data['requestedInformation'] | default('No', true) }}
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link" href="form-detail-general-enquiry#requestedInformation">Change<span class="govuk-visually-hidden"> uploaded document</span></a>
+    </dd>
+  </div>
+
+    <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+Add detail about your enquiry
+    </dt>
+    <dd class="govuk-summary-list__value">
+{{ data['moreDetail'] | default('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. Donec et mollis dolor.', true) }}
+    </dd> 
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link" href="form-detail-general-enquiry#more-detail">Change<span class="govuk-visually-hidden"> uploaded document</span></a>
+    </dd>
+  </div>
