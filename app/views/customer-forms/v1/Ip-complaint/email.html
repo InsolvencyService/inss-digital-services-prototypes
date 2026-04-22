@@ -16,24 +16,20 @@
 {% block content %}
    <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-    {% if data.checkAnswers == 'true' %}
-    <form action="check-your-answers" method="post" novalidate>
-    {% elif data['phone'] == "true" %}
-      <form action="phone" method="post" novalidate>
-      {% elif data['address'] == "true" %}
-      <form action="/customer-forms/v1/phoneRoute" method="post" novalidate>
-        {% endif %}
+
+      <form action="authorising-body" method="post" novalidate>
+
 
 <div class="govuk-form-group">
     <h1 class="govuk-label-wrapper">
       <label class="govuk-label govuk-label--l" for="email">
-        Email address
+       What is their email address? (optional)
       </label>
     </h1>
   <div id="email-hint" class="govuk-hint">
-    We’ll only use this to contact you about your enquiry or complaint.
+  The email address of the person you're complaining about.
   </div>
-  <input class="govuk-input" id="email" name="email" type="email" value="{{ data['email']}}" spellcheck="false" aria-describedby="email-hint" autocomplete="email">
+  <input class="govuk-input" id="email" name="practitionerEmail" type="email" spellcheck="false" aria-describedby="email-hint" autocomplete="email">
 </div>
 
 

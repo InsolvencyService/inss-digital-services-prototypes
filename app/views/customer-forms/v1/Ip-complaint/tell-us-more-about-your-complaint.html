@@ -1,0 +1,46 @@
+{% extends "layouts/main.html" %}
+
+{% set serviceName = 'Insolvency Service' %}
+
+{% block pageTitle %}
+{{ serviceName }} – {{ data.contactReason }} - About your complaint
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+   <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form action="tell-us-more" method="post" novalidate>
+
+  <h1 class="govuk-heading-l">Tell us more about your complaint</h1>
+
+<p class="govuk-body">To help the Gateway understand your complaint about the Insolvency Practitioner, tell us more. You should include specific dates of relevant matters and names of the relevant parties to  your complaint.</p>
+
+<div class="govuk-form-group">
+
+{{ govukTextarea({
+  name: "ipComplaint",
+  id: "ip-complaint",
+  label: {
+    text: "What has the Insolvency Practitioner done that you think is wrong?",
+    classes: "govuk-label--m",
+    isPageHeading: false
+  },
+  hint: {
+    text: "Details of what has led to your complaint."
+  }
+}) }}
+
+<button class="govuk-button" data-module="govuk-button">
+Continue
+</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

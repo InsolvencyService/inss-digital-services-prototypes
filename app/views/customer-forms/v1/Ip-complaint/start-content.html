@@ -18,25 +18,52 @@
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-    <form action="name" method="post" novalidate>
+    <form action="/customer-forms/v1/ip-complaint/start-content" method="post" novalidate>
 
       <h1 class="govuk-heading-l">Complain about an Insolvency Practitioner</h1>
-<p class="govuk-body">
-Before completing this form, read our guidance on complaining about an insolvency practitioner.We can only send your complaint onto the IPs authorising body if:
-</p>
+
+      {{ data.checkAnswers }}
+
+      <h2 class="govuk-heading-m">Before you complete this form</h2>
+
+<p class="govuk-body">Before you complete this form, you must read <a href="https://www.gov.uk/government/publications/insolvency-practitioners-guidance-for-those-who-want-to-complain/insolvency-practitioners-guidance-on-how-to-complain-about-an-insolvency-practitioner" class="govuk-link" rel="noreferrer noopener" target="_blank">our guidance (opens in new tab)</a> on complaining about an insolvency practitioner.<br>
+We will consider your complaint based on the evidence you provide. Please note that we can only send your complaint onto the Insolvency Practitioner's authorising body if:</p>
 <ul class="govuk-list govuk-list--bullet">
-  <li>
-you have already complained to the IP directly
-</li>
-  <li>
-your complaint has not already been assessed by the authorising body 
-</li>
-  <li>
-your complaint meets the criteria for referral
-</li>
+  <li>you have already complained to the Insolvency Practitioner directly and you can evidence this</li>
+<li>your complaint has not already been assessed by the authorising body or the Gateway</li>
+<li>your complaint meets the criteria for referral <a href="https://www.gov.uk/government/publications/insolvency-practitioners-guidance-for-those-who-want-to-complain/insolvency-practitioners-guidance-on-how-to-complain-about-an-insolvency-practitioner" class="govuk-link" rel="noreferrer noopener" target="_blank">listed in our guidance (opens in new tab)</a></li>
+<li>you have provided evidence to support your claims</li>
+
 </ul>
-<p class="govuk-body">
-If you are complaining about the Insolvency Service, go back and choose complain and about the Insolvency Service option</p>
+<p class="govuk-body">If you are&nbsp;complaining about the Insolvency Service, we have a <a href="https://www.gov.uk/government/organisations/insolvency-service/about/complaints-procedure" class="govuk-link" rel="noreferrer noopener" target="_blank">separate complaints procedure (opens in new tab)</a>.</p>
+<p class="govuk-body">Please provide a copy of the IP complaint and their response as supporting evidence.</p>
+
+
+{{ govukRadios({
+  classes: "govuk-radios--inline",
+  name: "complainedBefore",
+  fieldset: {
+    legend: {
+      text: "Have you complained to the Insolvency Practitioner or their staff?",
+      isPageHeading: false,
+      classes: "govuk-fieldset__legend--m"
+    }
+  },
+  hint: {
+    text: "Select the answer that applies."
+  },
+  items: [
+    {
+      value: "yes",
+      text: "Yes"
+    },
+    {
+      value: "no",
+      text: "No"
+    }
+  ]
+}) }}
+
 
         {{ govukButton({
           text: "Continue"

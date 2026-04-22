@@ -1,0 +1,68 @@
+{% extends "layouts/main.html" %}
+
+{% set serviceName = 'Insolvency Service' %}
+
+{% block pageTitle %}
+  {{ serviceName }} – {{ data.contactReason }}
+{% endblock %}
+
+
+
+{% block beforeContent %}
+  {{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+    <form action="/customer-forms/v1/ip-complaint/already-reviewed" method="post" novalidate>
+
+<h1 class="govuk-heading-l">If your complaint has already been reviewed</h1>
+
+<p class="govuk-body">The Gateway cannot re-consider decisions which it has previously made regarding your complaint, without the provision of new supporting evidence.</p>
+<p class="govuk-body">The Gateway also cannot consider decisions previously reached by, or complaints about or linked to complaints currently under consideration by:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>The Insolvency Practitioner’s authorising body; or by</li>
+<li>The Accountant in Bankruptcy (Scotland)</li>
+
+</ul>
+
+{{ govukRadios({
+  name: "complaintConsidered",
+   fieldset: {
+    legend: {
+      text: "Has your complaint been assessed by the authorising body before and fully considered?",
+      isPageHeading:false,
+      classes: "govuk-fieldset__legend--m"
+    }
+  },
+  items: [
+    {
+      value: "yes",
+      text: "Yes"
+    },
+    {
+      value: "Yes but I am supplying new information",
+      text: "Yes but I am supplying new information"
+    },
+    {
+      value: "no",
+      text: "No"
+    }
+  ]
+}) }}
+
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+      </form>
+
+    </div>
+  </div>
+
+ 
+{% endblock %}

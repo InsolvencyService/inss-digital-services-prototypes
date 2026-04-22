@@ -1,6 +1,6 @@
 {% extends "layouts/main.html" %}
 
-{% set serviceName = 'Upload redundancy payment forms(RP14/A)' %}
+{% set serviceName = 'Insolvency Service' %}
 
 {% block pageTitle %}
  {{ serviceName }} – {{ data.contactReason }} - upload a form
@@ -20,10 +20,44 @@
     <div class="govuk-grid-column-two-thirds">
 
   
-<form class="form" action="check-your-answers" method="post">
+<form class="form" action="checkYourAnswers" method="post">
+
+{{ data.checkAnswers }}
 
 
+{% if data['contactReason'] == 'Complain about an insolvency practitioner' %}  
 
+<h1 class="govuk-heading-l">Supporting evidence</h1>
+<p class="govuk-body">The Gateway can only consider complaints based on the information and evidence that you provide. If you do not provide any evidence, it is unlikely that your complaint can be properly assessed and referred to the IP’s authorising body.</p>
+<p class="govuk-body">Please note that in most cases, the authorising body will only be able to uphold your complaint if you are able to provide evidence which supports the allegations you have made against the insolvency practitioner.   </p>
+<p class="govuk-body">For a disciplinary investigation to be taken forward by the authorising body, there must be a clear indication of wrongdoing by an insolvency practitioner (or those working under the direction of an IP). </p>
+<p class="govuk-body">Please upload all evidence that you believe supports your complaint, e.g:
+* any agreements between you and the IP (IVA agreements, settlement agreements, etc)
+* copies of correspondence (emails, letters, messages, etc)
+* a copy of your complaint to the IP
+* the IP’s response to your complaint 
+* if your complaint is about an IVA, please also provide a copy of the IVA proposal and chairman's report</p>
+<p class="govuk-body">Your evidence can be uploaded using the Choose File buttons below. Alternatively, please post any hard copies to … (address)</p>
+<p class="govuk-body">Each file must be one of the following doc, docx, xls, xlsx, txt, pdf, png, jpg, jpeg, odt and the size of each file must not exceed 3MB in size.</p>
+
+
+<div class="govuk-form-group">
+  <h1 class="govuk-label-wrapper">
+  <label class="govuk-label govuk-label--m" for="file-upload-1">
+Supporting evidence
+  </label>
+  </h1>
+    <div id="event-namew-hint" class="govuk-hint">
+Please list your supporting evidence documentation and what it shows.
+  </div>
+  <div
+    class="govuk-drop-zone"
+    data-module="govuk-file-upload">
+    <input class="govuk-file-upload" id="file-upload-1" name="file-upload-1" type="file">
+  </div>
+</div>
+
+{% else %}
 
 <div class="govuk-form-group">
   <h1 class="govuk-label-wrapper">
@@ -41,7 +75,7 @@
   </div>
 </div>
 
-
+{% endif %}
 
   {{ govukButton({
   text: "Continue"

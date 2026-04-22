@@ -1,0 +1,65 @@
+{% extends "layouts/main.html" %}
+
+{% set serviceName = 'Insolvency Service' %}
+
+{% block pageTitle %}
+  {{ serviceName }} – {{ data.contactReason }}
+{% endblock %}
+
+
+
+{% block beforeContent %}
+  {{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+    <form action="what-is-your-connection-to-the-insolvency" method="post" novalidate>
+
+{{ govukRadios({
+  name: "company",
+   fieldset: {
+    legend: {
+      text: "What type of company insolvency was it about?",
+      isPageHeading:true,
+      classes: "govuk-fieldset__legend--l"
+    }
+  },
+  hint: {
+    text: "The type of individual insolvency procedure it was about."
+  },
+  items: [
+    {
+      value: "Administration",
+      text: "Administration"
+    },
+    {
+      value: "Company Voluntary Arrangement",
+      text: "Company Voluntary Arrangement"
+    },
+    {
+      value: "Liquidation",
+      text: "Liquidation"
+    },
+    {
+      value: "Don't know",
+      text: "Don't know"
+    }
+    
+  ]
+}) }}
+
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+      </form>
+
+    </div>
+  </div>
+
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends "layouts/main.html" %}
+
+{% set serviceName = 'Insolvency Service' %}
+
+{% block pageTitle %}
+  {{ serviceName }} – {{ data.contactReason }}
+{% endblock %}
+
+
+
+{% block beforeContent %}
+  {{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+    <form action="tell-us-more-about-your-complaint" method="post" novalidate>
+
+
+      {{ govukCheckboxes({
+  name: "companyConnection",
+   fieldset: {
+    legend: {
+      text: "What is your connection to the insolvency?",
+      isPageHeading:true,
+      classes: "govuk-fieldset__legend--l"
+    }
+  },
+  hint: {
+    text: " Select from a list of options, you may tick multiple options. "
+  },
+  items: [
+    {
+      value: "Insolvent",
+      text: "Insolvent"
+    },
+    {
+      value: "Creditor",
+      text: "Creditor"
+    },
+    {
+      value: "Director",
+      text: "Director"
+    },
+    {
+      value: "Employee",
+      text: "Employee"
+    },
+    {
+      value: "Shareholder",
+      text: "Shareholder"
+    },
+    {
+      value: "Insolvency Practitioner",
+      text: "Insolvency Practitioner"
+    },
+    {
+      value: "Insolvent's spouse or partner",
+      text: "Insolvent's spouse or partner"
+    },
+    {
+      value: "Other",
+      text: "Other"
+    } 
+  ]
+}) }}
+
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+      </form>
+
+    </div>
+  </div>
+
+{% endblock %}
+   

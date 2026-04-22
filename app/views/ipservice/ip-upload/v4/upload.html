@@ -8,6 +8,12 @@
 
 
 
+{% block header %}
+  {% include "ipservice/ip-upload/v4/_include-one-login-header.html" %}
+{% endblock %}
+
+
+
 {% block beforeContent %}
   {{ govukBackLink({
   text: "Back",
@@ -20,10 +26,10 @@
     <div class="govuk-grid-column-two-thirds">
 
   
-  {% if data['form-validation-errorsV3'] == "yes" %}
-<form class="form" action="/ipservice/ip-upload/v3/upload-successV3" method="post">
+  {% if data['form-validation-errorsV4'] == "yes" %}
+<form class="form" action="/ipservice/ip-upload/v4/upload-successV4" method="post">
   {% else %}
-<form class="form" action="/ipservice/ip-upload/v3/uploadV3" method="post">
+<form class="form" action="/ipservice/ip-upload/v4/uploadV4" method="post">
   {% endif %}
 
 

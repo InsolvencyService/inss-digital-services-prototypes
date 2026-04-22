@@ -16,14 +16,18 @@
 {% block content %}
    <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
+      {% if data.checkAnswers == 'true' %}
+      <form action="check-your-answers" method="post" novalidate>
+      {% else %}
       <form action="/customer-forms/v1/phoneRoute" method="post" novalidate>
+      {% endif%}  
    <div class="govuk-form-group">
   <h1 class="govuk-label-wrapper">
     <label class="govuk-label govuk-label--l" for="phone-number">
       UK phone number (optional)
     </label>
   </h1>
-  <input class="govuk-input govuk-input--width-20" id="phone-number" name="phoneNumber" type="tel" autocomplete="tel">
+  <input class="govuk-input govuk-input--width-20" id="phone-number" name="phoneNumber" type="tel" value="{{ data['phoneNumber']}}" autocomplete="tel">
 </div>
 
 <button class="govuk-button" data-module="govuk-button">

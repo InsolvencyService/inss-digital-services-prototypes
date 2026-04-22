@@ -1,0 +1,68 @@
+{% extends "layouts/main.html" %}
+
+{% set serviceName = 'Insolvency Service' %}
+
+{% block pageTitle %}
+  {{ serviceName }} – {{ data.contactReason }}
+{% endblock %}
+
+
+
+{% block beforeContent %}
+  {{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+    <form action="what-type-of-insolvency-was-it-about" method="post" novalidate>
+
+      {{ govukCheckboxes({
+  name: "individual",
+   fieldset: {
+    legend: {
+      text: "What type of individual insolvency procedure was it about?",
+      isPageHeading:true,
+      classes: "govuk-fieldset__legend--l"
+    }
+  },
+  hint: {
+    text: "The type of individual insolvency procedure it was about."
+  },
+  items: [
+    {
+      value: "Bankruptcy",
+      text: "Bankruptcy"
+    },
+    {
+      value: "Individual Voluntary Arrangement",
+      text: "Individual Voluntary Arrangement"
+    },
+    {
+      value: "Sequestration",
+      text: "Sequestration"
+    },
+    {
+      value: "Protected Trust Deed",
+      text: "Protected Trust Deed"
+    },
+    {
+      value: "Don't know",
+      text: "Don't know"
+    } 
+  ]
+}) }}
+
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+      </form>
+
+    </div>
+  </div>
+
+{% endblock %}

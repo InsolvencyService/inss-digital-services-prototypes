@@ -17,8 +17,11 @@
 {% block content %}
    <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
+      {% if data.checkAnswers == 'true' %}
+      <form action="../check-your-answers" method="post" novalidate>
+      {% else %}
       <form action="detail" method="post" novalidate>
-
+      {% endif %}
 
 
 {{ govukRadios({

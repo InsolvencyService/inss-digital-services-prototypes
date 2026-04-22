@@ -17,7 +17,11 @@
 {% block content %}
    <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
+      {% if data.checkAnswers == 'true' %}
+      <form action="../check-your-answers" method="post" novalidate>
+      {% else %}
       <form action="/customer-forms/v1/upload-guard" method="post" novalidate>
+      {% endif %}
 
 <div class="govuk-form-group">
  <h1 class="govuk-label-wrapper">
@@ -29,7 +33,7 @@
       <div id="more-detail-hint" class="govuk-hint">
     Please provide us with as much information as possible to help us deal with your enquiry.
   </div>
-  <textarea class="govuk-textarea" id="more-detail" name="moreDetail" rows="8" aria-describedby="more-detail-hint"></textarea>
+  <textarea class="govuk-textarea" id="more-detail" name="moreDetail" rows="8" aria-describedby="more-detail-hint">{{ data['moreDetail']  }}</textarea>
 </div>
 
 <button class="govuk-button" data-module="govuk-button">

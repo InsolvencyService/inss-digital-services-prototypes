@@ -7,7 +7,7 @@
 {{ data['What is your enquiry about?'] | default('Applying for bankruptcy', true) }}
     </dd>
     <dd class="govuk-summary-list__actions">
-      <a class="govuk-link  " href="form-detail-general-enquiry#complaint-about">Change<span class="govuk-visually-hidden"> uploaded document</span></a>
+      <a class="govuk-link  " href="./general-enquiry/question">Change<span class="govuk-visually-hidden"> what your enquiry is about</span></a>
     </dd>
   </div>
 
@@ -20,7 +20,7 @@
 {{ data['referenceNumber'] | default('No', true) }}
     </dd>
     <dd class="govuk-summary-list__actions">
-      <a class="govuk-link" href="form-detail-general-enquiry#referenceNumber">Change<span class="govuk-visually-hidden"> uploaded document</span></a>
+      <a class="govuk-link" href="./general-enquiry/reference-number">Change<span class="govuk-visually-hidden"> whether you have a case reference number</span></a>
     </dd>
   </div>
 
@@ -34,7 +34,7 @@
 {{ data['casereferenceYes'] | default('123456789', true) }}
     </dd>
     <dd class="govuk-summary-list__actions">
-      <a class="govuk-link" href="form-detail-general-enquiry#caseReferenceNumber">Change<span class="govuk-visually-hidden"> uploaded document</span></a>
+      <a class="govuk-link" href="./general-enquiry/reference-number#caseReferenceNumber">Change<span class="govuk-visually-hidden"> case reference number</span></a>
     </dd>
   </div>
   {% else %}
@@ -47,7 +47,7 @@
 {{ data['requestedInformation'] | default('No', true) }}
     </dd>
     <dd class="govuk-summary-list__actions">
-      <a class="govuk-link" href="form-detail-general-enquiry#requestedInformation">Change<span class="govuk-visually-hidden"> uploaded document</span></a>
+      <a class="govuk-link" href="./general-enquiry/previous-request">Change<span class="govuk-visually-hidden"> requested information</span></a>
     </dd>
   </div>
 
@@ -59,6 +59,6 @@ Add detail about your enquiry
 {{ data['moreDetail'] | default('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. Donec et mollis dolor.', true) }}
     </dd> 
     <dd class="govuk-summary-list__actions">
-      <a class="govuk-link" href="form-detail-general-enquiry#more-detail">Change<span class="govuk-visually-hidden"> uploaded document</span></a>
+      <a class="govuk-link" href="./general-enquiry/detail">Change<span class="govuk-visually-hidden"> detail about your enquiry</span></a>
     </dd>
   </div>

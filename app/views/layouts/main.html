@@ -7,14 +7,18 @@ https://prototype-kit.service.gov.uk/docs/how-to-use-layouts
 {% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
 
 {% block header %}
- 
 
-  {{ govukHeader() }}
+
+ 
+  {{ govukHeader ({
+    homepageUrl: "/"
+  }) }}
+
+
 {{ govukServiceNavigation({
   serviceName: serviceName,
   serviceUrl: "start.html"
 }) }}
-
 
     {% block headerEnd %}
     <div class="govuk-width-container">

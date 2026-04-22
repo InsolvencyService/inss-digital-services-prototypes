@@ -6,6 +6,10 @@
   {{ serviceName }} – confirmation
 {% endblock %}
 
+{% block header %}
+  {% include "ipservice/ip-upload/v4/_include-one-login-header.html" %}
+{% endblock %}
+
 
 {% block content %}
    <div class="govuk-grid-row">
@@ -27,12 +31,11 @@
          If your form has been accepted the email will contain the case reference number.
         </p> -->
 
-        <a href="start.html" class="govuk-button">Upload another form</a>
+        <a href="declaration.html" class="govuk-button">Upload another form</a>
       </div>
     </div>
 
 </div>
     </div>
     
-    <a href="time-machine.html" class="timemachine">Continue</a>
 {% endblock %}

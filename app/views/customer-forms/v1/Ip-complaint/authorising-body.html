@@ -1,0 +1,72 @@
+{% extends "layouts/main.html" %}
+
+{% set serviceName = 'Insolvency Service' %}
+
+{% block pageTitle %}
+  {{ serviceName }} – {{ data.contactReason }}
+{% endblock %}
+
+
+
+{% block beforeContent %}
+  {{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+    <form action="/customer-forms/v1/ip-complaint/authorising-body" method="post" novalidate>
+
+      <h1 class="govuk-heading-l">Authorising body</h1>
+
+    
+
+      <p class="govuk-body">
+        You can find the name of the authorising body at <a href="https://www.gov.uk/find-an-insolvency-practitioner" target="_blank">Find an insolvency practitioner (opens in a new tab)</a>.
+      </p>
+
+{{ govukRadios({
+  name: "authorisingBody",
+   fieldset: {
+    legend: {
+      text: "What is the name of the authorising body?",
+      isPageHeading:false,
+      classes: "govuk-fieldset__legend--m"
+    }
+  },
+  items: [
+    {
+      value: " ICAEW",
+      text: "ICAEW"
+    },
+    {
+      value: " IPA",
+      text: "IPA"
+    },
+    {
+      value: " ICAS",
+      text: "ICAS"
+    },
+    {
+      divider: "or"
+    },
+    {
+      value: "None of the above",
+      text: "None of the above"
+    }
+  ]
+}) }}
+
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+      </form>
+
+    </div>
+  </div>
+
+{% endblock %}

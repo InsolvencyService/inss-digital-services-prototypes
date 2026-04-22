@@ -1,0 +1,37 @@
+{% extends "layouts/main.html" %}
+
+{% set serviceName = 'Insolvency Service' %}
+
+{% block pageTitle %}
+  {{ serviceName }} – confirmation
+{% endblock %}
+{% block beforeContent %}
+  {{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+   <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+  <h1 class="govuk-heading-l"> You're not eligible for this service</h1>
+
+{% if data.authorisingBody == "None of the above" %}
+ <p class="govuk-body">The Gateway can only consider complaints regarding Insolvency Practitioners who operate within Great Britain and Northern Ireland. </p>
+<p class="govuk-body">Those Insolvency Practitioners are all authorised by one of the three stated authorising bodies.</p>
+{% else %}
+
+    <p class="govuk-body">The Gateway will not consider your complaint if you have not made a formal complaint to the Insolvency Practitioner. For more information, <a href="https://www.gov.uk/government/publications/insolvency-practitioners-guidance-for-those-who-want-to-complain/insolvency-practitioners-guidance-on-how-to-complain-about-an-insolvency-practitioner" class="govuk-link" rel="noreferrer noopener" target="_blank">read the guidance (opens in new tab)</a>.</p>
+<p class="govuk-body">If you make a complaint to the Insolvency Practitioner and remain dissatisfied by their response, you can make a complaint to the Gateway.</p>
+<p class="govuk-body">You will need to provide a copy of that complaint to The Gateway and of any reply you receive from the Insolvency Practitioner.</p>
+
+{% endif %}
+</div>
+    </div>
+
+
+
+    
+
+{% endblock %}

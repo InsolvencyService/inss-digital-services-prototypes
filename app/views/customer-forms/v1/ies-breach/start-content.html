@@ -18,8 +18,38 @@
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-ies breach
-    <form action="name" method="post" novalidate>
+
+    <form action="../name" method="post" novalidate>
+
+      <h1 class="govuk-heading-l">Investigations and enforcement services breach questionnaire {{ data['organisation'] }}</h1>
+<p class="govuk-body">
+Use this form if you wish to report:
+</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>a disqualified director acting in the management of a company</li>
+  <li>an individual for acting in the management of a company whilst subject to bankruptcy or Debt Relief restrictions</li>
+  <li>a Designated Person in breach of their disqualified director sanctions licence or acting in the management of a company without a licence</li>
+</ul>
+
+<p class="govuk-body">
+a company or business using a prohibited name
+</p>
+<p class="govuk-body">
+Before you complete this form please read the following to find out what we do and other useful information:
+</p>
+<ul class="govuk-list govuk-list--bullet">
+<li>
+<a href="https://www.gov.uk/government/publications/reporting-misconduct-by-companies-directors-and-bankrupts-to-the-insolvency-service" target="_blank">For breaches of bankruptcy / debt relief restrictions or a director disqualification(opens in a new tab)</a> 
+</li>
+<li>
+<a href="https://www.gov.uk/guidance/director-disqualification-sanctions" target="_blank">For director disqualification sanctions(opens in a new tab)</a>
+</li>
+<li>
+    <a href="https://www.gov.uk/government/publications/re-use-of-company-names" target="_blank">For companies / businesses re-using a company name(opens in a new tab)</a>
+</li>
+</ul>
+<p class="govuk-body">
+Please provide as much of the information asked for as you can, as this will give us the best start to considering your complaint and where we might go for further details. We appreciate that you may not be able to provide everything requested, but any information you give will greatly help any enquiries that may be undertaken into your allegations.</p>
 
         {{ govukButton({
           text: "Continue"

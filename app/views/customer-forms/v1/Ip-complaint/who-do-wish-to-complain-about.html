@@ -16,21 +16,18 @@
 {% block content %}
    <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      {% if data.checkAnswers == 'true' %}
-      <form action="check-your-answers" method="post" novalidate>
-      {% else %}
-      <form action="address" method="post" novalidate>
-      {% endif %}  
+      <form action="where-does-the-insolvency-practitioner-your-complaining-about-work" method="post" novalidate>
 <div class="govuk-form-group">
   <h1 class="govuk-label-wrapper">
-    <label class="govuk-label govuk-label--l" for="event-name">
-     What is your full name? 
+    <label class="govuk-label govuk-label--l" for="practioner-name">
+     Who do you wish to complain about? 
     </label>
   </h1>
-  <div id="full-name-hint" class="govuk-hint">
-    Enter your first name, middle name (if applicable), and last name
+  <div id="practitioner-name-hint" class="govuk-hint">
+   The name of the Insolvency Practitioner you wish to complain about.
+
   </div>
-  <input class="govuk-input" id="full-name" name="full-name" type="text" spellcheck="false" value="{{ data['full-name'] }}" aria-describedby="Value-hint" inputmode="text">
+  <input class="govuk-input" id="practitioner-name" name="practitionerName" type="text" spellcheck="false" value="" aria-describedby="Value-hint" inputmode="text">
 </div>
 
 

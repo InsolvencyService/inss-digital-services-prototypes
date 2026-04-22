@@ -1,2 +1,106 @@
-<h1 class="govuk-heading-l">Complain about an Insolvency Practitioner</h1>
 
+    <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Who do you wish to complain about?</dt>
+    <dd class="govuk-summary-list__value">
+{{ data.practitionerName | default('Virgil Robertson', true) }}
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link" href="../../ip-complaint/who-do-wish-to-complain-about">Change<span class="govuk-visually-hidden"> who you wish to complain about</span></a>
+    </dd>
+  </div>
+
+  
+    <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Where does the Insolvency Practitioner you're complaining about work?</dt>
+    <dd class="govuk-summary-list__value">
+{{ data.practitionerWork | default('Gremo group', true) }}
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link" href="start.html">Change<span class="govuk-visually-hidden"> uploaded document</span></a>
+    </dd>
+  </div>
+
+
+  
+    <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">What is their email address? (optional)?</dt>
+    <dd class="govuk-summary-list__value">
+{{ data.practitionerEmail | default('virgil.robertson@example.com', true) }}
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link" href="start.html">Change<span class="govuk-visually-hidden"> uploaded document</span></a>
+    </dd>
+  </div>
+
+  
+    <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Is your complaint about the insolvency of an individual or a company?</dt>
+    <dd class="govuk-summary-list__value">
+{{ data.individualOrCompany | default('Company', true) }}
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link" href="start.html">Change<span class="govuk-visually-hidden"> uploaded document</span></a>
+    </dd>
+  </div>
+
+      <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">What type of individual insolvency procedure was it about?</dt>
+    <dd class="govuk-summary-list__value">
+{{ data.individual| default('Individual Voluntary Arrangement', true) }}
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link" href="start.html">Change<span class="govuk-visually-hidden"> uploaded document</span></a>
+    </dd>
+  </div>
+
+
+  
+    <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">What type of company insolvency was it about?</dt>
+    <dd class="govuk-summary-list__value">
+{{ data.company | default('Administration', true) }}
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link" href="start.html">Change<span class="govuk-visually-hidden"> uploaded document</span></a>
+    </dd>
+  </div>
+
+      <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">What is your connection to the insolvency?</dt>
+    <dd class="govuk-summary-list__value">
+{{ data.companyConnection | default('Creditor', true) }}
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link" href="start.html">Change<span class="govuk-visually-hidden"> uploaded document</span></a>
+    </dd>
+  </div>
+
+      <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">What has the Insolvency Practitioner done that you think is wrong?</dt>
+    <dd class="govuk-summary-list__value">
+{{ data.ipComplaint | default('Test complaint details', true) }}
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link" href="start.html">Change<span class="govuk-visually-hidden"> uploaded document</span></a>
+    </dd>
+  </div>
+
+      <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Why do you think the Insolvency Practitioner is at fault?</dt>
+    <dd class="govuk-summary-list__value">
+{{ data.ipFault| default('Test fault details', true) }}
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link" href="start.html">Change<span class="govuk-visually-hidden"> uploaded document</span></a>
+    </dd>
+  </div>
+
+      <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">When you complained to the Insolvency Practitioner, what happened?</dt>
+    <dd class="govuk-summary-list__value">
+{{ data.ipWhatHappened | default('Test what happened details', true) }}
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link" href="start.html">Change<span class="govuk-visually-hidden"> uploaded document</span></a>
+    </dd>
+  </div>

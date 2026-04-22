@@ -1,6 +1,6 @@
 {% extends "layouts/main.html" %}
 
-{% set serviceName = 'Upload redundancy payment forms(RP14/A)' %}
+{% set serviceName = 'Insolvency Service' %}
 
 {% block pageTitle %}
 {{ serviceName }} – {{ data.contactReason }} - Check your answers
@@ -17,7 +17,7 @@
 {% block content %}
    <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-  <h1 class="govuk-heading-l">Check your answers before submitting your form</h1>
+  <h1 class="govuk-heading-l">Check your answers before submitting your form {{ data.checkAnswers }}</h1>
   </div>
 </div>
 
@@ -31,7 +31,7 @@
 {{ data.contactReason | default('General enquiry', true) }}
     </dd>
     <dd class="govuk-summary-list__actions">
-      <a class="govuk-link" href="start.html">Change<span class="govuk-visually-hidden"> uploaded document</span></a>
+      <a class="govuk-link" href="start.html">Change<span class="govuk-visually-hidden"> how can we help you reason</span></a>
     </dd>
   </div>
 
@@ -44,9 +44,59 @@ What is your full name?
 {{ data['full-name'] | default('John Doe', true) }}
     </dd>
     <dd class="govuk-summary-list__actions">
-      <a class="govuk-link" href="your-details.html">Change<span class="govuk-visually-hidden"> uploaded document</span></a>
+      <a class="govuk-link" href="name.html">Change<span class="govuk-visually-hidden"> full name</span></a>
     </dd>
   </div>
+
+      <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+What is your address?
+    </dt>
+    <dd class="govuk-summary-list__value">
+<ul class="govuk-list">
+  <li>{{ data['AddressLine1'] | default('123 Example Street', true) }}</li>
+  <li>{{ data['AddressLine2'] | default('Example address line two', true) }}</li>
+  <li>{{ data['TownCity'] | default('Example Town', true) }}</li>
+  <li>{{ data['County'] | default('Example County', true) }}</li>
+  <li>{{ data['Postcode'] | default('Example Postcode', true) }}</li>
+</ul>
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link" href="address.html">Change<span class="govuk-visually-hidden"> address</span></a>
+    </dd>
+  </div>
+
+ {% if data['organisation'] == "true" %} 
+     <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+What is the name of your organisation? (optional)
+    </dt>
+    <dd class="govuk-summary-list__value">
+{{ data['organisation-name'] | default('Not provided', true) }}
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link" href="organisation.html">Change<span class="govuk-visually-hidden"> organisation name</span></a>
+    </dd>
+  </div>
+
+ {% endif %}
+
+  {% if data['dob'] == "true" %} 
+     <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+  What is your date of birth?
+    </dt>
+    <dd class="govuk-summary-list__value">
+{{ data['dob-day'] }} {{ data['dob-month'] }} {{ data['dob-year'] | default('10 November 1990', true)}}
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link" href="dob.html">Change<span class="govuk-visually-hidden"> date of birth</span></a>
+    </dd>
+  </div>
+
+ {% endif %}
+
+
     <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">
 Email address
@@ -55,7 +105,7 @@ Email address
 {{ data['email'] | default('john.doe@example.com', true) }}
     </dd>
     <dd class="govuk-summary-list__actions">
-      <a class="govuk-link" href="your-details.html">Change<span class="govuk-visually-hidden"> uploaded document</span></a>
+      <a class="govuk-link" href="email.html">Change<span class="govuk-visually-hidden"> email</span></a>
     </dd>
   </div>
    <div class="govuk-summary-list__row">
@@ -66,24 +116,10 @@ Phone number
 {{ data['phone-number'] | default('01234 567890', true) }}
     </dd>
     <dd class="govuk-summary-list__actions">
-      <a class="govuk-link" href="your-details.html">Change<span class="govuk-visually-hidden"> uploaded document</span></a>
+      <a class="govuk-link" href="phone.html">Change<span class="govuk-visually-hidden"> uploaded document</span></a>
     </dd>
   </div>
-    <div class="govuk-summary-list__row">
-    <dt class="govuk-summary-list__key">
-What is your address?
-    </dt>
-    <dd class="govuk-summary-list__value">
-{{ data['AddressLine1'] | default('123 Example Street', true) }}
-{{ data['AddressLine2'] | default('Example address line two', true) }}
-{{ data['TownCity'] | default('Example Town', true) }}
-{{ data['County'] | default('Example County', true) }} 
-{{ data['Postcode'] | default('Example Postcode', true) }}
-    </dd>
-    <dd class="govuk-summary-list__actions">
-      <a class="govuk-link" href="address.html">Change<span class="govuk-visually-hidden"> uploaded document</span></a>
-    </dd>
-  </div>
+
 
 
 
@@ -104,7 +140,21 @@ What is your address?
 
 {% endif %}
 
+{% if data['upload'] == 'true' %}
 
+    <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      Uploaded document
+    </dt>
+    <dd class="govuk-summary-list__value">
+{{ data['file-upload-1'] | default('example-document.pdf', true) }}
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link" href="upload.html">Change<span class="govuk-visually-hidden"> uploaded document</span></a>
+    </dd>
+  </div>
+
+{% else %}
     <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">
       Do you want to provide us with any documents to support your enquiry or complaint?
@@ -113,7 +163,7 @@ What is your address?
 {{ data['uploadDocuments'] | default('No', true) }}
     </dd>
     <dd class="govuk-summary-list__actions">
-      <a class="govuk-link" href="uploadGuard.html#uploadDocuments">Change<span class="govuk-visually-hidden"> uploaded document</span></a>
+      <a class="govuk-link" href="upload-guard.html">Change<span class="govuk-visually-hidden">Do you want to provide us with any documents to support your enquiry or complaint?</span></a>
     </dd>
   </div>
 {% if data['uploadDocuments'] == 'Yes' %}
@@ -129,6 +179,7 @@ What is your address?
     </dd>
   </div>
 
+{% endif %}
 {% endif %}
 
 </dl> 
