@@ -1,6 +1,7 @@
-{% extends "layouts/main.html" %}
-
+{% extends "layouts/main-forms.html" %}
 {% set serviceName = 'Insolvency Service' %}
+
+
 
 {% block pageTitle %}
 {{ serviceName }} – {{ data.contactReason }} - Your details
@@ -18,8 +19,15 @@
     <div class="govuk-grid-column-two-thirds">
       {% if data.checkAnswers == 'true' %}
       <form action="check-your-answers" method="post" novalidate>
-      {% else %}
+      {% elif data['address'] == "true" %}
       <form action="address" method="post" novalidate>
+    
+      {% elif data['dob'] == "true" %}
+      <form action="dob" method="post" novalidate>
+      {% elif data['organisation'] == "true" %}
+      <form action="organisation" method="post" novalidate>
+      {% else %}
+      <form action="email" method="post" novalidate>
       {% endif %}  
 <div class="govuk-form-group">
   <h1 class="govuk-label-wrapper">

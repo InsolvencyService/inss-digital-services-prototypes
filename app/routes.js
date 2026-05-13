@@ -92,12 +92,30 @@ router.post('/customer-forms/v1/uploadDocumentsQuestion', function(request, resp
     }
 })
 
+router.post('/customer-forms/v1/uploadDocument', function(request, response) {
+
+   
+        response.redirect("/customer-forms/v1/check-your-answers")
+        request.session.data['checkAnswers'] = 'true'
+    
+})
+
+router.post('/customer-forms/v1/uploadAnotherDocument', function(request, response) {
+
+    var addAnotherDoc = request.session.data['uploadAnotherDocument']
+    if (addAnotherDoc == "yes"){
+        response.redirect("/customer-forms/v1/upload")
+    } else {
+        response.redirect("/customer-forms/v1/check-your-answers")
+    }
+})
+
 router.post('/customer-forms/v1/checkYourAnswers', function(request, response) {
     response.redirect('/customer-forms/v1/check-your-answers')
     request.session.data['checkAnswers'] = 'true'
 })
 
-router.post('/customer-forms/v1/ip-complaint/start-content', function(request, response) {
+router.post('/customer-forms/v1/ip-complaint/start-content-route', function(request, response) {
 
     var complainedBefore = request.session.data['complainedBefore']
     if (complainedBefore == "yes"){
@@ -106,6 +124,7 @@ router.post('/customer-forms/v1/ip-complaint/start-content', function(request, r
         response.redirect("/customer-forms/v1/not-eligible-for-this-service")
     }
 })
+
 
 router.post('/customer-forms/v1/ip-complaint/already-reviewed', function(request, response) {
 
@@ -116,6 +135,7 @@ router.post('/customer-forms/v1/ip-complaint/already-reviewed', function(request
         response.redirect("/customer-forms/v1/name")
     }
 })
+
 
 router.post('/customer-forms/v1/ip-complaint/authorising-body', function(request, response) {
 
@@ -137,33 +157,92 @@ router.post('/customer-forms/v1/ip-complaint/individual-or-company', function(re
     }
 })
 
+router.post('/customer-forms/v1/is-complaint/isComplaint', function(request, response) {
 
-
-router.post('/customer-forms/v1/phoneRoute', function(request, response) {
-
-    var reason = request.session.data['contactReason']
-    if (reason == "General enquiry"){
-        response.redirect("/customer-forms/v1/general-enquiry/question")
-    } 
-    
-    else if (reason == "Complain about an insolvency practitioner"){
-        response.redirect("/customer-forms/v1/ip-complaint/who-do-wish-to-complain-about")
-    }
-
-      else if (reason == "Investigations and Enforcement Services"){
-        response.redirect("/customer-forms/v1/ies-complaint/question")
-    }
-
-        else if (reason == "Complain about The Insolvency Service"){
-        response.redirect("/customer-forms/v1/is-complaint/question")
-    }
-
-        else if (reason == "Investigations and Enforcement Services Breach Questionnaire"){
-        response.redirect("/customer-forms/v1/ies-breach/question")
+    var isComplaint = request.session.data['isComplaint']
+    if (isComplaint == "Yes"){
+        response.redirect("/customer-forms/v1/name")
+    } else {
+        response.redirect("/customer-forms/v1/is-complaint/your-complaint-is-not-about-the-insolvency-service")
     }
 })
 
 
+router.post('/customer-forms/v1/removeUpload', function(request, response) {
+
+    var removeDocuments = request.session.data['removeDocuments']
+    if (removeDocuments == "Yes"){
+        response.redirect("/customer-forms/v1/upload-list")
+    } else {
+        response.redirect("/customer-forms/v1/upload")
+    }
+})
+
+
+
+
+router.post('/customer-forms/v1/general-enquiry/start', function(request, response) {
+
+    request.session.data['contactReason'] = 'General enquiry'
+    request.session.data['organisation'] = 'false'
+    request.session.data['address'] = 'false'
+    request.session.data['dob'] = 'false'
+    request.session.data['phone'] = 'false'
+    request.session.data['upload'] = 'false'
+    response.redirect("/customer-forms/v1/general-enquiry/start")
+
+})
+
+router.post('/customer-forms/v1/ip-complaint/start', function(request, response) {
+
+    request.session.data['contactReason'] = 'Complain about an Insolvency Practitioner'
+    request.session.data['organisation'] = 'true'
+    request.session.data['address'] = 'false'
+    request.session.data['dob'] = 'false'
+    request.session.data['phone'] = 'false'
+    request.session.data['upload'] = 'true'
+    response.redirect("/customer-forms/v1/ip-complaint/start")
+
+})
+
+
+router.post('/customer-forms/v1/company-complaint/start', function(request, response) {
+
+    request.session.data['contactReason'] = 'Company complaints form'
+    request.session.data['organisation'] = 'true'
+    request.session.data['address'] = 'false'
+    request.session.data['dob'] = 'false'
+    request.session.data['phone'] = 'false'
+    request.session.data['upload'] = 'false'
+    response.redirect("/customer-forms/v1/company-complaint/start")
+
+})
+
+
+router.post('/customer-forms/v1/is-complaint/start', function(request, response) {
+
+    request.session.data['contactReason'] = 'Complain about the Insolvency Service'
+    request.session.data['organisation'] = 'false'
+    request.session.data['address'] = 'false'
+    request.session.data['dob'] = 'false'
+    request.session.data['phone'] = 'false'
+    request.session.data['upload'] = 'false'
+    response.redirect("/customer-forms/v1/is-complaint/start")
+
+})
+
+
+router.post('/customer-forms/v1/ies-breach/start', function(request, response) {
+
+    request.session.data['contactReason'] = 'Investigations and Enforcement Services Breach Questionnaire'
+    request.session.data['organisation'] = 'true'
+    request.session.data['address'] = 'false'
+    request.session.data['dob'] = 'false'
+    request.session.data['phone'] = 'false'
+    request.session.data['upload'] = 'true'
+    response.redirect("/customer-forms/v1/ies-breach/start")
+
+})
 
 router.post('/customer-forms/v1/contentStart', function(request, response) {
 
@@ -179,7 +258,7 @@ router.post('/customer-forms/v1/contentStart', function(request, response) {
         request.session.data['phone'] = 'true'
        request.session.data['upload'] = 'false'
 
-        response.redirect("/customer-forms/v1/general-enquiry/start-content")
+        response.redirect("/customer-forms/v1/general-enquiry/start")
     } 
     
     else if (reason == "Complain about an insolvency practitioner"){
@@ -190,7 +269,7 @@ router.post('/customer-forms/v1/contentStart', function(request, response) {
                request.session.data['phone'] = 'false'
             request.session.data['upload'] = 'true'
 
-        response.redirect("/customer-forms/v1/ip-complaint/start-content")
+        response.redirect("/customer-forms/v1/ip-complaint/start")
     }
 
       else if (reason == "Investigations and Enforcement Services"){
@@ -201,11 +280,11 @@ router.post('/customer-forms/v1/contentStart', function(request, response) {
                request.session.data['phone'] = 'false'
             request.session.data['upload'] = 'false'
         
-        response.redirect("/customer-forms/v1/ies-complaint/start-content")
+        response.redirect("/customer-forms/v1/ies-complaint/start")
     }
 
 
-        else if (reason == "Complain about The Insolvency Service"){
+        else if (reason == "Complain about the Insolvency Service"){
  
             request.session.data['organisation'] = 'false'
             request.session.data['address'] = 'false'
@@ -213,7 +292,7 @@ router.post('/customer-forms/v1/contentStart', function(request, response) {
             request.session.data['phone'] = 'false'
             request.session.data['upload'] = 'false'
 
-        response.redirect("/customer-forms/v1/is-complaint/start-content")
+        response.redirect("/customer-forms/v1/is-complaint/start")
     }
 
         else if (reason == "Investigations and Enforcement Services Breach Questionnaire"){
@@ -224,9 +303,37 @@ router.post('/customer-forms/v1/contentStart', function(request, response) {
             request.session.data['phone'] = 'false'
             request.session.data['upload'] = 'false'
 
-        response.redirect("/customer-forms/v1/ies-breach/start-content")
+        response.redirect("/customer-forms/v1/ies-breach/start")
     }
 })
+
+
+
+router.post('/customer-forms/v1/phoneRoute', function(request, response) {
+
+    var reason = request.session.data['contactReason']
+    if (reason == "General enquiry"){
+        response.redirect("/customer-forms/v1/general-enquiry/question")
+    } 
+    
+    else if (reason == "Complain about an Insolvency Practitioner"){
+        response.redirect("/customer-forms/v1/ip-complaint/who-do-wish-to-complain-about")
+    }
+
+      else if (reason == "Company complaints form"){
+        response.redirect("/customer-forms/v1/company-complaint/question")
+    }
+
+        else if (reason == "Complain about the Insolvency Service"){
+        response.redirect("/customer-forms/v1/is-complaint/do-you-have-an-insolvency-reference-number")
+    }
+
+        else if (reason == "Investigations and Enforcement Services Breach Questionnaire"){
+        response.redirect("/customer-forms/v1/ies-breach/question")
+    }
+})
+
+
 
 
 

@@ -1,6 +1,4 @@
-{% extends "layouts/main.html" %}
-
-{% set serviceName = 'Insolvency Service' %}
+{% extends "layouts/main-forms.html" %}
 
 {% block pageTitle %}
   {{ serviceName }} – {{ data.contactReason }}
@@ -21,7 +19,7 @@
 
     <form action="../name" method="post" novalidate>
 
-      <h1 class="govuk-heading-l">Investigations and enforcement services {{ data['organisation'] }}</h1>
+      <h1 class="govuk-heading-l">Investigations and enforcement services {{ data.contactReason }}</h1>
 <p class="govuk-body">
 You can make a complaint if you have reasonable grounds to suspect a company that is currently active or dissolved of:
 </p>

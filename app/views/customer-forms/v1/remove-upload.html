@@ -1,4 +1,6 @@
-{% extends "layouts/main-forms.html" %}
+{% extends "layouts/main.html" %}
+
+{% set serviceName = 'Insolvency Service' %}
 
 {% block pageTitle %}
  {{ serviceName }} – {{ data.contactReason }}
@@ -6,35 +8,24 @@
 
 {% block beforeContent %}
 
-{{ govukBackLink({
+  {{ govukBackLink({
   text: "Back",
-  href: "start.html"
+  href: "javascript:window.history.back()"
 }) }}
 {% endblock %}
 
 {% block content %}
  <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <form action="uploadGuard" method="post" novalidate>
-  <span class="govuk-caption-l">Complaints form</span>
-{% set refHtml %}
-{{ govukInput({
-  id: "haveYouComplainedBefore-reference",
-  name: "haveYouComplainedBeforeReference",
-  spellcheck: false,
-  classes: "govuk-!-width-one-third",
-  label: {
-    text: "what was your reference number?	
-"
-  }
-}) }}
-{% endset -%}
+      <form action="removeUpload" method="post" novalidate>
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
 
 {{ govukRadios({
-  name: "contact",
+  classes: "govuk-radios--inline",
+  name: "removeDocuments",
   fieldset: {
     legend: {
-      text: "Have you complained before about this?",
+      text: "Do you want to remove " + data.fileUpload1 + "?",
       isPageHeading: true,
       classes: "govuk-fieldset__legend--l"
     }
@@ -42,16 +33,12 @@
   items: [
     {
       value: "Yes",
-      text: "Yes",
-      conditional: {
-        html: refHtml
-      }
+      text: "Yes"
     },
     {
       value: "No",
       text: "No"
     }
-    
   ]
 }) }}
 

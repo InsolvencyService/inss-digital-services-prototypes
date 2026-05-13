@@ -1,6 +1,4 @@
-{% extends "layouts/main.html" %}
-
-{% set serviceName = 'Insolvency Service' %}
+{% extends "layouts/main-forms.html" %}
 
 {% block pageTitle %}
 {{ serviceName }} – {{ data.contactReason }} - Your details
@@ -20,7 +18,8 @@
     <form action="check-your-answers" method="post" novalidate>
     {% elif data['phone'] == "true" %}
       <form action="phone" method="post" novalidate>
-      {% elif data['address'] == "true" %}
+      {% else %}
+
       <form action="/customer-forms/v1/phoneRoute" method="post" novalidate>
         {% endif %}
 

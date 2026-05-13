@@ -1,6 +1,4 @@
-{% extends "layouts/main.html" %}
-
-{% set serviceName = 'Insolvency Service' %}
+{% extends "layouts/main-forms.html" %}
 
 {% block pageTitle %}
 {{ serviceName }} – {{ data.contactReason }} - About your complaint
@@ -17,9 +15,13 @@
 {% block content %}
    <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <form action="uploadGuard" method="post" novalidate>
+       {% if data.checkAnswers == 'true' %}
+      <form action="../check-your-answers" method="post" novalidate>
+      {% else %}
+      <form action="../upload-guard" method="post" novalidate>
+      {% endif %}
 
-  <h1 class="govuk-heading-l">Complain about The Insolvency Service</h1>
+  <h1 class="govuk-heading-l">Your complaint</h1>
 
 <p class="govuk-body">Where possible you should include details like:</p>
 <ul class="govuk-list govuk-list--bullet">
@@ -30,10 +32,10 @@
 
 <div class="govuk-form-group">
 
-    <label class="govuk-label govuk-label--m" for="more-detail">
+    <label class="govuk-label govuk-label--m" for="is-complaint-detail">
      Describe your complaint
     </label>
-  <textarea class="govuk-textarea" id="more-detail" name="moreDetail" rows="8" aria-describedby="more-detail-hint"></textarea>
+  <textarea class="govuk-textarea" id="is-complaint-detail" name="moreDetail" rows="8" aria-describedby="is-complaint-detail-hint"></textarea>
 </div>
 
 <button class="govuk-button" data-module="govuk-button">

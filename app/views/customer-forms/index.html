@@ -19,33 +19,54 @@
 
       <h1 class="govuk-heading-l">Customer forms</h1>
 
-      <h2 class="govuk-heading-m">Customer complaint form</h2>
+      <h2 class="govuk-heading-m">Version 1</h2>
 
-      {% set completedStatus = {
-        text: "Completed"
-      } %}
+      <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+      
+      <form action="v1/general-enquiry/start" method="post">
+        {% set contactReason = 'General enquiry' %}
+        <button class="govuk-link" data-module="govuk-button">
+          General enquiries   
+        </button>
+      </form>
 
-      {% set incompleteStatus = {
-        tag: {
-          text: "In progress",
-          classes: "govuk-tag--light-blue"
-        }
-      } %}
+      <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
-      {# To switch between the completed and incomplete statues, use some inline logic within the component below, like this: "status: (completedStatus if ... else incompleteStatus)" #}
+          <form action="v1/ip-complaint/start" method="post" novalidate>
+        {% set contactReason = 'Complain about an insolvency practitioner' %}
+        <button class="govuk-link" data-module="govuk-button">
+          Complain about an insolvency practitioner
+        </button>
+      </form>
 
-      {{ govukTaskList({
-        idPrefix: "first-section",
-        items: [
-          {
-            title: {
-              text: "Version 1"
-            },
-            href: "/customer-forms/v1/start.html",
-            status: incompleteStatus
-          }
-        ]
-      }) }}
+      
+        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">    
+      <form action="v1/company-complaint/start" method="post" novalidate>
+        {% set contactReason = 'Company complaints form' %}
+        <button class="govuk-link" data-module="govuk-button">
+         Company complaints form 
+        </button>
+      </form>
+
+      <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">    
+      <form action="v1/is-complaint/start" method="post" novalidate>
+        {% set contactReason = 'Complain about the Insolvency Service' %}
+        <button class="govuk-link" data-module="govuk-button">
+          Complain about the Insolvency Service
+        </button>
+      </form>
+
+      <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">    
+      <form action="v1/ies-breach/start" method="post" novalidate>
+        {% set contactReason = 'Investigations and Enforcement Services Breach Questionnaire' %}
+        <button class="govuk-link" data-module="govuk-button">
+         Investigations and Enforcement Services Breach Questionnaire 
+        </button>
+      </form>
+
+      <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+    
 
      
     </div>

@@ -14,11 +14,35 @@ https://prototype-kit.service.gov.uk/docs/how-to-use-layouts
     homepageUrl: "/"
   }) }}
 
-
+{% if data.contactReason == "General enquiry" %}
 {{ govukServiceNavigation({
-  serviceName: serviceName,
-  serviceUrl: "start.html"
+  serviceName: 'Contact the Insolvency Service: General enquiry',
+  serviceUrl: '/customer-forms/v1/general-enquiry/start.html'
 }) }}
+{% elif data.contactReason == "Complain about an Insolvency Practitioner" %}
+{{ govukServiceNavigation({
+  serviceName: 'Contact the Insolvency Service: Complain about an Insolvency Practitioner',
+  serviceUrl: '/customer-forms/v1/ip-complaint/start.html'
+}) }}
+
+{% elif data.contactReason == "Company complaints form" %}
+{{ govukServiceNavigation({
+  serviceName: 'Contact the Insolvency Service: Company complaints form',
+  serviceUrl: '/customer-forms/v1/company-complaint/start.html'
+}) }}
+{% elif data.contactReason == "Complain about the Insolvency Service" %}
+{{ govukServiceNavigation({
+  serviceName: 'Contact the Insolvency Service: Complain about the Insolvency Service',
+  serviceUrl: '/customer-forms/v1/is-complaint/start.html'
+}) }}
+{% elif data.contactReason == "Investigations and Enforcement Services Breach Questionnaire" %}
+{{ govukServiceNavigation({
+  serviceName: 'Contact the Insolvency Service: Investigations and Enforcement Services Breach Questionnaire',
+  serviceUrl: '/customer-forms/v1/ies-breach/start.html'
+}) }}
+{% endif %}
+
+
 
 
     {% block headerEnd %}

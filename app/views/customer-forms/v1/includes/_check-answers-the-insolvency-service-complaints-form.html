@@ -1,1 +1,52 @@
-<h1 class="govuk-heading-l">Complain about the Insolvency Service</h1>
+    <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+     Do you have an Insolvency Service reference number to support your complaint?
+    </dt> 
+    <dd class="govuk-summary-list__value">
+{{ data['isRef'] | default('No', true) }}
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link" href="./is-complaint/do-you-have-an-insolvency-reference-number#IScaseReferenceYes">Change<span class="govuk-visually-hidden"> whether you complained about this before?</span></a>
+    </dd>
+  </div>
+
+  {% if data['isRef'] == 'Yes' %}
+  
+    <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      What was your reference number?
+    </dt> 
+    <dd class="govuk-summary-list__value">
+{{ data['IScaseReferenceYes'] | default('123456789', true) }}
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link" href="./is-complaint/have-you-complained-about-this-before#IScaseReferenceYes">Change<span class="govuk-visually-hidden"> case reference number</span></a>
+    </dd>
+  </div>
+  {% else %}
+  {% endif %}
+
+   <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      Have you complained about this before?
+    </dt> 
+    <dd class="govuk-summary-list__value">
+{{ data['isComplainedBefore'] | default('No', true) }}
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link" href="./is-complaint/have-you-complained-about-this-before#isComplainedBefore">Change<span class="govuk-visually-hidden"> whether you complained about this before?</span></a>
+    </dd>
+  </div>
+
+
+      <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+     Describe your complaint
+    </dt> 
+    <dd class="govuk-summary-list__value">
+{{ data['is-complaint-detail'] | default('Lorem ipsum dolor sit amet', true) }}
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link" href="./is-complaint/question">Change<span class="govuk-visually-hidden"> your complaint</span></a>
+    </dd>
+  </div>

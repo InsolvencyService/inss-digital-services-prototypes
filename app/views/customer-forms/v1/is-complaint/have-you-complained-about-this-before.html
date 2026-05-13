@@ -16,36 +16,33 @@
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-    <form action="what-is-your-connection-to-the-insolvency" method="post" novalidate>
+     {% if data.checkAnswers == 'true' %}
+      <form action="../check-your-answers" method="post" novalidate>
+      {% else %}  
+    <form action="question" method="post" novalidate>
+    {% endif %}
+
+
+
+
 
 {{ govukRadios({
-  name: "company",
-   fieldset: {
+  name: "isComplainedBefore",
+  fieldset: {
     legend: {
-      text: "What type of company insolvency was it about?",
-      isPageHeading:true,
+      text: "Have you complained about this before?",
+      isPageHeading: true,
       classes: "govuk-fieldset__legend--l"
     }
   },
-  hint: {
-    text: "The type of individual insolvency procedure it was about."
-  },
   items: [
     {
-      value: "Administration",
-      text: "Administration"
+      value: "Yes",
+      text: "Yes"
     },
     {
-      value: "Company Voluntary Arrangement",
-      text: "Company Voluntary Arrangement"
-    },
-    {
-      value: "Liquidation",
-      text: "Liquidation"
-    },
-    {
-      value: "Don't know",
-      text: "Don't know"
+      value: "No",
+      text: "No"
     }
     
   ]

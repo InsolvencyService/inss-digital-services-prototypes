@@ -1,0 +1,82 @@
+{% extends "layouts/main.html" %}
+
+{% set serviceName = 'Insolvency Service' %}
+
+{% block pageTitle %}
+ {{ serviceName }} – {{ data.contactReason }} - upload a form
+{% endblock %}
+
+
+
+{% block beforeContent %}
+  {{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+   <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+<h1 class="govuk-heading-l">Uploaded files</h1>
+
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      File 1
+    </dt>
+    <dd class="govuk-summary-list__value">
+      {{ data.fileUpload1 }}
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link" href="remove-upload">Remove<span class="govuk-visually-hidden"> file</span></a>
+    </dd>
+  </div>
+    {% if data.fileUpload2 %}
+      <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      File 2
+    </dt>
+    <dd class="govuk-summary-list__value">
+      {{ data.fileUpload2 }}
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link" href="remove-upload">Remove<span class="govuk-visually-hidden"> file</span></a>
+    </dd>
+  </div>
+  {% endif %}
+  </dl>
+
+<form class="form" action="uploadAnotherDocument" method="post">
+
+
+{{ govukRadios({
+  classes: "govuk-radios--inline",
+  name: "uploadAnotherDocument",
+  fieldset: {
+    legend: {
+      text: "Do you want to upload another document?",
+      isPageHeading: false,
+      classes: "govuk-fieldset__legend--m"
+    }
+  },
+  items: [
+    {
+      value: "yes",
+      text: "Yes"
+    },
+    {
+      value: "no",
+      text: "No"
+    }
+  ]
+}) }}
+
+  {{ govukButton({
+  text: "Continue"
+}) }}
+
+</form>
+
+
+{% endblock %}

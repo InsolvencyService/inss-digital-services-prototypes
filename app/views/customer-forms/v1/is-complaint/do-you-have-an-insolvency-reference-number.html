@@ -1,12 +1,12 @@
 {% extends "layouts/main-forms.html" %}
 
-
 {% block pageTitle %}
-{{ serviceName }} – {{ data.contactReason }} - About your complaint
+  {{ serviceName }} – {{ data.contactReason }}
 {% endblock %}
 
-{% block beforeContent %}
 
+
+{% block beforeContent %}
   {{ govukBackLink({
   text: "Back",
   href: "javascript:window.history.back()"
@@ -14,18 +14,20 @@
 {% endblock %}
 
 {% block content %}
-   <div class="govuk-grid-row">
+  <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      {% if data.checkAnswers == 'true' %}
+     {% if data.checkAnswers == 'true' %}
       <form action="../check-your-answers" method="post" novalidate>
-      {% else %}
-      <form action="previous-request" method="post" novalidate>
-      {% endif %}
+      {% else %}  
+    <form action="question" method="post" novalidate>
+    {% endif %}
+
+
 
 {% set refHtml %}
 {{ govukInput({
-  id: "casereferenceYes",
-  name: "casereferenceYes",
+  id: "IScaseReferenceYes",
+  name: "IScaseReferenceYes",
   spellcheck: false,
   classes: "govuk-!-width-one-third",
   label: {
@@ -39,10 +41,10 @@
 {% endset -%}
 
 {{ govukRadios({
-  name: "referenceNumber",
+  name: "isRef",
   fieldset: {
     legend: {
-      text: "Do you have a reference number?",
+      text: "Do you have an Insolvency Service reference number to support your complaint?",
       isPageHeading: true,
       classes: "govuk-fieldset__legend--l"
     }
@@ -63,10 +65,13 @@
   ]
 }) }}
 
-<button class="govuk-button" data-module="govuk-button">
-Continue
-</button>
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
       </form>
+
     </div>
   </div>
+
 {% endblock %}

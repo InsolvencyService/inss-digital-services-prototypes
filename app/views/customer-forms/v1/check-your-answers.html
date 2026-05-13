@@ -1,7 +1,4 @@
-{% extends "layouts/main.html" %}
-
-{% set serviceName = 'Insolvency Service' %}
-
+{% extends "layouts/main-forms.html" %}
 {% block pageTitle %}
 {{ serviceName }} – {{ data.contactReason }} - Check your answers
 {% endblock %}
@@ -17,7 +14,7 @@
 {% block content %}
    <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-  <h1 class="govuk-heading-l">Check your answers before submitting your form {{ data.checkAnswers }}</h1>
+  <h1 class="govuk-heading-l">Check your answers before submitting your form</h1>
   </div>
 </div>
 
@@ -25,7 +22,19 @@
   <div class="govuk-grid-column-full">
 
 <dl class="govuk-summary-list">
-    <div class="govuk-summary-list__row">
+
+{% if data.contactReason == "Complain about the Insolvency Service" %}
+ <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Is your complaint about the Insolvency Service?</dt>
+    <dd class="govuk-summary-list__value">
+{{ data.isComplaint | default('Yes', true) }}
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link" href="start.html">Change<span class="govuk-visually-hidden"> is your complaint about the Insolvency Service?</span></a>
+    </dd>
+  </div> 
+{% endif %}
+   <!-- <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">  How can we help you?</dt>
     <dd class="govuk-summary-list__value">
 {{ data.contactReason | default('General enquiry', true) }}
@@ -33,7 +42,7 @@
     <dd class="govuk-summary-list__actions">
       <a class="govuk-link" href="start.html">Change<span class="govuk-visually-hidden"> how can we help you reason</span></a>
     </dd>
-  </div>
+  </div> -->
 
 
     <div class="govuk-summary-list__row">
@@ -48,6 +57,7 @@ What is your full name?
     </dd>
   </div>
 
+ {% if data['address'] == "true" %} 
       <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">
 What is your address?
@@ -65,6 +75,7 @@ What is your address?
       <a class="govuk-link" href="address.html">Change<span class="govuk-visually-hidden"> address</span></a>
     </dd>
   </div>
+  {% endif %}
 
  {% if data['organisation'] == "true" %} 
      <div class="govuk-summary-list__row">
@@ -108,6 +119,8 @@ Email address
       <a class="govuk-link" href="email.html">Change<span class="govuk-visually-hidden"> email</span></a>
     </dd>
   </div>
+
+   {% if data['phone'] == "true" %}  
    <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">
 Phone number
@@ -120,22 +133,23 @@ Phone number
     </dd>
   </div>
 
-
+{% endif %}
 
 
 {% if data.contactReason == "General enquiry" %}
+    {% include "/customer-forms/v1/includes/_check-answers-general-enquiry.html" %}
 
+{% elif data.contactReason == "Complain about an Insolvency Practitioner" %}
+    {% include "/customer-forms/v1/includes/_check-answers-insolvency-practitioner-complaint.html" %}
 
-{% include "/customer-forms/v1/includes/_check-answers-general-enquiry.html" %}
-
-{% elif data.contactReason == "Complain about an insolvency practitioner" %}
-  {% include "/customer-forms/v1/includes/_check-answers-insolvency-practitioner-complaint.html" %}
 {% elif data.contactReason == "Investigations and Enforcement Services" %}
-  {% include "/customer-forms/v1/includes/_check-answers-investigations-and-enforcement-services.html" %}
-{% elif data.contactReason == "Complain about The Insolvency Service" %}
-  {% include "/customer-forms/v1/includes/_check-answers-the-insolvency-service-complaints-form.html" %}
+    {% include "/customer-forms/v1/includes/_check-answers-investigations-and-enforcement-services.html" %}
+
+{% elif data.contactReason == "Complain about the Insolvency Service" %}
+   {% include "/customer-forms/v1/includes/_check-answers-the-insolvency-service-complaints-form.html" %}
+
 {% elif data.contactReason == "Investigations and Enforcement Services Breach Questionnaire" %}
-  {% include "/customer-forms/v1/includes/_check-answers-investigations-and-enforcement-services-breach-questionnaire.html" %}
+    {% include "/customer-forms/v1/includes/_check-answers-investigations-and-enforcement-services-breach-questionnaire.html" %}
 
 
 {% endif %}
@@ -169,13 +183,16 @@ Phone number
 {% if data['uploadDocuments'] == 'Yes' %}
     <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">
-      Uploaded document
+      Uploaded files
     </dt>
     <dd class="govuk-summary-list__value">
-{{ data['file-upload-1'] | default('example-document.pdf', true) }}
+{{ data['fileUpload1'] | default('example-document.pdf', true) }}
+{% if data['fileUpload2'] %}
+<br>{{ data['fileUpload2'] | default('example-document.pdf', true) }}
+{% endif %}
     </dd>
     <dd class="govuk-summary-list__actions">
-      <a class="govuk-link" href="upload.html">Change<span class="govuk-visually-hidden"> uploaded document</span></a>
+      <a class="govuk-link" href="upload-list.html">Change<span class="govuk-visually-hidden"> uploaded document</span></a>
     </dd>
   </div>
 

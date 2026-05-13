@@ -20,9 +20,9 @@
     <div class="govuk-grid-column-two-thirds">
 
   
-<form class="form" action="checkYourAnswers" method="post">
+<form class="form" action="upload-list" method="post">
 
-{{ data.checkAnswers }}
+
 
 
 {% if data['contactReason'] == 'Complain about an insolvency practitioner' %}  
@@ -59,22 +59,38 @@ Please list your supporting evidence documentation and what it shows.
 
 {% else %}
 
-<div class="govuk-form-group">
-  <h1 class="govuk-label-wrapper">
-  <label class="govuk-label govuk-label--l" for="file-upload-1">
-    Upload a file
-  </label>
-  </h1>
-    <div id="event-namew-hint" class="govuk-hint">
-  The uploaded file must be XML ending with '.xml'. (Other formats e.g. PDF, XLS are NOT supported).
-  </div>
-  <div
-    class="govuk-drop-zone"
-    data-module="govuk-file-upload">
-    <input class="govuk-file-upload" id="file-upload-1" name="file-upload-1" type="file">
-  </div>
-</div>
 
+{% if data.fileUpload1 %}
+
+
+{{ govukFileUpload({
+  id: "file-upload-2",
+  name: "fileUpload2",
+  label: {
+    text: "Upload a file",
+    isPageHeading: true,
+    classes: "govuk-label--l"
+  },
+  javascript: true,
+  multiple: false
+
+}) }}
+
+{% else %}
+
+{{ govukFileUpload({
+  id: "file-upload-1",
+  name: "fileUpload1",
+  label: {
+    text: "Upload a file",
+    isPageHeading: true,
+    classes: "govuk-label--l"
+  },
+  javascript: true,
+  multiple: false
+
+}) }}
+{% endif %}
 {% endif %}
 
   {{ govukButton({

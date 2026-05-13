@@ -29,6 +29,8 @@
 
       <form action="/customer-forms/v1/contentStart" method="post" novalidate>
 
+        {% set checkAnswers = false %}
+        
 
         {{ govukRadios({
           name: "contactReason",
@@ -53,7 +55,7 @@
               text: "Investigations and Enforcement Services"
             },
             {
-              value: "Complain about The Insolvency Service",
+              value: "Complain about the Insolvency Service",
               text: "Complain about the Insolvency Service"
             },
             {

@@ -608,4 +608,21 @@
 }
 
 
+// hacky syling to override a button inpersonating a link ///
+
+button.govuk-link {
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: "GDS Transport",arial,sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight: 400;
+    font-size: 1.1875rem;
+    line-height: 1.3157894737;
+    color: #1a65a6;
+    cursor: pointer;
+}
+
+
 
