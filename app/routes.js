@@ -195,7 +195,7 @@ router.post('/customer-forms/v1/general-enquiry/start', function(request, respon
 
 router.post('/customer-forms/v1/ip-complaint/start', function(request, response) {
 
-    request.session.data['contactReason'] = 'Complain about an Insolvency Practitioner'
+    request.session.data['contactReason'] = 'Complain about an insolvency practitioner'
     request.session.data['organisation'] = 'true'
     request.session.data['address'] = 'false'
     request.session.data['dob'] = 'false'
@@ -221,7 +221,7 @@ router.post('/customer-forms/v1/company-complaint/start', function(request, resp
 
 router.post('/customer-forms/v1/is-complaint/start', function(request, response) {
 
-    request.session.data['contactReason'] = 'Complain about the Insolvency Service'
+    request.session.data['contactReason'] = 'Complain about the insolvency service'
     request.session.data['organisation'] = 'false'
     request.session.data['address'] = 'false'
     request.session.data['dob'] = 'false'
@@ -234,7 +234,7 @@ router.post('/customer-forms/v1/is-complaint/start', function(request, response)
 
 router.post('/customer-forms/v1/ies-breach/start', function(request, response) {
 
-    request.session.data['contactReason'] = 'Investigations and Enforcement Services Breach Questionnaire'
+    request.session.data['contactReason'] = 'Investigations and enforcement services breach questionnaire'
     request.session.data['organisation'] = 'true'
     request.session.data['address'] = 'false'
     request.session.data['dob'] = 'false'
@@ -316,7 +316,7 @@ router.post('/customer-forms/v1/phoneRoute', function(request, response) {
         response.redirect("/customer-forms/v1/general-enquiry/question")
     } 
     
-    else if (reason == "Complain about an Insolvency Practitioner"){
+    else if (reason == "Complain about an insolvency practitioner"){
         response.redirect("/customer-forms/v1/ip-complaint/who-do-wish-to-complain-about")
     }
 
@@ -324,11 +324,11 @@ router.post('/customer-forms/v1/phoneRoute', function(request, response) {
         response.redirect("/customer-forms/v1/company-complaint/question")
     }
 
-        else if (reason == "Complain about the Insolvency Service"){
+        else if (reason == "Complain about the insolvency service"){
         response.redirect("/customer-forms/v1/is-complaint/do-you-have-an-insolvency-reference-number")
     }
 
-        else if (reason == "Investigations and Enforcement Services Breach Questionnaire"){
+        else if (reason == "Investigations and enforcement services breach questionnaire"){
         response.redirect("/customer-forms/v1/ies-breach/question")
     }
 })
