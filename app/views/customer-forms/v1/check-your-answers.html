@@ -23,7 +23,7 @@
 
 <dl class="govuk-summary-list">
 
-{% if data.contactReason == "Complain about the Insolvency Service" %}
+{% if data.contactReason == "Complain about the insolvency service" %}
  <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">Is your complaint about the Insolvency Service?</dt>
     <dd class="govuk-summary-list__value">
@@ -139,16 +139,16 @@ Phone number
 {% if data.contactReason == "General enquiry" %}
     {% include "/customer-forms/v1/includes/_check-answers-general-enquiry.html" %}
 
-{% elif data.contactReason == "Complain about an Insolvency Practitioner" %}
+{% elif data.contactReason == "Complain about an insolvency practitioner" %}
     {% include "/customer-forms/v1/includes/_check-answers-insolvency-practitioner-complaint.html" %}
 
-{% elif data.contactReason == "Investigations and Enforcement Services" %}
+{% elif data.contactReason == "Investigations and enforcement services" %}
     {% include "/customer-forms/v1/includes/_check-answers-investigations-and-enforcement-services.html" %}
 
-{% elif data.contactReason == "Complain about the Insolvency Service" %}
+{% elif data.contactReason == "Complain about the insolvency service" %}
    {% include "/customer-forms/v1/includes/_check-answers-the-insolvency-service-complaints-form.html" %}
 
-{% elif data.contactReason == "Investigations and Enforcement Services Breach Questionnaire" %}
+{% elif data.contactReason == "Investigations and enforcement services breach questionnaire" %}
     {% include "/customer-forms/v1/includes/_check-answers-investigations-and-enforcement-services-breach-questionnaire.html" %}
 
 
