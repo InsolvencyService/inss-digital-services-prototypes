@@ -1,0 +1,28 @@
+{% extends "layouts/main-forms.html" %}
+
+{% block pageTitle %}
+{{ serviceName }} – {{ data.contactReason }} - About your complaint
+{% endblock %}
+
+{% block beforeContent %}
+
+  {{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+   <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+  <h1 class="govuk-heading-l">Your complaint is not about a limited company</h1>
+
+  {{ govukInsetText({
+  text: "Awaiting content for this section"
+}) }}
+
+
+    </div>
+  </div>
+{% endblock %}

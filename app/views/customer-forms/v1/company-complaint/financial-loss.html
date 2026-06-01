@@ -1,0 +1,52 @@
+{% extends "layouts/main-forms.html" %}
+
+{% block pageTitle %}
+  {{ serviceName }} – {{ data.contactReason }}
+{% endblock %}
+
+
+
+{% block beforeContent %}
+  {{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+    <form action="/customer-forms/v1/company-complaint/financialLoss" method="post" novalidate>
+{{ govukRadios({
+  classes: "govuk-radios--inline",
+  name: "financialLoss",
+  fieldset: {
+    legend: {
+      text: "Have you suffered a financial loss from the company?",
+      isPageHeading: true,
+      classes: "govuk-fieldset__legend--l"
+    }
+  },
+  items: [
+    {
+      value: "Yes",
+      text: "Yes"
+    },
+    {
+      value: "No",
+      text: "No"
+    }
+  ]
+}) }}
+      
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+      </form>
+
+    </div>
+  </div>
+
+ 
+{% endblock %}

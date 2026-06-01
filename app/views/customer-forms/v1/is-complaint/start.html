@@ -22,73 +22,66 @@
     <form action="isComplaint" method="post" novalidate>
 
       <h1 class="govuk-heading-l">Make a complaint about the Insolvency Service</h1>
-<!--
-<h2 class="govuk-heading-m">What you can complain about</h2>
-
-
-<p class="govuk-body">  
-You can make a complaint if you think we have failed to meet our standard of service. This can include if:
-</p>
-
-<ul class="govuk-list govuk-list--bullet">
-  <li>you experienced unreasonable delays;</li>
-  <li>we made mistakes with your case;</li>
-  <li>we did not follow our policies or processes;</li>
-  <li>a member of our staff has not acted appropriately;</li>
-  <li>we have not responded to correspondence within our published targets;</li>
-  <li>we have given you misleading or incorrect information</li>
-</ul>
-
-
-
-<p class="govuk-body">  
-Before completing this form, you should read our <a href="https://www.gov.uk/government/organisations/insolvency-service/about/complaints-procedure">complaints guidance</a> which sets out how our complaints process works and what you can expect from us.  
-</p>
-
-<h2 class="govuk-heading-m">If your complaint is not about the Insolvency Service</h2>
-<p class="govuk-body">
-You might want to complain to us about:
-</p>
-
-<ul class="govuk-list govuk-list--bullet">
-  <li>a bankrupt person or a director of a company in liquidation, administration or administrative receivership, a director or sole trader reusing the name (or a similar name) of a company in liquidation or a disqualified director, you can do this by completing the <a href="https://www.insolvencydirect.bis.gov.uk/externalonlineforms/BreachQuestionnaire.aspx">Investigations and Enforcement Services Breach form.</a></li>
-  <li>an active or dissolved limited company, find out more information at <a href="https://www.gov.uk/complain-company">Complain about a limited company</a></li>
-  <li>an insolvency practitioner for example a trustee, liquidator, administrator or supervisor of an Individual Voluntary Arrangement (IVA), you can do find out more information at <a href="">complain about an Insolvency Practitioner</a></li>
-</ul>
 
 <p class="govuk-body">
-
-We have further information to help you find the <a href="">right place to direct your complaint to.</a>
+  Make sure you complete the correct form for your complaint. </p>
+<p class="govuk-body">
+  Use this form to make a complaint if you think we have failed to meet our service standards.
 </p>
 
--->
 
 
-{{ govukInsetText({
-  text: "Awaiting content for this section"
-}) }}
+<p class="govuk-body">
+Before submitting your complaint, read our <a href="https://www.gov.uk/government/organisations/insolvency-service/about/complaints-procedure">complaints guidance</a>. This explains how the process works and what you can expect from us. 
+</p>
 
-{{ govukRadios({
-  classes: "govuk-radios--inline",
+
+
+
+{{ govukCheckboxes({
   name: "isComplaint",
   fieldset: {
     legend: {
-      text: "Is your complaint about the Insolvency Service?",
+      text: "What are you complaining about?",
       isPageHeading: false,
       classes: "govuk-fieldset__legend--m"
     }
   },
+  hint: {
+    text: "Select all options that apply"
+  },
   items: [
     {
-      value: "Yes",
-      text: "Yes"
+      value: "unreasonable delays",
+      text: "unreasonable delays"
     },
     {
-      value: "No",
-      text: "No"
+      value: "you have made mistakes when handling my case",
+      text: "you have made mistakes when handling my case"
+    },
+    {
+      value: "a member of staff has acted inappropriately",
+      text: "a member of staff has acted inappropriately"
+    },
+    {
+      value: "you did not respond to your correspondence within your published targets",
+      text: "you did not respond to your correspondence within your published targets"
+    },
+    {
+      value: "you provided misleading or incorrect information",
+      text: "you provided misleading or incorrect information"
+    },
+    {
+      divider: "or"
+    },
+    {
+      value: "none",
+      text: "my complaint is not listed",
+      behaviour: "exclusive"
     }
   ]
 }) }}
+
 
         {{ govukButton({
           text: "Continue"

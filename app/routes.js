@@ -74,6 +74,19 @@ router.post('/ipservice/ip-upload/v4/upload-successV4', function (req, res) {
 
 
 
+router.post('/ipservice/ip-upload/v4/employer',  function(request, response) {
+  
+    var employerName = request.session.data['employerName']
+    if (employerName == "No"){
+        response.redirect("/ipservice/ip-upload/v4/incorrect-employer")
+    } else {
+        response.redirect("/ipservice/ip-upload/v4/form-validation-errors")
+    }
+})
+
+
+
+
 
 
 
@@ -160,10 +173,10 @@ router.post('/customer-forms/v1/ip-complaint/individual-or-company', function(re
 router.post('/customer-forms/v1/is-complaint/isComplaint', function(request, response) {
 
     var isComplaint = request.session.data['isComplaint']
-    if (isComplaint == "Yes"){
-        response.redirect("/customer-forms/v1/name")
-    } else {
+    if (isComplaint == "none"){
         response.redirect("/customer-forms/v1/is-complaint/your-complaint-is-not-about-the-insolvency-service")
+    } else {
+         response.redirect("/customer-forms/v1/name")
     }
 })
 
@@ -177,6 +190,86 @@ router.post('/customer-forms/v1/removeUpload', function(request, response) {
         response.redirect("/customer-forms/v1/upload")
     }
 })
+
+
+
+router.post('/customer-forms/v1/company-complaint/activeDissolved', function(request, response) {
+
+    var removeDocuments = request.session.data['activeOrDissolved']
+    if (removeDocuments == "Dissolved"){
+        response.redirect("/customer-forms/v1/company-complaint/active-dissolved-companies-house")
+    } else {
+        response.redirect("/customer-forms/v1/company-complaint/about-you")
+    }
+})
+
+
+
+router.post('/customer-forms/v1/company-complaint/companiesHouse', function(request, response) {
+
+    var removeDocuments = request.session.data['companiesHouse']
+    if (removeDocuments == "Yes"){
+        response.redirect("/customer-forms/v1/company-complaint/active-dissolved-plc-ltd")
+    } else {
+        response.redirect("/customer-forms/v1/company-complaint/no-service")
+    }
+})
+
+router.post('/customer-forms/v1/company-complaint/plcLtd', function(request, response) {
+
+    var removeDocuments = request.session.data['plcLtd']
+    if (removeDocuments == "Yes"){
+        response.redirect("/customer-forms/v1/company-complaint/active-dissolved-after-3-years")
+    } else {
+        response.redirect("/customer-forms/v1/company-complaint/no-service")
+    }
+})
+
+
+router.post('/customer-forms/v1/company-complaint/afterDissolved3', function(request, response) {
+
+    var removeDocuments = request.session.data['afterDissolved3']
+    if (removeDocuments == "Yes"){
+        response.redirect("/customer-forms/v1/company-complaint/active-dissolved-after")
+    } else {
+        response.redirect("/customer-forms/v1/company-complaint/no-service")
+    }
+})
+
+
+
+router.post('/customer-forms/v1/company-complaint/afterDissolved', function(request, response) {
+
+    var removeDocuments = request.session.data['afterDissolved']
+    if (removeDocuments == "Yes"){
+        response.redirect("/customer-forms/v1/company-complaint/about-you")
+    } else {
+        response.redirect("/customer-forms/v1/company-complaint/no-service")
+    }
+})
+
+
+router.post('/customer-forms/v1/company-complaint/aboutYou', function(request, response) {
+
+    var removeDocuments = request.session.data['aboutYou']
+    if (removeDocuments == "Yes"){
+        response.redirect("/customer-forms/v1/name")
+    } else {
+        response.redirect("/customer-forms/v1/company-complaint/company-name")
+    }
+})
+
+router.post('/customer-forms/v1/company-complaint/financialLoss', function(request, response) {
+
+    var removeDocuments = request.session.data['financialLoss']
+    if (removeDocuments == "Yes"){
+        response.redirect("/customer-forms/v1/company-complaint/financial-loss-amount")
+    } else {
+        response.redirect("/customer-forms/v1/company-complaint/question")
+    }
+})
+
+
 
 
 
@@ -212,7 +305,7 @@ router.post('/customer-forms/v1/company-complaint/start', function(request, resp
     request.session.data['organisation'] = 'true'
     request.session.data['address'] = 'false'
     request.session.data['dob'] = 'false'
-    request.session.data['phone'] = 'false'
+    request.session.data['phone'] = 'true'
     request.session.data['upload'] = 'false'
     response.redirect("/customer-forms/v1/company-complaint/start")
 
@@ -321,7 +414,7 @@ router.post('/customer-forms/v1/phoneRoute', function(request, response) {
     }
 
       else if (reason == "Company complaints form"){
-        response.redirect("/customer-forms/v1/company-complaint/question")
+        response.redirect("/customer-forms/v1/company-complaint/company-name")
     }
 
         else if (reason == "Complain about the insolvency service"){

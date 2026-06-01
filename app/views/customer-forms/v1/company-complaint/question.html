@@ -14,23 +14,15 @@
 {% block content %}
    <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <form action="uploadGuard" method="post" novalidate>
-
-  <h1 class="govuk-heading-l">Investigations and Enforcement Services - Breach Questionnaire</h1>
-
-<p class="govuk-body">Where possible you should include details like:</p>
-<ul class="govuk-list govuk-list--bullet">
-  <li>the name of any individual that you have spoken to or wish to complain about;</li>
-  <li>details about what has gone wrong or not been handled properly;</li>
-  <li>how you would like us to resolve your complaint.</li>
-</ul>
+      <form action="company-list" method="post" novalidate>
 
 <div class="govuk-form-group">
-
-    <label class="govuk-label govuk-label--m" for="more-detail">
-     Describe your complaint
+<h1 class="govuk-label-wrapper">
+    <label class="govuk-label govuk-label--l" for="more-detail">
+     Can you give more detail about your complaint against the company?
     </label>
-  <textarea class="govuk-textarea" id="more-detail" name="moreDetail" rows="8" aria-describedby="more-detail-hint"></textarea>
+</h1>
+  <textarea class="govuk-textarea" id="companyComplaintDetails" name="companyComplaintDetails" rows="8" aria-describedby="companyComplaintDetails-hint">{{ data['companyComplaintDetails'] }}</textarea>
 </div>
 
 <button class="govuk-button" data-module="govuk-button">

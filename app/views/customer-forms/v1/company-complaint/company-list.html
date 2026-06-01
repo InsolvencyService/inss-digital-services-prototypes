@@ -1,14 +1,9 @@
 {% extends "layouts/main.html" %}
 
-{% set serviceName = 'Upload redundancy payment forms(RP14/A)' %}
+{% set serviceName = 'Insolvency Service' %}
 
 {% block pageTitle %}
-  {{ serviceName }} – your form has errors
-{% endblock %}
-
-
-{% block header %}
-  {% include "ipservice/ip-upload/v4/_include-one-login-header.html" %}
+ {{ serviceName }} – {{ data.contactReason }} - upload a form
 {% endblock %}
 
 
@@ -21,46 +16,49 @@
 {% endblock %}
 
 {% block content %}
-
-{{ data['validationErrors'] }}
-
    <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-  <h1 class="govuk-heading-l">Your employer details</h1>
+<h1 class="govuk-heading-l">Companies</h1>
 
-  <p class="govuk-body">We have matched to the following employer:</p>
-  <dl class="govuk-summary-list">
+<dl class="govuk-summary-list">
   <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">
-      Case reference number
+      Company 1
     </dt>
     <dd class="govuk-summary-list__value">
-     1234567
+      {{ data.companyName1 }}
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link" href="remove-upload">Remove<span class="govuk-visually-hidden"> file</span></a>
     </dd>
   </div>
-    <div class="govuk-summary-list__row">
+    {% if data.companyName2 %}
+      <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">
-      Employer name
+      Company 2
     </dt>
     <dd class="govuk-summary-list__value">
-     ABC Ltd
+      {{ data.companyName2 }}
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link" href="remove-upload">Remove<span class="govuk-visually-hidden"> file</span></a>
     </dd>
   </div>
-</dl>
+  {% endif %}
+  </dl>
 
-   <form action="/ipservice/ip-upload/v4/form-validation-errors" method="post" novalidate>
-  {{ govukRadios({
+<form class="form" action="uploadAnotherDocument" method="post">
+
+
+{{ govukRadios({
   classes: "govuk-radios--inline",
-  name: "employerName",
+  name: "anotherCompany",
   fieldset: {
     legend: {
-      text: "Is this the correct employer name?",
+      text: "Do you want to add another company?",
       isPageHeading: false,
       classes: "govuk-fieldset__legend--m"
     }
-  },
-  hint: {
-    text: "This case reference number you have provided matches with this employer in our system."
   },
   items: [
     {
@@ -74,16 +72,11 @@
   ]
 }) }}
 
- 
-
-
-
-  
-
   {{ govukButton({
   text: "Continue"
 }) }}
+
 </form>
 
-    </div>
+
 {% endblock %}
