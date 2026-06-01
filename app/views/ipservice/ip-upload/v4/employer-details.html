@@ -43,7 +43,11 @@
       Employer name
     </dt>
     <dd class="govuk-summary-list__value">
-     ABC Ltd
+      {% if data.employerName == "No" %}
+      Company 2 Ltd
+      {% else %}
+     Company 1 Ltd
+      {% endif %}
     </dd>
   </div>
 </dl>
