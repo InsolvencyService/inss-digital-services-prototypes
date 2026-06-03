@@ -270,6 +270,17 @@ router.post('/customer-forms/v1/company-complaint/financialLoss', function(reque
 })
 
 
+router.post('/customer-forms/v1/company-complaint/company-list', function(request, response) {
+
+    var addCompany = request.session.data['anotherCompany']
+    if (addCompany == "Yes"){
+        response.redirect("/customer-forms/v1/company-complaint/company-name")
+    } else {
+        response.redirect("/customer-forms/v1/upload-guard")
+    }
+})
+
+
 
 
 

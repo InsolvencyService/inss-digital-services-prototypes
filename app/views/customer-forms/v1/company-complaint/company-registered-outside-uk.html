@@ -1,5 +1,11 @@
 {% extends "layouts/main-forms.html" %}
 
+{% if data['anotherCompany'] == "Yes" %}
+  {% set outsideUkGuard = 'outsideUkGuard2' %}
+{% else %}
+  {% set outsideUkGuard = 'outsideUkGuard1' %}
+{% endif %}
+
 
 {% block pageTitle %}
 {{ serviceName }} – {{ data.contactReason }} - About your complaint
@@ -36,7 +42,7 @@
 {% endset -%}
 
 {{ govukRadios({
-  name: "outsideUkGuard",
+  name: data.outsideUkGuard | default(outsideUkGuard),
   fieldset: {
     legend: {
       text: "Was the company incorporated outside of the UK?",

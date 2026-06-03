@@ -1,6 +1,12 @@
 {% extends "layouts/main-forms.html" %}
 {% set serviceName = 'Insolvency Service' %}
 
+{% if data['anotherCompany'] == "Yes" %}
+  {% set companyName = 'companyName2' %}
+{% else %}
+  {% set companyName = 'companyName1' %}
+{% endif %}
+
 
 
 {% block pageTitle %}
@@ -15,6 +21,7 @@
 {% endblock %}
 
 {% block content %}
+
    <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       {% if data.checkAnswers == 'true' %}
@@ -26,11 +33,9 @@
   <h1 class="govuk-label-wrapper">
     <label class="govuk-label govuk-label--l" for="event-name">
      Whats the name of the company you are complaining about?
-    </label>
   </h1>
-  <input class="govuk-input" id="company-name" name="company-name" type="text" spellcheck="false" value="{{ data['company-name'] }}" aria-describedby="Value-hint" inputmode="text">
+  <input class="govuk-input" id="company-name" name="{{ companyName }}" type="text" spellcheck="false" value="{{ companyName }}" aria-describedby="Value-hint" inputmode="text">
 </div>
-
 
 <button class="govuk-button" data-module="govuk-button">
 Continue

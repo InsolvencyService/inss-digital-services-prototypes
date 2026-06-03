@@ -1,0 +1,267 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName="Home" %}
+
+{% block content %}
+
+ <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+<div class="govuk-form-group">
+  <h1 class="govuk-label-wrapper">
+    <label class="govuk-label govuk-label--l" for="event-name">
+   Search
+    </label>
+  </h1>
+  <input class="govuk-input govuk-!-width-one-half" id="event-name" name="eventName" type="text">
+  <button class="govuk-button type="submit">Search</button>
+</div>
+
+      
+
+  </div>
+  </div>
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-one-quarter">
+      {{ govukCheckboxes({
+  name: "Filter type 1",
+  classes: "govuk-checkboxes--small",
+  fieldset: {
+    legend: {
+      text: "Filter type 1",
+      isPageHeading: true,
+      classes: "govuk-fieldset__legend--m"
+    }
+  },
+  items: [
+    {
+      value: "Filter1",
+      text: "Filter 1"
+    },
+    {
+      value: "Filter2",
+      text: "Filter 2"
+    },
+    {
+      value: "Filter3",
+      text: "Filter 3"
+    },
+    {
+      value: "Filter4",
+      text: "Filter 4"
+    }
+  ]
+}) }}
+
+      {{ govukCheckboxes({
+  name: "Filter type 2",
+  classes: "govuk-checkboxes--small",
+  fieldset: {
+    legend: {
+      text: "Filter type 2",
+      isPageHeading: true,
+      classes: "govuk-fieldset__legend--m"
+    }
+  },
+  items: [
+    {
+      value: "Filter5",
+      text: "Filter 5"
+    },
+    {
+      value: "Filter6",
+      text: "Filter 6"
+    },
+    {
+      value: "Filter7",
+      text: "Filter 7"
+    },
+    {
+      value: "Filter8",
+      text: "Filter 8"
+    }
+  ]
+}) }}
+
+
+
+    </div>
+    <div class="govuk-grid-column-three-quarters">
+
+      <p class="govuk-body">Showing 1 to 10 of 33 results for <strong>search term</strong></p>
+      <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+     <div class="govuk-form-group">
+  <label class="govuk-label govuk-!-display-inline" for="sort">
+    Sort by
+  </label>
+  <select class="govuk-select" id="sort" name="sort">
+    <option value="published">Most relevant</option>
+    <option value="updated" selected>Sort option 2</option>
+    <option value="views">Sort option 3</option>
+  </select>
+</div>
+ <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+<ul class="govuk-list govuk-list--divided">
+  <li><h2 class="govuk-heading-s"><a href="#">Result 1</a></h2><p class="govuk-body"> 
+    <strong class="govuk-tag govuk-tag--yellow">
+          Tag 1
+        </strong> 
+        <strong class="govuk-tag govuk-tag--blue">
+          Tag 2
+        </strong></p>
+        <p class="govuk-body">Description for Result 1</p>  
+        <p class="govuk-body govuk-body--secondary  govuk-!-font-size-16">Catergory / timestamp </p>
+        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+      </li>
+        <li><h2 class="govuk-heading-s"><a href="#">Result 2</a></h2><p class="govuk-body"> 
+    <strong class="govuk-tag govuk-tag--yellow">
+          Tag 1
+        </strong> 
+        <strong class="govuk-tag govuk-tag--blue">
+          Tag 2
+        </strong></p>
+        <p class="govuk-body">Description for Result 2</p>  
+        <p class="govuk-body govuk-body--secondary  govuk-!-font-size-16">Catergory / timestamp </p>
+        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+      </li>
+          <li><h2 class="govuk-heading-s"><a href="#">Result 3</a></h2><p class="govuk-body">
+    <strong class="govuk-tag govuk-tag--yellow">
+          Tag 1
+        </strong> 
+        <strong class="govuk-tag govuk-tag--blue">
+          Tag 2
+        </strong></p>
+        <p class="govuk-body">Description for Result 3</p>  
+        <p class="govuk-body govuk-body--secondary  govuk-!-font-size-16">Catergory / timestamp </p>
+        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+      </li>
+      <li><h2 class="govuk-heading-s"><a href="#">Result 4</a></h2><p class="govuk-body"> 
+    <strong class="govuk-tag govuk-tag--yellow">        Tag 1
+        </strong> 
+        <strong class="govuk-tag govuk-tag--blue">
+          Tag 2
+        </strong></p>
+        <p class="govuk-body  ">Description for Result 4</p>  
+        <p class="govuk-body govuk-body--secondary  govuk-!-font-size-16">Catergory / timestamp </p>
+        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+      </li>
+      <li><h2 class="govuk-heading-s"><a href="#">Result 5</a></h2><p class="govuk-body"> 
+    <strong class="govuk-tag govuk-tag--yellow">
+          Tag 1
+        </strong> 
+        <strong class="govuk-tag govuk-tag--blue">
+          Tag 2
+        </strong></p>
+        <p class="govuk-body">Description for Result 5</p>  
+        <p class="govuk-body govuk-body--secondary  govuk-!-font-size-16">Catergory / timestamp </p>
+        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+      </li>
+      <li><h2 class="govuk-heading-s"><a href="#">Result 6</a></h2><p class="govuk-body"> 
+    <strong class="govuk-tag govuk-tag--yellow">      Tag 1
+        </strong> 
+        <strong class="govuk-tag govuk-tag--blue">
+          Tag 2
+        </strong></p>
+        <p class="govuk-body">Description for Result 6</p>  
+        <p class="govuk-body govuk-body--secondary  govuk-!-font-size-16">Catergory / timestamp </p>
+        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+      </li>
+        <li><h2 class="govuk-heading-s"><a href="#">Result 7</a></h2><p class="govuk-body">       
+    <strong class="govuk-tag govuk-tag--yellow">
+          Tag 1               
+        </strong> 
+        <strong class="govuk-tag govuk-tag--blue">
+          Tag 2
+        </strong></p>
+        <p class="govuk-body">Description for Result 7</p>
+
+        <p class="govuk-body govuk-body--secondary  govuk-!-font-size-16">Catergory / timestamp </p>
+        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+      </li>
+      <li><h2 class="govuk-heading-s"><a href="#">Result 8</a></h2><p class="govuk-body"> 
+    <strong class="govuk-tag govuk-tag--yellow">
+          Tag 1
+        </strong> 
+        <strong class="govuk-tag govuk-tag--blue">
+          Tag 2
+        </strong></p>
+        <p class="govuk-body">Description for Result 8</p>  
+        <p class="govuk-body govuk-body--secondary  govuk-!-font-size-16">Catergory / timestamp </p>
+        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+      </li>
+      <li><h2 class="govuk-heading-s"><a href="#">Result 9</a></h2><p class="govuk-body">     
+    <strong class="govuk-tag govuk-tag--yellow">
+          Tag 1
+        </strong> 
+        <strong class="govuk-tag govuk-tag--blue">
+          Tag 2
+        </strong></p>
+        <p class="govuk-body">Description for Result 9</p>  
+        <p class="govuk-body govuk-body--secondary  govuk-!-font-size-16">Catergory / timestamp </p>
+        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">    
+      </li>
+      <li><h2 class="govuk-heading-s"><a href="#">Result 10</a></h2><p class="govuk-body"> 
+    <strong class="govuk-tag govuk-tag--yellow">
+          Tag 1
+        </strong> 
+        <strong class="govuk-tag govuk-tag--blue">
+          Tag 2
+        </strong></p>
+        <p class="govuk-body">Description for Result 10</p>  
+        <p class="govuk-body govuk-body--secondary  govuk-!-font-size-16">Catergory / timestamp </p>
+        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">    
+      </li>   
+
+</ul>
+
+<!--  pagination  -->
+
+<nav class="govuk-pagination" aria-label="Pagination">
+  <div class="govuk-pagination__prev">
+    <a class="govuk-link govuk-pagination__link" href="#" rel="prev">
+      <svg class="govuk-pagination__icon govuk-pagination__icon--prev" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+        <path d="m6.5938-0.0078125-6.7266 6.7266 6.7441 6.4062 1.377-1.449-4.1856-3.9768h12.896v-2h-12.984l4.2931-4.293-1.414-1.414z"></path>
+      </svg>
+      <span class="govuk-pagination__link-title">
+        Previous<span class="govuk-visually-hidden"> page</span>
+      </span>
+    </a>
+  </div>
+  <ul class="govuk-pagination__list">
+    <li class="govuk-pagination__item">
+      <a class="govuk-link govuk-pagination__link" href="#" aria-label="Page 1">
+        1
+      </a>
+    </li>
+    <li class="govuk-pagination__item govuk-pagination__item--current">
+      <a class="govuk-link govuk-pagination__link" href="#" aria-label="Page 2" aria-current="page">
+        2
+      </a>
+    </li>
+    <li class="govuk-pagination__item">
+      <a class="govuk-link govuk-pagination__link" href="#" aria-label="Page 3">
+        3
+      </a>
+    </li>
+  </ul>
+  <div class="govuk-pagination__next">
+    <a class="govuk-link govuk-pagination__link" href="#" rel="next">
+      <span class="govuk-pagination__link-title">
+        Next<span class="govuk-visually-hidden"> page</span>
+      </span>
+      <svg class="govuk-pagination__icon govuk-pagination__icon--next" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+        <path d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"></path>
+      </svg>
+    </a>
+  </div>
+</nav>
+
+
+
+  </div>
+</div>
+
+{% endblock %}

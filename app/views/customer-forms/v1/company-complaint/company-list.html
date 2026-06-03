@@ -17,7 +17,7 @@
 
 {% block content %}
    <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
+    <div class="govuk-grid-column-full">
 <h1 class="govuk-heading-l">Companies</h1>
 
 <dl class="govuk-summary-list">
@@ -26,10 +26,11 @@
       Company 1
     </dt>
     <dd class="govuk-summary-list__value">
-      {{ data.companyName1 }}
+      {{ data.companyName1 | default("123 LTD") }}
     </dd>
     <dd class="govuk-summary-list__actions">
-      <a class="govuk-link" href="remove-upload">Remove<span class="govuk-visually-hidden"> file</span></a>
+      <a class="govuk-link" href="company-name.html">Change<span class="govuk-visually-hidden"> company</span></a> |
+      <a class="govuk-link" href="remove-company">Remove<span class="govuk-visually-hidden"> company</span></a>
     </dd>
   </div>
     {% if data.companyName2 %}
@@ -38,16 +39,17 @@
       Company 2
     </dt>
     <dd class="govuk-summary-list__value">
-      {{ data.companyName2 }}
+      {{ data.companyName2 | default("456 LTD") }}
     </dd>
     <dd class="govuk-summary-list__actions">
-      <a class="govuk-link" href="remove-upload">Remove<span class="govuk-visually-hidden"> file</span></a>
+      <a class="govuk-link" href="company-name.html">Change<span class="govuk-visually-hidden"> company</span></a> |
+      <a class="govuk-link" href="remove-company">Remove<span class="govuk-visually-hidden"> company</span></a>
     </dd>
   </div>
   {% endif %}
   </dl>
 
-<form class="form" action="uploadAnotherDocument" method="post">
+<form class="form" action="/customer-forms/v1/company-complaint/company-list" method="post">
 
 
 {{ govukRadios({
@@ -62,11 +64,11 @@
   },
   items: [
     {
-      value: "yes",
+      value: "Yes",
       text: "Yes"
     },
     {
-      value: "no",
+      value: "No",
       text: "No"
     }
   ]

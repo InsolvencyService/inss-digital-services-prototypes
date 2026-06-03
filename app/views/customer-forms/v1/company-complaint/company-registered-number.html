@@ -1,6 +1,10 @@
 {% extends "layouts/main-forms.html" %}
 {% set serviceName = 'Insolvency Service' %}
-
+{% if data['anotherCompany'] == "Yes" %}
+  {% set companyRegisteredNumber = 'companyRegisteredNumber2' %}
+{% else %}
+  {% set companyRegisteredNumber = 'companyRegisteredNumber1' %}
+{% endif %}
 
 
 {% block pageTitle %}
@@ -28,7 +32,7 @@
      Whats the companies registered number?(optional)
     </label>
   </h1>
-  <input class="govuk-input" id="company-registered-number" name="company-registered-number" type="text" spellcheck="false" value="{{ data['company-registered-number'] }}" aria-describedby="Value-hint" inputmode="text">
+  <input class="govuk-input" id="companyRegisteredNumber" name="{{ companyRegisteredNumber }}" type="text" spellcheck="false" value="{{ data[companyRegisteredNumber] }}" aria-describedby="Value-hint" inputmode="text">
 </div>
 
 
