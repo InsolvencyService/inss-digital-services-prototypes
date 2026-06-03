@@ -73,6 +73,29 @@ router.post('/ipservice/ip-upload/v4/upload-successV4', function (req, res) {
 })
 
 
+// Route from upload to form-validation-errors
+router.post('/ipservice/ip-upload/v5/uploadV5', function (req, res) {
+  // Simulate validation - for demo purposes, always show errors first
+  // In a real app, you'd validate the uploaded file here
+  res.redirect('/ipservice/ip-upload/v5/form-validation-errors')
+})
+
+// Route from form-validation-errors back to upload
+router.post('/ipservice/ip-upload/v5/form-validation-errorsV5', function (req, res) { 
+  req.session.data['form-validation-errorsV5'] = "yes"
+  res.redirect('/ipservice/ip-upload/v5/upload')
+
+
+})
+
+// Route from upload to check-your-answers (when validation passes)
+router.post('/ipservice/ip-upload/v5/upload-successV5', function (req, res) {
+  res.redirect('/ipservice/ip-upload/v5/employer-details')
+})
+
+
+
+
 
 router.post('/ipservice/ip-upload/v4/employer',  function(request, response) {
   
@@ -81,6 +104,18 @@ router.post('/ipservice/ip-upload/v4/employer',  function(request, response) {
         response.redirect("/ipservice/ip-upload/v4/incorrect-employer")
     } else {
         response.redirect("/ipservice/ip-upload/v4/form-validation-errors")
+    }
+})
+
+
+
+router.post('/ipservice/ip-upload/v5/employer',  function(request, response) {
+  
+    var employerName = request.session.data['employerName']
+    if (employerName == "No"){
+        response.redirect("/ipservice/ip-upload/v5/incorrect-employer")
+    } else {
+        response.redirect("/ipservice/ip-upload/v5/check-your-answers")
     }
 })
 
@@ -270,7 +305,7 @@ router.post('/customer-forms/v1/company-complaint/financialLoss', function(reque
 })
 
 
-router.post('/customer-forms/v1/company-complaint/company-list', function(request, response) {
+router.post('/customer-forms/v1/company-complaint/addAnotherCompany', function(request, response) {
 
     var addCompany = request.session.data['anotherCompany']
     if (addCompany == "Yes"){

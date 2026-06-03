@@ -1,0 +1,78 @@
+{% extends "layouts/main.html" %}
+
+{% set serviceName = 'Upload redundancy payment forms(RP14/A)' %}
+
+{% block pageTitle %}
+{{ serviceName }} – your form has errors
+{% endblock %}
+
+
+{% block header %}
+  {% include "ipservice/ip-upload/v4/_include-one-login-header.html" %}
+{% endblock %}
+
+
+{% block beforeContent %}
+{{ govukBackLink({
+text: "Back",
+href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-l"> National insurance number</h1>
+    <p class="govuk-body">4 invalid national insurance numbers</p>
+    
+
+    <h2 class="govuk-heading-m">How to fix it</h2>  
+       <p class="govuk-body">The national insurance number must be in the format QQ123456C</p>
+
+
+    <table class="govuk-table govuk-table--small-text-until-tablet">
+  <caption class="govuk-table__caption govuk-table__caption--m">Affected employees</caption>
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">First name</th>
+      <th scope="col" class="govuk-table__header">Surname</th>
+      <th scope="col" class="govuk-table__header">Date of birth</th>
+      <th scope="col" class="govuk-table__header">National insurance number</th>
+      <th scope="col" class="govuk-table__header">Cell value</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell">Jane</td>
+      <td class="govuk-table__cell">Doe</td>
+      <td class="govuk-table__cell">14/01/1996</td>
+      <td class="govuk-table__cell">Not entered</td>
+      <td class="govuk-table__cell">Not entered</td>
+    </tr>
+        <tr class="govuk-table__row">
+      <td class="govuk-table__cell">Not entered</td>
+      <td class="govuk-table__cell">Smith</td>
+      <td class="govuk-table__cell">07/04/1985</td>
+      <td class="govuk-table__cell">Not entered</td>
+      <td class="govuk-table__cell">Not entered</td>
+</tr>
+      <tr class="govuk-table__row">
+      <td class="govuk-table__cell">Not entered</td>
+      <td class="govuk-table__cell">Smith</td>
+      <td class="govuk-table__cell">26/06/1982</td>
+      <td class="govuk-table__cell">BB123456B</td>
+      <td class="govuk-table__cell">Not entered</td>
+    </tr>
+        <tr class="govuk-table__row">
+      <td class="govuk-table__cell">Robert</td>
+      <td class="govuk-table__cell">Smith</td>
+      <td class="govuk-table__cell">Not entered</td>
+      <td class="govuk-table__cell">JE345678J</td>
+      <td class="govuk-table__cell">Not entered</td>
+  </tbody>
+</table>
+
+</div>
+  </div>
+  {% endblock %}

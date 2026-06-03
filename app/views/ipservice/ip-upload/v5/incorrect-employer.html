@@ -1,0 +1,41 @@
+{% extends "layouts/main.html" %}
+
+{% set serviceName = 'Upload redundancy payment forms(RP14/A)' %}
+
+{% block pageTitle %}
+  {{ serviceName }} – your form has errors
+{% endblock %}
+
+
+{% block header %}
+  {% include "ipservice/ip-upload/v4/_include-one-login-header.html" %}
+{% endblock %}
+
+
+
+{% block beforeContent %}
+  {{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+
+{{ data['validationErrors'] }}
+
+   <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+  <h1 class="govuk-heading-l">Incorrect employer</h1>
+
+  <p class="govuk-body">Because the employer does not match the case reference number you provided. you need to correct it and upload the form again.</p>
+
+   <form action="/ipservice/ip-upload/v5/upload" method="post" novalidate>
+
+  {{ govukButton({
+  text: "Continue"
+}) }}
+</form>
+
+    </div>
+{% endblock %}

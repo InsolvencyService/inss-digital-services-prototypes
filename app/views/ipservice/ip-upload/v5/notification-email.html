@@ -1,0 +1,30 @@
+{% extends "govuk-prototype-kit/layouts/unbranded.html" %}
+
+{% block pageTitle %}
+  Unbranded page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block content %}
+   <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <div class="emailTemplate">
+        {{ govukHeader() }}
+
+        <div class="gem-c-organisation-logo">
+    <p class="email gem-c-organisation-logo__container gem-c-organisation-logo__link gem-c-organisation-logo__crest gem-c-organisation-logo__crest--single-identity " href="http://www.gov.uk">
+      <span class="gem-c-organisation-logo__name">The insolvency service</span>
+    </p></div>
+<hr class="govuk-section-break govuk-section-break--m  govuk-section-break--visible">
+  <h1 class="govuk-heading-xl">
+    You uploaded a redundancy payment form (RP14/A)
+  </h1>
+  <p class="govuk-body">
+    Their has been a problem with the form you uploaded.</p>
+
+    <h2 class="govuk-heading-m">Reason for the rejection</h2>
+    <p>Your form exceeded the maximum number of employees(250) allowed in a single upload.</p>
+     <h2 class="govuk-heading-m">What to do next</h2>
+    <p class="govuk-body">Please separate your form into multiple uploads, each with no more than 250 employees.</p>
+  </div>
+</div>
+{% endblock %}

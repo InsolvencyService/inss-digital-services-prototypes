@@ -151,8 +151,11 @@ Phone number
 {% elif data.contactReason == "Investigations and enforcement services breach questionnaire" %}
     {% include "/customer-forms/v1/includes/_check-answers-investigations-and-enforcement-services-breach-questionnaire.html" %}
 
+{% elif data.contactReason == "Complain about a company" %}
+    {% include "/customer-forms/v1/includes/_check-answers-company-complaint.html" %}
 
 {% endif %}
+
 
 {% if data['upload'] == 'true' %}
 

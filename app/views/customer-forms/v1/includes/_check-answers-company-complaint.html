@@ -1,0 +1,176 @@
+
+<div class="govuk-summary-list__row">
+  <dt class="govuk-summary-list__key">
+    Is your complaint about a company that is currently trading or one that has been dissolved?
+  </dt>
+  <dd class="govuk-summary-list__value">
+    {{ data['activeOrDissolved'] | default('Not provided', true) }}
+  </dd>
+  <dd class="govuk-summary-list__actions">
+    <a class="govuk-link" href="./company-complaint/active-dissolved-guard">Change<span class="govuk-visually-hidden"> company status</span></a>
+  </dd>
+</div>
+
+<div class="govuk-summary-list__row">
+  <dt class="govuk-summary-list__key">
+    What's the name of the company you are complaining about?
+  </dt>
+  <dd class="govuk-summary-list__value">
+    {% if data['anotherCompany'] == "Yes" %}
+      {{ data['companyName2'] | default('Not provided', true) }}
+    {% else %}
+      {{ data['companyName1'] | default('Not provided', true) }}
+    {% endif %}
+  </dd>
+  <dd class="govuk-summary-list__actions">
+    <a class="govuk-link" href="./company-complaint/company-name">Change<span class="govuk-visually-hidden"> company name</span></a>
+  </dd>
+</div>
+
+<div class="govuk-summary-list__row">
+  <dt class="govuk-summary-list__key">
+    What's the company's registered number? (optional)
+  </dt>
+  <dd class="govuk-summary-list__value">
+    {% if data['anotherCompany'] == "Yes" %}
+      {{ data['companyRegisteredNumber2'] | default('Not provided', true) }}
+    {% else %}
+      {{ data['companyRegisteredNumber1'] | default('Not provided', true) }}
+    {% endif %}
+  </dd>
+  <dd class="govuk-summary-list__actions">
+    <a class="govuk-link" href="./company-complaint/company-registered-number">Change<span class="govuk-visually-hidden"> company registered number</span></a>
+  </dd>
+</div>
+
+<div class="govuk-summary-list__row">
+  <dt class="govuk-summary-list__key">
+    Is the company registered outside the UK?
+  </dt>
+  <dd class="govuk-summary-list__value">
+    {{ data['registeredOutsideUK'] | default('Not provided', true) }}
+  </dd>
+  <dd class="govuk-summary-list__actions">
+    <a class="govuk-link" href="./company-complaint/company-registered-outside-uk">Change<span class="govuk-visually-hidden"> company registration location</span></a>
+  </dd>
+</div>
+
+<div class="govuk-summary-list__row">
+  <dt class="govuk-summary-list__key">
+    What is the company's address? (optional)
+  </dt>
+  <dd class="govuk-summary-list__value">
+    {% if data['AddressLine1'] or data['AddressLine2'] or data['TownCity'] or data['County'] or data['Postcode'] %}
+      <ul class="govuk-list">
+        {% if data['AddressLine1'] %}<li>{{ data['AddressLine1'] }}</li>{% endif %}
+        {% if data['AddressLine2'] %}<li>{{ data['AddressLine2'] }}</li>{% endif %}
+        {% if data['TownCity'] %}<li>{{ data['TownCity'] }}</li>{% endif %}
+        {% if data['County'] %}<li>{{ data['County'] }}</li>{% endif %}
+        {% if data['Postcode'] %}<li>{{ data['Postcode'] }}</li>{% endif %}
+      </ul>
+    {% else %}
+      Not provided
+    {% endif %}
+  </dd>
+  <dd class="govuk-summary-list__actions">
+    <a class="govuk-link" href="./company-complaint/company-address">Change<span class="govuk-visually-hidden"> company address</span></a>
+  </dd>
+</div>
+
+<div class="govuk-summary-list__row">
+  <dt class="govuk-summary-list__key">
+    What is the company's website address? (optional)
+  </dt>
+  <dd class="govuk-summary-list__value">
+    {{ data['companyWebsite'] | default('Not provided', true) }}
+  </dd>
+  <dd class="govuk-summary-list__actions">
+    <a class="govuk-link" href="./company-complaint/company-website">Change<span class="govuk-visually-hidden"> company website</span></a>
+  </dd>
+</div>
+
+<div class="govuk-summary-list__row">
+  <dt class="govuk-summary-list__key">
+    What is the company's email address? (optional)
+  </dt>
+  <dd class="govuk-summary-list__value">
+    {{ data['companyEmail'] | default('Not provided', true) }}
+  </dd>
+  <dd class="govuk-summary-list__actions">
+    <a class="govuk-link" href="./company-complaint/company-email">Change<span class="govuk-visually-hidden"> company email</span></a>
+  </dd>
+</div>
+
+<div class="govuk-summary-list__row">
+  <dt class="govuk-summary-list__key">
+    If you know the company's other addresses, please list them here. (optional)
+  </dt>
+  <dd class="govuk-summary-list__value">
+    {{ data['otherAddresses'] | default('Not provided', true) }}
+  </dd>
+  <dd class="govuk-summary-list__actions">
+    <a class="govuk-link" href="./company-complaint/other-addresses">Change<span class="govuk-visually-hidden"> other addresses</span></a>
+  </dd>
+</div>
+
+<div class="govuk-summary-list__row">
+  <dt class="govuk-summary-list__key">
+    Who have you dealt with at the company and what were their roles? (optional)
+  </dt>
+  <dd class="govuk-summary-list__value">
+    {{ data['companyContacts'] | default('Not provided', true) }}
+  </dd>
+  <dd class="govuk-summary-list__actions">
+    <a class="govuk-link" href="./company-complaint/company-contacts">Change<span class="govuk-visually-hidden"> company contacts</span></a>
+  </dd>
+</div>
+
+<div class="govuk-summary-list__row">
+  <dt class="govuk-summary-list__key">
+    Can you give more detail about your complaint against the company?
+  </dt>
+  <dd class="govuk-summary-list__value">
+    {{ data['companyComplaintDetails'] | default('Not provided', true) }}
+  </dd>
+  <dd class="govuk-summary-list__actions">
+    <a class="govuk-link" href="./company-complaint/question">Change<span class="govuk-visually-hidden"> complaint details</span></a>
+  </dd>
+</div>
+
+<div class="govuk-summary-list__row">
+  <dt class="govuk-summary-list__key">
+    Have you suffered a financial loss from the company?
+  </dt>
+  <dd class="govuk-summary-list__value">
+    {{ data['financialLoss'] | default('Not provided', true) }}
+  </dd>
+  <dd class="govuk-summary-list__actions">
+    <a class="govuk-link" href="./company-complaint/financial-loss">Change<span class="govuk-visually-hidden"> financial loss</span></a>
+  </dd>
+</div>
+
+{% if data['financialLoss'] == 'Yes' %}
+<div class="govuk-summary-list__row">
+  <dt class="govuk-summary-list__key">
+    How much money did you lose and when? (optional)
+  </dt>
+  <dd class="govuk-summary-list__value">
+    {{ data['financialLossAmount'] | default('Not provided', true) }}
+  </dd>
+  <dd class="govuk-summary-list__actions">
+    <a class="govuk-link" href="./company-complaint/financial-loss-amount">Change<span class="govuk-visually-hidden"> financial loss amount</span></a>
+  </dd>
+</div>
+{% endif %}
+
+<div class="govuk-summary-list__row">
+  <dt class="govuk-summary-list__key">
+    Do you want to provide your contact information?
+  </dt>
+  <dd class="govuk-summary-list__value">
+    {{ data['aboutYou'] | default('Not provided', true) }}
+  </dd>
+  <dd class="govuk-summary-list__actions">
+    <a class="govuk-link" href="./company-complaint/about-you">Change<span class="govuk-visually-hidden"> contact information</span></a>
+  </dd>
+</div>
