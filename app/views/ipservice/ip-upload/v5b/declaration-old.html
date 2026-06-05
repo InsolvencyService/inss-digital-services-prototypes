@@ -1,0 +1,68 @@
+{% extends "layouts/main.html" %}
+
+{% set serviceName = 'Upload redundancy payment forms(RP14/A)' %}
+
+{% block pageTitle %}
+  {{ serviceName }} – homepage
+{% endblock %}
+
+{% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
+{% block header %}
+  {{ govukHeader() }}
+{{ govukServiceNavigation({
+  serviceName: 'Upload redundancy payment forms(RP14/A)',
+  serviceUrl: "start.html"
+}) }}
+{% endblock %}
+
+{% block content %}
+   <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+  <h1 class="govuk-heading-l">{{ serviceName }}</h1>
+
+ <!-- {% set html %}
+  <p class="govuk-notification-banner__heading">
+    You have 3 rejected forms. <br>
+    <a class="govuk-notification-banner__link" href="#">View rejected forms</a>
+  </p>
+{% endset %} 
+
+{{ govukNotificationBanner({
+  html: html
+}) }} -->
+
+<p class="">I am a licensed Insolvency Practitioner and in completing the required forms I have acted in accordance with the professional standards governing insolvency practice and money laundering regulations.</p>
+
+<p class="govuk-body">The uploaded file must be XML ending with '.xml'. (Other formats e.g. PDF, XLS are NOT supported).
+</p>
+
+<div class="govuk-form-group">
+  <label class="govuk-label govuk-label--s" for="file-upload-1">
+    Upload a file
+  </label>
+  <div
+    class="govuk-drop-zone"
+    data-module="govuk-file-upload">
+    <input class="govuk-file-upload" id="file-upload-1" name="fileUpload1" type="file">
+  </div>
+</div>
+
+  {{ govukButton({
+  text: "Continue",
+  href: "/ipservice/home.html"
+}) }}
+
+
+
+<h3 class="govuk-heading-s">
+      Get help with redundancy payments forms
+    </h3>
+    <p class="">Send an email including your contact details to the following email address </p>
+    <ul class="govuk-list">
+  <li><a class="govuk-link" href="#">IPHelpdesk@insolvency.gov.uk</a></li>
+  <li>We aim to respond within 2 working days</li>
+  </ul>
+
+
+    </div>
+{% endblock %}

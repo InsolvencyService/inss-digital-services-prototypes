@@ -120,6 +120,38 @@ router.post('/ipservice/ip-upload/v5/employer',  function(request, response) {
 })
 
 
+// Route from upload to form-validation-errors
+router.post('/ipservice/ip-upload/v5b/uploadV5', function (req, res) {
+  // Simulate validation - for demo purposes, always show errors first
+  // In a real app, you'd validate the uploaded file here
+  res.redirect('/ipservice/ip-upload/v5b/form-validation-errors')
+})
+
+// Route from form-validation-errors back to upload
+router.post('/ipservice/ip-upload/v5b/form-validation-errorsV5', function (req, res) { 
+  req.session.data['form-validation-errorsV5'] = "yes"
+  res.redirect('/ipservice/ip-upload/v5b/upload')
+
+
+})
+
+// Route from upload to check-your-answers (when validation passes)
+router.post('/ipservice/ip-upload/v5b/upload-successV5', function (req, res) {
+  res.redirect('/ipservice/ip-upload/v5b/check-your-answers')
+})
+
+
+router.post('/ipservice/ip-upload/v5b/employer',  function(request, response) {
+  
+    var employerName = request.session.data['employerName']
+    if (employerName == "No"){
+        response.redirect("/ipservice/ip-upload/v5b/case-reference-number")
+    } else {
+        response.redirect("/ipservice/ip-upload/v5b/upload")
+    }
+})
+
+
 
 
 
