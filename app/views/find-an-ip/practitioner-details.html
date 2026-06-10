@@ -1,0 +1,94 @@
+{% extends "layouts/main.html" %}
+
+{% set serviceName = 'Find an insolvency practitioner' %}
+
+{% set pageName="Practitioner details" %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l">Insolvency practitioner details</h1>
+
+    <div class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">IP name</dt>
+        <dd class="govuk-summary-list__value">{{ data.name | default('Unknown practitioner') }}</dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Company name</dt>
+        <dd class="govuk-summary-list__value">{{ data.companyName | default('Not available') }}</dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Company address</dt>
+        <dd class="govuk-summary-list__value">{{ data.address | default('Not available') }}</dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Email</dt>
+        <dd class="govuk-summary-list__value">
+          {% if data.email %}
+            <a href="mailto:{{ data.email }}" class="govuk-link">{{ data.email }}</a>
+          {% else %}
+            Not available
+          {% endif %}
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Telephone</dt>
+        <dd class="govuk-summary-list__value">
+          {% if data.telephone %}
+            <a href="tel:{{ data.telephone }}" class="govuk-link">{{ data.telephone }}</a>
+          {% else %}
+            Not available
+          {% endif %}
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">IP number</dt>
+        <dd class="govuk-summary-list__value">{{ data.ipNumber | default('IP234563') }}</dd>
+      </div>
+    </div>
+
+    <h2 class="govuk-heading-m">Authorising body</h2>
+    <div class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Name</dt>
+        <dd class="govuk-summary-list__value">{{ data.authorisingBodyName | default('Insolvency Practitioners Association') }}</dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Address</dt>
+        <dd class="govuk-summary-list__value">	46 New Broad Street<br>
+London<br>
+EC2M 1JH</dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Website</dt>
+        <dd class="govuk-summary-list__value">
+    
+            <a class="govuk-link" href="{{ data.authorisingBodyWebsite }}">www.authorisingbodywebsite.com</a>
+         
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Telephone</dt>
+        <dd class="govuk-summary-list__value">020 8152 4980</dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Fax</dt>
+        <dd class="govuk-summary-list__value">020 8152 4981</dd>
+      </div>
+    </div>
+
+    <button class="govuk-button" type="button">Find an insolvency practitioner</button>
+
+  </div>
+</div>
+
+{% endblock %}

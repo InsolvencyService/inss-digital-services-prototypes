@@ -1,0 +1,114 @@
+{% extends "layouts/main.html" %}
+
+{% set serviceName = 'Find an insolvency practitioner' %}
+
+{% set pageName="Search" %}
+
+
+{% block beforeContent %}
+  {{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+
+ <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+<h1 class="govuk-heading-l">Search results</h1>
+
+
+<div class="govuk-form-group">
+    <label class="govuk-label govuk-label--m" for="searchTerm">
+   Search
+    </label>
+  <input class="govuk-input govuk-!-width-one-half" id="searchTerm" name="searchTerm" value="{{ data.searchTerm | default('search term') }}" type="text">
+  </div>
+  
+  <button class="govuk-button" type="submit">Search</button>
+
+
+      
+
+  </div>
+  </div>
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-three-quarters">
+
+      <p class="govuk-body">Showing 1 to 10 of 14 results for <strong>{{ data.searchTerm | default('search term') }}</strong></p>
+      <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+      <table class="govuk-table">
+        <caption class="govuk-table__caption govuk-table__caption--m govuk-visually-hidden">Search results table</caption>
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Name</th>
+            <th scope="col" class="govuk-table__header">Company</th>
+            <th scope="col" class="govuk-table__header">Town or city</th>
+            <th scope="col" class="govuk-table__header">Postcode</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row"><td class="govuk-table__cell"><a class="govuk-link" href="/find-an-ip/practitioner-details.html?name=Alex%20Carter&companyName=Northpoint%20Insolvency&address=123%20Moorgate%2C%20London%20EC1A%201BB&authorisingBodyName=Institute%20of%20Chartered%20Accountants%20in%20England%20and%20Wales&email=alex.carter@northpointinsolvency.co.uk&telephone=020%207946%201234&ipNumber=IP000001">Alex Carter</a></td><td class="govuk-table__cell">Northpoint Insolvency</td><td class="govuk-table__cell">London</td><td class="govuk-table__cell">EC1A 1BB</td></tr>
+          <tr class="govuk-table__row"><td class="govuk-table__cell"><a class="govuk-link" href="/find-an-ip/practitioner-details.html?name=Beatrice%20Jones&companyName=Thames%20Recovery&address=45%20Long%20Acre%2C%20Covent%20Garden%2C%20London%20WC2N%205DU&authorisingBodyName=Insolvency%20Practitioners%20Association&email=beatrice.jones@thamesrecovery.co.uk&telephone=020%207946%205678&ipNumber=IP000002">Beatrice Jones</a></td><td class="govuk-table__cell">Thames Recovery</td><td class="govuk-table__cell">London</td><td class="govuk-table__cell">WC2N 5DU</td></tr>
+          <tr class="govuk-table__row"><td class="govuk-table__cell"><a class="govuk-link" href="/find-an-ip/practitioner-details.html?name=Caleb%20Singh&companyName=City%20Restructure&address=2%20Parliament%20Street%2C%20Westminster%2C%20London%20SW1A%201AA&authorisingBodyName=Institute%20of%20Chartered%20Accountants%20of%20Scotland&email=caleb.singh@cityrestructure.co.uk&telephone=020%207946%209012&ipNumber=IP000003">Caleb Singh</a></td><td class="govuk-table__cell">City Restructure</td><td class="govuk-table__cell">London</td><td class="govuk-table__cell">SW1A 1AA</td></tr>
+          <tr class="govuk-table__row"><td class="govuk-table__cell"><a class="govuk-link" href="/find-an-ip/practitioner-details.html?name=Diana%20Patel&companyName=Capital%20Administrators&address=67%20Whitechapel%20Road%2C%20East%20London%20E1%206AN&authorisingBodyName=Institute%20of%20Chartered%20Accountants%20in%20England%20and%20Wales&email=diana.patel@capitaladmin.co.uk&telephone=020%207946%203456&ipNumber=IP000004">Diana Patel</a></td><td class="govuk-table__cell">Capital Administrators</td><td class="govuk-table__cell">London</td><td class="govuk-table__cell">E1 6AN</td></tr>
+          <tr class="govuk-table__row"><td class="govuk-table__cell"><a class="govuk-link" href="/find-an-ip/practitioner-details.html?name=Ethan%20Brooks&companyName=Riverbank%20Advisors&address=89%20Upper%20Street%2C%20Islington%2C%20London%20N1%209GU&authorisingBodyName=Insolvency%20Practitioners%20Association&email=ethan.brooks@riverbankadvisors.co.uk&telephone=020%207946%207890&ipNumber=IP000005">Ethan Brooks</a></td><td class="govuk-table__cell">Riverbank Advisors</td><td class="govuk-table__cell">London</td><td class="govuk-table__cell">N1 9GU</td></tr>
+          <tr class="govuk-table__row"><td class="govuk-table__cell"><a class="govuk-link" href="/find-an-ip/practitioner-details.html?name=Fiona%20Clarke&companyName=Union%20Insolvency&address=12%20Borough%20High%20Street%2C%20Southwark%2C%20London%20SE1%207PB&authorisingBodyName=Institute%20of%20Chartered%20Accountants%20of%20Scotland&email=fiona.clarke@unioninsolvency.co.uk&telephone=020%207946%202345&ipNumber=IP000006">Fiona Clarke</a></td><td class="govuk-table__cell">Union Insolvency</td><td class="govuk-table__cell">London</td><td class="govuk-table__cell">SE1 7PB</td></tr>
+          <tr class="govuk-table__row"><td class="govuk-table__cell"><a class="govuk-link" href="/find-an-ip/practitioner-details.html?name=George%20Ahmed&companyName=Lakeside%20Recovery&address=34%20Holloway%20Road%2C%20London%20N7%208XS&authorisingBodyName=Insolvency%20Practitioners%20Association&email=george.ahmed@lakesiderecovery.co.uk&telephone=020%207946%206789&ipNumber=IP000007">George Ahmed</a></td><td class="govuk-table__cell">Lakeside Recovery</td><td class="govuk-table__cell">London</td><td class="govuk-table__cell">N7 8XS</td></tr>
+          <tr class="govuk-table__row"><td class="govuk-table__cell"><a class="govuk-link" href="/find-an-ip/practitioner-details.html?name=Harriet%20Evans&companyName=Crown%20Insolvency&address=56%20King%27s%20Road%2C%20Chelsea%2C%20London%20SW3%204AA&authorisingBodyName=Institute%20of%20Chartered%20Accountants%20in%20England%20and%20Wales&email=harriet.evans@crowninsolvency.co.uk&telephone=020%207946%201567&ipNumber=IP000008">Harriet Evans</a></td><td class="govuk-table__cell">Crown Insolvency</td><td class="govuk-table__cell">London</td><td class="govuk-table__cell">SW3 4AA</td></tr>
+          <tr class="govuk-table__row"><td class="govuk-table__cell"><a class="govuk-link" href="/find-an-ip/practitioner-details.html?name=Isaac%20Turner&companyName=Bridgepoint%20Partners&address=78%20Hertsmere%20Road%2C%20Canary%20Wharf%2C%20London%20E14%205AB&authorisingBodyName=Institute%20of%20Chartered%20Accountants%20of%20Scotland&email=isaac.turner@bridgepointpartners.co.uk&telephone=020%207946%205123&ipNumber=IP000009">Isaac Turner</a></td><td class="govuk-table__cell">Bridgepoint Partners</td><td class="govuk-table__cell">London</td><td class="govuk-table__cell">E14 5AB</td></tr>
+          <tr class="govuk-table__row"><td class="govuk-table__cell"><a class="govuk-link" href="/find-an-ip/practitioner-details.html?name=Jasmin%20Reed&companyName=Regency%20Restructuring&address=90%20Lavender%20Hill%2C%20Battersea%2C%20London%20SW8%201QP&authorisingBodyName=Insolvency%20Practitioners%20Association&email=jasmin.reed@regencyrestructuring.co.uk&telephone=020%207946%209876&ipNumber=IP000010">Jasmin Reed</a></td><td class="govuk-table__cell">Regency Restructuring</td><td class="govuk-table__cell">London</td><td class="govuk-table__cell">SW8 1QP</td></tr>
+        </tbody>
+      </table>
+
+
+
+
+
+
+
+<!--  pagination  -->
+
+<nav class="govuk-pagination" aria-label="Pagination">
+  <!-- <div class="govuk-pagination__prev">
+    <a class="govuk-link govuk-pagination__link" href="#" rel="prev">
+      <svg class="govuk-pagination__icon govuk-pagination__icon--prev" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+        <path d="m6.5938-0.0078125-6.7266 6.7266 6.7441 6.4062 1.377-1.449-4.1856-3.9768h12.896v-2h-12.984l4.2931-4.293-1.414-1.414z"></path>
+      </svg>
+      <span class="govuk-pagination__link-title">
+        Previous<span class="govuk-visually-hidden"> page</span>
+      </span>
+    </a>
+  </div> -->
+  <ul class="govuk-pagination__list">
+    <li class="govuk-pagination__item govuk-pagination__item--current">
+      <a class="govuk-link govuk-pagination__link" href="/find-an-ip/find-a-insolvency-practitioner-results.html" aria-label="Page 1" aria-current="page">
+        1
+      </a>
+    </li>
+    <li class="govuk-pagination__item">
+      <a class="govuk-link govuk-pagination__link" href="/find-an-ip/find-a-insolvency-practitioner-results-2.html" aria-label="Page 2">
+        2
+      </a>
+    </li>
+  </ul>
+  <div class="govuk-pagination__next">
+    <a class="govuk-link govuk-pagination__link" href="/find-an-ip/find-a-insolvency-practitioner-results-2.html" rel="next">
+      <span class="govuk-pagination__link-title">
+        Next<span class="govuk-visually-hidden"> page</span>
+      </span>
+      <svg class="govuk-pagination__icon govuk-pagination__icon--next" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+        <path d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"></path>
+      </svg>
+    </a>
+  </div>
+</nav>
+
+
+
+  </div>
+</div>
+
+{% endblock %}

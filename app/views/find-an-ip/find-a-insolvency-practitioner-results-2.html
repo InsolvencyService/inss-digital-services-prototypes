@@ -1,0 +1,91 @@
+{% extends "layouts/main.html" %}
+
+{% set serviceName = 'Find an insolvency practitioner' %}
+
+{% set pageName="Search" %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+
+ <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+<h1 class="govuk-heading-l">Search results</h1>
+
+<div class="govuk-form-group">
+    <label class="govuk-label govuk-label--m" for="searchTerm">
+   Search
+    </label>
+  <input class="govuk-input govuk-!-width-one-half" id="searchTerm" name="searchTerm" value="{{ data.searchTerm | default('search term') }}" type="text">
+  </div>
+  
+  <button class="govuk-button" type="submit">Search</button>
+
+  </div>
+  </div>
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-three-quarters">
+
+      <p class="govuk-body">Showing 11 to 14 of 14 results for <strong>{{ data.searchTerm | default('search term') }}</strong></p>
+      <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+      <table class="govuk-table">
+        <caption class="govuk-table__caption govuk-table__caption--m govuk-visually-hidden">Search results table</caption>
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Name</th>
+            <th scope="col" class="govuk-table__header">Company</th>
+            <th scope="col" class="govuk-table__header">Town or city</th>
+            <th scope="col" class="govuk-table__header">Postcode</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row"><td class="govuk-table__cell"><a class="govuk-link" href="/find-an-ip/practitioner-details.html?name=Karen%20Miller&companyName=West%20End%20Recovery&address=11%20Buckingham%20Palace%20Road%2C%20Victoria%2C%20London%20SW1V%203DG&authorisingBodyName=Institute%20of%20Chartered%20Accountants%20in%20England%20and%20Wales&email=karen.miller@westendrecovery.co.uk&telephone=020%207946%204321&ipNumber=IP000011">Karen Miller</a></td><td class="govuk-table__cell">West End Recovery</td><td class="govuk-table__cell">London</td><td class="govuk-table__cell">SW1V 3DG</td></tr>
+          <tr class="govuk-table__row"><td class="govuk-table__cell"><a class="govuk-link" href="/find-an-ip/practitioner-details.html?name=Liam%20Harris&companyName=Harbour%20Administrators&address=5%20Greenwich%20Church%20Street%2C%20Greenwich%2C%20London%20SE10%200DX&authorisingBodyName=Insolvency%20Practitioners%20Association&email=liam.harris@harbouradmin.co.uk&telephone=020%207946%208765&ipNumber=IP000012">Liam Harris</a></td><td class="govuk-table__cell">Harbour Administrators</td><td class="govuk-table__cell">London</td><td class="govuk-table__cell">SE10 0DX</td></tr>
+          <tr class="govuk-table__row"><td class="govuk-table__cell"><a class="govuk-link" href="/find-an-ip/practitioner-details.html?name=Maya%20Wilson&companyName=Bridge%20Debt%20Solutions&address=77%20Fonthill%20Road%2C%20Finsbury%20Park%2C%20London%20N4%203HQ&authorisingBodyName=Institute%20of%20Chartered%20Accountants%20of%20Scotland&email=maya.wilson@bridgedebt.co.uk&telephone=020%207946%204567&ipNumber=IP000013">Maya Wilson</a></td><td class="govuk-table__cell">Bridge Debt Solutions</td><td class="govuk-table__cell">London</td><td class="govuk-table__cell">N4 3HQ</td></tr>
+          <tr class="govuk-table__row"><td class="govuk-table__cell"><a class="govuk-link" href="/find-an-ip/practitioner-details.html?name=Noah%20Davies&companyName=Capital%20Recovery%20Ltd&address=55%20Old%20Street%2C%20Shoreditch%2C%20London%20E2%208AA&authorisingBodyName=Insolvency%20Practitioners%20Association&email=noah.davies@capitalrecovery.co.uk&telephone=020%207946%203210&ipNumber=IP000014">Noah Davies</a></td><td class="govuk-table__cell">Capital Recovery Ltd</td><td class="govuk-table__cell">London</td><td class="govuk-table__cell">E2 8AA</td></tr>
+        </tbody>
+      </table>
+
+
+
+
+
+<!--  pagination  -->
+
+<nav class="govuk-pagination" aria-label="Pagination">
+  <div class="govuk-pagination__prev">
+    <a class="govuk-link govuk-pagination__link" href="/find-an-ip/find-a-insolvency-practitioner-results.html" rel="prev">
+      <svg class="govuk-pagination__icon govuk-pagination__icon--prev" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+        <path d="m6.5938-0.0078125-6.7266 6.7266 6.7441 6.4062 1.377-1.449-4.1856-3.9768h12.896v-2h-12.984l4.2931-4.293-1.414-1.414z"></path>
+      </svg>
+      <span class="govuk-pagination__link-title">
+        Previous<span class="govuk-visually-hidden"> page</span>
+      </span>
+    </a>
+  </div>
+  <ul class="govuk-pagination__list">
+    <li class="govuk-pagination__item">
+      <a class="govuk-link govuk-pagination__link" href="/find-an-ip/find-a-insolvency-practitioner-results.html" aria-label="Page 1">
+        1
+      </a>
+    </li>
+    <li class="govuk-pagination__item govuk-pagination__item--current">
+      <a class="govuk-link govuk-pagination__link" href="#" aria-label="Page 2" aria-current="page">
+        2
+      </a>
+    </li>
+  </ul>
+</nav>
+
+
+
+  </div>
+</div>
+
+{% endblock %}

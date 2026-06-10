@@ -1,0 +1,40 @@
+{% extends "layouts/main.html" %}
+{% set serviceName = 'Find an insolvency practitioner' %}
+
+{% set pageName="Search" %}
+
+{% block content %}
+
+ <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+<form action="find-a-insolvency-practitioner-results" method="post" novalidate>     
+<h1 class="govuk-heading-l">Find an insolvency practitioner</h1>
+<p>
+ Search using one or more of the following:
+</p> 
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>name</li>
+  <li>company</li>
+  <li>town or city</li>
+  <li>full or partial postcode</li>
+  <li>a combination of these</li>
+</ul>
+
+<div class="govuk-form-group">
+    <label class="govuk-label govuk-label--m" for="searchTerm">
+   Search
+    </label>
+  <input class="govuk-input govuk-!-width-one-half" id="searchTerm" name="searchTerm" value="{{ searchTerm }}" type="text">
+  </div>
+  
+  {{ govukButton({
+  text: "Search"
+}) }}
+</form>
+      
+
+  </div>
+  </div>
+
+{% endblock %}
