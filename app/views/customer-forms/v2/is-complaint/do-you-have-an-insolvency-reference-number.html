@@ -1,0 +1,77 @@
+{% extends "layouts/main-forms.html" %}
+
+{% block pageTitle %}
+  {{ serviceName }} – {{ data.contactReason }}
+{% endblock %}
+
+
+
+{% block beforeContent %}
+  {{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+     {% if data.checkAnswers == 'true' %}
+      <form action="../check-your-answers" method="post" novalidate>
+      {% else %}  
+    <form action="question" method="post" novalidate>
+    {% endif %}
+
+
+
+{% set refHtml %}
+{{ govukInput({
+  id: "IScaseReferenceYes",
+  name: "IScaseReferenceYes",
+  spellcheck: false,
+  classes: "govuk-!-width-one-third",
+  label: {
+    text: "What was your reference number?	
+"
+  },
+   hint: {
+    text: "This may begin with letters such as LN, DRO, BKT."
+  }
+}) }}
+{% endset -%}
+
+{{ govukRadios({
+  name: "isRef",
+  fieldset: {
+    legend: {
+      text: "Do you have an Insolvency Service reference number to support your complaint?",
+      isPageHeading: true,
+      classes: "govuk-fieldset__legend--l"
+    }
+  },
+  items: [
+    {
+      value: "Yes",
+      text: "Yes",
+      conditional: {
+        html: refHtml
+      }
+    },
+    {
+      value: "No",
+      text: "No"
+    }
+    
+  ]
+}) }}
+
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+      </form>
+
+    </div>
+  </div>
+
+{% endblock %}

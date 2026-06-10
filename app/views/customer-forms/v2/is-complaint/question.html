@@ -1,0 +1,47 @@
+{% extends "layouts/main-forms.html" %}
+
+{% block pageTitle %}
+{{ serviceName }} – {{ data.contactReason }} - About your complaint
+{% endblock %}
+
+{% block beforeContent %}
+
+  {{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+   <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+       {% if data.checkAnswers == 'true' %}
+      <form action="../check-your-answers" method="post" novalidate>
+      {% else %}
+      <form action="../upload-guard" method="post" novalidate>
+      {% endif %}
+
+  <h1 class="govuk-heading-l">Your complaint</h1>
+
+<p class="govuk-body">Where possible you should include details like:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>the name of any individual that you have spoken to or wish to complain about;</li>
+  <li>details about what has gone wrong or not been handled properly;</li>
+  <li>how you would like us to resolve your complaint.</li>
+</ul>
+
+<div class="govuk-form-group">
+
+    <label class="govuk-label govuk-label--m" for="is-complaint-detail">
+     Describe your complaint
+    </label>
+  <textarea class="govuk-textarea" id="is-complaint-detail" name="moreDetail" rows="8" aria-describedby="is-complaint-detail-hint"></textarea>
+</div>
+
+<button class="govuk-button" data-module="govuk-button">
+Continue
+</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}
