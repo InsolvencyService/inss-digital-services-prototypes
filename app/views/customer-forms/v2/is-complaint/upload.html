@@ -1,0 +1,108 @@
+{% extends "layouts/main.html" %}
+
+{% set serviceName = 'Insolvency Service' %}
+
+{% block pageTitle %}
+ {{ serviceName }} – {{ data.contactReason }} - upload a form
+{% endblock %}
+
+
+
+{% block beforeContent %}
+  {{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+   <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+  
+<form class="form" action="upload-list" method="post">
+
+<input type="hidden" id="totalUploadedSize" name="totalUploadedSize" value="0MB">
+<input type="hidden" id="totalUploadedSizeBytes" name="totalUploadedSizeBytes" value="0">
+<input type="hidden" id="uploadedFileSizes" name="uploadedFileSizes" value="[]">
+
+{{ govukFileUpload({
+  id: "file-upload-1",
+  name: "fileUpload",
+  hint: {
+    text: "You can upload one or more files up to 35MB in total. We accept .jpg, .jpeg, .png, .pdf, .doc, .docx, .xls, .xlsx formats."
+  },
+
+  label: {
+    text: "Upload a file",
+    isPageHeading: true,
+    classes: "govuk-label--l"
+  },
+  javascript: true,
+  multiple: true
+
+}) }}
+
+
+
+  {{ govukButton({
+  text: "Continue"
+}) }}
+
+</form>
+
+<script>
+  (function () {
+    var fileInput = document.getElementById('file-upload-1')
+    var totalSizeField = document.getElementById('totalUploadedSize')
+    var totalBytesField = document.getElementById('totalUploadedSizeBytes')
+    var uploadedFileSizesField = document.getElementById('uploadedFileSizes')
+    var form = document.querySelector('form.form')
+
+    function formatSize(bytes) {
+      var megabytes = bytes / (1024 * 1024)
+
+      if (megabytes >= 1) {
+        return megabytes.toFixed(2).replace(/\.00$/, '') + 'MB'
+      }
+
+      return Math.ceil(bytes / 1024) + 'KB'
+    }
+
+    function updateTotals() {
+      var files = Array.prototype.slice.call(fileInput.files || [])
+
+      if (!files.length) {
+        totalSizeField.value = '0MB'
+        totalBytesField.value = '0'
+        uploadedFileSizesField.value = '[]'
+        return
+      }
+
+      var totalBytes = files.reduce(function (sum, file) {
+        return sum + (file.size || 0)
+      }, 0)
+
+      totalSizeField.value = formatSize(totalBytes)
+      totalBytesField.value = String(totalBytes)
+      uploadedFileSizesField.value = JSON.stringify(files.map(function (file) {
+        return {
+          name: file.name,
+          size: file.size
+        }
+      }))
+    }
+
+    if (!fileInput || !totalSizeField || !totalBytesField || !uploadedFileSizesField) {
+      return
+    }
+
+    fileInput.addEventListener('change', updateTotals)
+
+    if (form) {
+      form.addEventListener('submit', updateTotals)
+    }
+  })()
+</script>
+
+{% endblock %}

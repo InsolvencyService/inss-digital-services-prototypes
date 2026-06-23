@@ -1,0 +1,94 @@
+{% extends "layouts/main.html" %}
+
+{% set serviceName = 'Insolvency Service' %}
+
+{% block pageTitle %}
+{{ serviceName }} – Check your answers
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l">Check your answers</h1>
+    <p class="govuk-body">Review the information you have provided before submitting your complaint.</p>
+
+    <h2 class="govuk-heading-m">Your type of complaint</h2>
+    {%- set complaint = data['isComplaint'] or 'Not provided' -%}
+    <div class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <div class="govuk-summary-list__key">What are you complaining about?</div>
+        <div class="govuk-summary-list__value">
+          {{ complaint }}</div>
+        <div class="govuk-summary-list__actions"><a class="govuk-link" href="start?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> complaint type</span></a></div>
+      </div>
+    </div>
+
+    <h2 class="govuk-heading-m">Your details</h2>
+    <div class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <div class="govuk-summary-list__key">Full name</div>
+        <div class="govuk-summary-list__value">{{ data['full-name'] or 'Not provided' }}</div>
+        <div class="govuk-summary-list__actions"><a class="govuk-link" href="name?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> full name</span></a></div>
+      </div>
+      <div class="govuk-summary-list__row">
+        <div class="govuk-summary-list__key">Email address</div>
+        <div class="govuk-summary-list__value">{{ data['email'] or 'Not provided' }}</div>
+        <div class="govuk-summary-list__actions"><a class="govuk-link" href="email?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> email address</span></a></div>
+      </div>
+      <div class="govuk-summary-list__row">
+        <div class="govuk-summary-list__key">Do you have an insolvency reference number?</div>
+        <div class="govuk-summary-list__value">{{ data['isRef'] or 'No' }}</div>
+        <div class="govuk-summary-list__actions"><a class="govuk-link" href="do-you-have-an-insolvency-reference-number?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> insolvency reference</span></a></div>
+      </div>
+      {%- if data['isRef'] == 'Yes' -%}
+      <div class="govuk-summary-list__row">
+        <div class="govuk-summary-list__key">Insolvency reference number</div>
+        <div class="govuk-summary-list__value">{{ data['IScaseReferenceYes'] or 'Not provided' }}</div>
+        <div class="govuk-summary-list__actions"><a class="govuk-link" href="do-you-have-an-insolvency-reference-number?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> insolvency reference number</span></a></div>
+      </div>
+      {%- endif -%}
+      <div class="govuk-summary-list__row">
+        <div class="govuk-summary-list__key">Have you complained about this before?</div>
+        <div class="govuk-summary-list__value">{{ data['complaintBefore'] or 'Not provided' }}</div>
+        <div class="govuk-summary-list__actions"><a class="govuk-link" href="have-you-complained-about-this-before?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> previous complaint</span></a></div>
+      </div>
+    </div>
+
+    <h2 class="govuk-heading-m">Your complaint</h2>
+    <div class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <div class="govuk-summary-list__key">Describe your complaint</div>
+        <div class="govuk-summary-list__value">{{ data['moreDetail'] or 'Not provided' }}</div>
+        <div class="govuk-summary-list__actions"><a class="govuk-link" href="complaint-details?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> complaint description</span></a></div>
+      </div>
+    </div>
+
+    <h2 class="govuk-heading-m">Supporting documents</h2>
+    <div class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <div class="govuk-summary-list__key">Documents uploaded</div>
+        <div class="govuk-summary-list__value">
+            {%- set uploadedFiles = data.uploadedFiles or [] -%}
+            {%- if uploadedFiles.length -%}
+            <div class="govuk-list">{%- for file in uploadedFiles -%}<div>{{ file }}</div>{%- endfor -%}</div>
+            {%- endif -%}
+        </div>
+        <div class="govuk-summary-list__actions"><a class="govuk-link" href="upload-list?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> uploaded documents</span></a></div>
+      </div>
+    </div>
+
+    <form action="confirm-submission" method="post" novalidate>
+      {{ govukButton({
+        text: "Submit complaint"
+      }) }}
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,99 @@
+{% extends "layouts/main.html" %}
+
+{% set serviceName = 'Insolvency Service' %}
+
+{% block pageTitle %}
+ {{ serviceName }} – {{ data.contactReason }} - upload a form
+{% endblock %}
+
+
+
+{% block beforeContent %}
+  {{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+   <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+{% if data.fileRemoved %}
+{% call govukNotificationBanner({
+  type: "success"
+}) %}
+  <h3 class="govuk-notification-banner__heading">
+    File removed
+  </h3>
+{% endcall %}
+{% endif %}
+
+<h1 class="govuk-heading-l">Uploaded files</h1>
+
+<p>Upload multiple documents. The total size must be 35MB or less.</p>
+<p>You have used <strong>{{ data.totalUploadedSize }}</strong>  of your 35MB limit.</p>
+
+
+<dl class="govuk-summary-list">
+  
+{% set uploadedFiles = data.uploadedFiles or [] %}
+{% if uploadedFiles.length %}
+<dl class="govuk-summary-list">
+  {% for file in uploadedFiles %}
+
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+     File {{ loop.index }}
+    </dt>
+    <dd class="govuk-summary-list__value">
+    {{ file }}
+    </dd>
+    <dd class="govuk-summary-list__actions">
+       <a class="govuk-link" href="remove-upload?file={{ file | urlencode }}">Remove <span class="govuk-visually-hidden"> file</span></a>
+    </dd>
+  </div>
+  {% endfor %}
+  </dl>
+{% endif %}
+
+
+
+
+
+
+
+
+
+<form class="form" action="uploadAnotherDocument" method="post">
+
+
+{{ govukRadios({
+  classes: "govuk-radios--inline",
+  name: "uploadAnotherDocument",
+  fieldset: {
+    legend: {
+      text: "Do you want to upload another document?",
+      isPageHeading: false,
+      classes: "govuk-fieldset__legend--m"
+    }
+  },
+  items: [
+    {
+      value: "yes",
+      text: "Yes"
+    },
+    {
+      value: "no",
+      text: "No"
+    }
+  ]
+}) }}
+
+  {{ govukButton({
+  text: "Continue"
+}) }}
+
+</form>
+
+
+{% endblock %}

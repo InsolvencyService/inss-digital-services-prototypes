@@ -81,9 +81,11 @@ EC2M 1JH</dd>
         <dd class="govuk-summary-list__value">020 8152 4980</dd>
       </div>
 </dl>
-
-    <button class="govuk-button" type="button">Find another insolvency practitioner</button>
-
+<form action="/find-an-ip/find-a-insolvency-practitioner" method="post" novalidate>
+{{ govukButton({
+  text: "Find another insolvency practitioner"
+}) }}
+</form>
   </div>
 </div>
 

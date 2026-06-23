@@ -16,11 +16,7 @@
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-     {% if data.checkAnswers == 'true' %}
-      <form action="../check-your-answers" method="post" novalidate>
-      {% else %}  
-    <form action="question" method="post" novalidate>
-    {% endif %}
+    <form action="have-you-complained-about-this-before" method="post" novalidate>
 
 
 

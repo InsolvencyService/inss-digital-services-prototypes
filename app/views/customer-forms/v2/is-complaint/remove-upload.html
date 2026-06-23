@@ -1,0 +1,53 @@
+{% extends "layouts/main.html" %}
+
+{% set serviceName = 'Insolvency Service' %}
+
+{% block pageTitle %}
+ {{ serviceName }} – {{ data.contactReason }}
+{% endblock %}
+
+{% block beforeContent %}
+
+  {{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+ <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form action="removeUpload" method="post" novalidate>
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+
+{% set fileToRemove = data.fileToRemove or fileToRemove or 'this file' %}
+
+{{ govukRadios({
+  classes: "govuk-radios--inline",
+  name: "removeDocuments",
+  fieldset: {
+    legend: {
+      text: "Do you want to remove " + fileToRemove + "?",
+      isPageHeading: true,
+      classes: "govuk-fieldset__legend--l"
+    }
+  },
+  items: [
+    {
+      value: "Yes",
+      text: "Yes"
+    },
+    {
+      value: "No",
+      text: "No"
+    }
+  ]
+}) }}
+
+<button class="govuk-button" type="submit" data-module="govuk-button">
+Continue
+</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

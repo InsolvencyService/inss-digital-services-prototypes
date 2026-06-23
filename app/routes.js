@@ -6,6 +6,10 @@
 const govukPrototypeKit = require('govuk-prototype-kit')
 const router = govukPrototypeKit.requests.setupRouter()
 
+const customerFormsV2Routes = require('./views/customer-forms/v2/routes')
+
+router.use(customerFormsV2Routes)
+
 // Add your routes here
 
 // Route from upload to form-validation-errors
@@ -148,6 +152,38 @@ router.post('/ipservice/ip-upload/v5b/employer',  function(request, response) {
         response.redirect("/ipservice/ip-upload/v5b/case-reference-number")
     } else {
         response.redirect("/ipservice/ip-upload/v5b/upload")
+    }
+})
+
+
+// Route from upload to form-validation-errors
+router.post('/ipservice/ip-upload/v6/uploadV6', function (req, res) {
+  // Simulate validation - for demo purposes, always show errors first
+  // In a real app, you'd validate the uploaded file here
+  res.redirect('/ipservice/ip-upload/v6/form-validation-errors')
+})
+
+// Route from form-validation-errors back to upload
+router.post('/ipservice/ip-upload/v6/form-validation-errorsV6', function (req, res) { 
+  req.session.data['form-validation-errorsV6'] = "yes"
+  res.redirect('/ipservice/ip-upload/v6/upload')
+
+
+})
+
+// Route from upload to check-your-answers (when validation passes)
+router.post('/ipservice/ip-upload/v6/upload-successV6', function (req, res) {
+  res.redirect('/ipservice/ip-upload/v6/check-your-answers')
+})
+
+
+router.post('/ipservice/ip-upload/v6/employer',  function(request, response) {
+  
+    var employerName = request.session.data['employerName']
+    if (employerName == "No"){
+        response.redirect("/ipservice/ip-upload/v6/case-reference-number")
+    } else {
+        response.redirect("/ipservice/ip-upload/v6/upload")
     }
 })
 

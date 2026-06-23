@@ -19,56 +19,83 @@
 
       <h1 class="govuk-heading-l">Customer forms</h1>
 
-      <h2 class="govuk-heading-m">Version 1</h2>
-
-      <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
       
+<div class="govuk-summary-card">
+  <div class="govuk-summary-card__title-wrapper">
+    <h2 class="govuk-summary-card__title">
+     Version 2
+    </h2>
+  </div>
+  <div class="govuk-summary-card__content">
+
+      <form action="v2/is-complaint/start" method="post" novalidate>
+        {% set contactReason = 'Complain about the insolvency service test' %}
+        <button class="govuk-link" data-module="govuk-button">
+          Complain about the Insolvency Service
+        </button>
+      </form>
+  </div>
+</div> 
+
+      
+<div class="govuk-summary-card">
+  <div class="govuk-summary-card__title-wrapper">
+    <h2 class="govuk-summary-card__title">
+     Version 1
+    </h2>
+  </div>
+  <div class="govuk-summary-card__content">
+  <ul class="govuk-list">
+    <li>
       <form action="v1/general-enquiry/start" method="post">
         {% set contactReason = 'General enquiry' %}
         <button class="govuk-link" data-module="govuk-button">
           General enquiries   
         </button>
       </form>
-
-      <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
-
-          <form action="v1/ip-complaint/start" method="post" novalidate>
+</li>
+    <li>
+      <form action="v1/phone/start" method="post">
+        {% set contactReason = 'Phone contact' %}
+        <button class="govuk-link" data-module="govuk-button">
+          Phone contact
+        </button>
+      </form> 
+</li>
+    <li>
+    <form action="v1/ip-complaint/start" method="post" novalidate>
         {% set contactReason = 'Complain about an insolvency practitioner' %}
         <button class="govuk-link" data-module="govuk-button">
           Complain about an insolvency practitioner
         </button>
       </form>
-
-      
-        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">    
+ </li>
+ <li>
       <form action="v1/company-complaint/start" method="post" novalidate>
         {% set contactReason = 'Company complaints form test' %}
         <button class="govuk-link" data-module="govuk-button">
          Company complaints form 
         </button>
       </form>
-
-      <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">    
+</li>
+<li>
       <form action="v1/is-complaint/start" method="post" novalidate>
         {% set contactReason = 'Complain about the insolvency service test' %}
         <button class="govuk-link" data-module="govuk-button">
           Complain about the Insolvency Service
         </button>
       </form>
-
-      <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">    
+  </li>
+  <li>
       <form action="v1/ies-breach/start" method="post" novalidate>
         {% set contactReason = 'Investigations and enforcement services breach questionnaire' %}
         <button class="govuk-link" data-module="govuk-button">
          Investigations and Enforcement Services Breach Questionnaire 
         </button>
       </form>
-
-      <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
-
-    
-
-     
+</li>
+  </div>
+</div>   
     </div>
   </div>
 {% endblock %}

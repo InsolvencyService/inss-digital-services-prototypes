@@ -1,12 +1,13 @@
-{% extends "layouts/main-forms.html" %}
+{% extends "layouts/main.html" %}
+
+{% set serviceName = 'Insolvency Service' %}
 
 {% block pageTitle %}
-  {{ serviceName }} – {{ data.contactReason }}
+ {{ serviceName }} – {{ data.contactReason }}
 {% endblock %}
 
-
-
 {% block beforeContent %}
+
   {{ govukBackLink({
   text: "Back",
   href: "javascript:window.history.back()"
@@ -14,21 +15,17 @@
 {% endblock %}
 
 {% block content %}
-  <div class="govuk-grid-row">
+ <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-
-    <form action="complaint-details" method="post" novalidate>
-
-
-
-
-
+      <form action="uploadDocumentsRoute" method="post" novalidate>
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
 
 {{ govukRadios({
-  name: "isComplainedBefore",
+  classes: "govuk-radios--inline",
+  name: "uploadDocuments",
   fieldset: {
     legend: {
-      text: "Have you complained about this before?",
+      text: "Do you want to provide us with any documents to support your enquiry or complaint?",
       isPageHeading: true,
       classes: "govuk-fieldset__legend--l"
     }
@@ -42,17 +39,13 @@
       value: "No",
       text: "No"
     }
-    
   ]
 }) }}
 
-
-        {{ govukButton({
-          text: "Continue"
-        }) }}
+<button class="govuk-button" data-module="govuk-button">
+Continue
+</button>
       </form>
-
     </div>
   </div>
-
 {% endblock %}

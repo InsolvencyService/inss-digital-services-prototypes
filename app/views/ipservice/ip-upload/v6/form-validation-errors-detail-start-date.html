@@ -1,0 +1,91 @@
+{% extends "layouts/main.html" %}
+
+{% set serviceName = 'Upload redundancy payment forms(RP14/A)' %}
+
+{% block pageTitle %}
+{{ serviceName }} – your form has errors
+{% endblock %}
+
+
+{% block header %}
+  {% include "ipservice/ip-upload/v4/_include-one-login-header.html" %}
+{% endblock %}
+
+
+{% block beforeContent %}
+{{ govukBackLink({
+text: "Back",
+href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+
+    <h1 class="govuk-heading-l">Employer start date</h1>
+    <p class="govuk-body">The employer start date was invalid for 2 employees:</p>
+    <h2 class="govuk-heading-m">How to fix it</h2>
+    <p>The employer start date must be in the format DD/MM/YYYY</p>
+
+    {{ govukTable({
+  caption: "Affected employees",
+  captionClasses: "govuk-table__caption--m",
+  firstCellIsHeader: false,
+  head: [
+    {
+      text: "Fornames"
+    },
+     {
+      text: "Surname"
+    },
+    {
+      text: "Date of birth"
+    },
+      {
+      text: "National"
+    },
+    {
+      text: "Cell value"
+    }
+  ],
+  rows: [
+    [
+      {
+        text: "John"
+      },
+      {
+        text: "Doe"
+      },   {
+        text: "12/12/1980"
+      },
+       {
+        text: "DH232323D"
+      },
+      {
+        text: "30 05 21"
+      }
+    ], [
+      {
+        text: "Alice"
+      },
+      {
+        text: "Rimmer"
+      },   {  
+        text: "18/02/1987"
+      },
+       {
+        text: "JD567332A"
+      },
+      {
+        text: "12 06 "
+      }
+    ]
+  ]
+}) }}
+    
+
+</div>
+  </div>
+  {% endblock %}

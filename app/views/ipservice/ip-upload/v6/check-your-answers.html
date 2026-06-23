@@ -1,0 +1,78 @@
+{% extends "layouts/main.html" %}
+
+{% set serviceName = 'Upload redundancy payment forms(RP14/A)' %}
+
+{% block pageTitle %}
+  {{ serviceName }} – check your answers
+{% endblock %}
+
+
+{% block header %}
+  {% include "ipservice/ip-upload/v4/_include-one-login-header.html" %}
+{% endblock %}
+
+
+{% block beforeContent %}
+  {{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+   <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+  <h1 class="govuk-heading-l">Check your answers before submitting the form</h1>
+
+  <p class="govuk-body">We have matched to the following employer</p>
+  <dl class="govuk-summary-list">
+     <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+ Enter your 10 character reference number
+    </dt>
+    <dd class="govuk-summary-list__value">
+{{ data['caseReferenceNumber'] | default('CN98765432', true) }}
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link" href="case-reference-number.html">Change<span class="govuk-visually-hidden">case reference number</span></a>
+    </dd>
+  </div>   
+  
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+Employer name
+    </dt>
+    <dd class="govuk-summary-list__value">
+	Company 1 Ltd
+    </dd>
+  </div>
+   <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+Is this the correct employer name?
+    </dt>
+    <dd class="govuk-summary-list__value">
+{{ data['employerName'] | default('Yes', true) }}
+    </dd>
+  </div>
+  </dl>
+
+    
+  <p class="govuk-body">Your form has passed initial validation.</p>
+    <dl class="govuk-summary-list">
+    <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+ Uploaded document 
+    </dt>
+    <dd class="govuk-summary-list__value">
+{{ data['file-upload-1'] | default('Test.xml', true) }}
+    </dd>
+  </div>
+</dl>
+  {{ govukButton({
+  text: "Submit",
+  href: "confirmation.html"
+}) }}
+
+
+    </div>
+{% endblock %}
