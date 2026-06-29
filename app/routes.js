@@ -428,7 +428,7 @@ router.post('/customer-forms/v1/company-complaint/start', function(request, resp
 
 router.post('/customer-forms/v1/is-complaint/start', function(request, response) {
 
-    request.session.data['contactReason'] = 'Complain about the insolvency service'
+    request.session.data['contactReason'] = 'Complain about the Insolvency Service'
     request.session.data['organisation'] = 'false'
     request.session.data['address'] = 'false'
     request.session.data['dob'] = 'false'
@@ -539,6 +539,15 @@ router.post('/customer-forms/v1/phoneRoute', function(request, response) {
         response.redirect("/customer-forms/v1/ies-breach/question")
     }
 })
+
+
+router.post('/customer-forms/v2/is-complaint/start', function(request, response) {
+
+    request.session.data['contactReason'] = 'Complain about the Insolvency Service'
+    response.redirect("/customer-forms/v2/is-complaint/start")
+
+})
+
 
 
 

@@ -265,4 +265,35 @@ router.post('/customer-forms/v2/is-complaint/confirm-submission', function (requ
 })
 
 
+router.post('/customer-forms/v2/general-enquiry/generalEnquiries', function (request, response) {
+ 
+    var enquiryChoice = request.session.data['generalEnquiry']
+    
+    if (enquiryChoice == "redundancy") {
+    response.redirect('/customer-forms/v2/general-enquiry/redundancy')
+  } 
+  
+  else if (enquiryChoice == "debt relief order") {
+    response.redirect('/customer-forms/v2/general-enquiry/dro')
+  }
+
+    else if (enquiryChoice == "bankruptcy") {
+    response.redirect('/customer-forms/v2/general-enquiry/bankruptcy')
+  }
+
+
+  else if (enquiryChoice == "breathing space") {
+    response.redirect('/customer-forms/v2/general-enquiry/breathing-space')
+  }
+
+  else if (enquiryChoice == "I want to make a complaint") {
+    response.redirect('/customer-forms/v2/general-enquiry/wrong-form')
+  }
+  
+  else {
+    response.redirect('/customer-forms/v2/general-enquiry/name')
+  }
+})
+
+
 module.exports = router

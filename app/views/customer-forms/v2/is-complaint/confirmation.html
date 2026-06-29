@@ -1,4 +1,4 @@
-{% extends "layouts/main.html" %}
+{% extends "layouts/main-forms.html" %}
 
 {% set serviceName = 'Insolvency Service' %}
 
@@ -12,40 +12,28 @@
 {% block content %}
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    {% call govukPanel({
-      titleText: "Complaint submitted",
-      html: "Your reference number is:<br><strong>INS-" + data['reference-number'] | default('000000') + "</strong>"
-    }) %}
-    {% endcall %}
+{% call govukPanel({
+  titleText: "Complaint submitted"
+}) %}
+  Your reference number<br>
+  <strong>HDJ2123F</strong>
+{% endcall %}
 
     <h2 class="govuk-heading-m">What happens next</h2>
-    <p class="govuk-body">We've received your complaint and will review it.</p>
-    <p class="govuk-body">We'll contact you using the email address you provided (<strong>{{ data['email'] }}</strong>) to confirm we've received your complaint and provide updates.</p>
+     <p class="govuk-body">
+      We aim to reply to your complaint by email within 10 working days.</p>
 
-    <h3 class="govuk-heading-s">Your reference number</h3>
-    <p class="govuk-body">Keep your reference number for your records: <strong>INS-{{ data['reference-number'] | default('000000') }}</strong></p>
+<p class="govuk-body">
+  A copy of your complaint has been sent to the email address you provided on the form.
+</p>
 
-    <h2 class="govuk-heading-m">Contact us</h2>
-    <p class="govuk-body">If you have any questions about your complaint, please contact:</p>
-    <ul class="govuk-list">
-      <li>
-        <strong>Address:</strong><br>
-        Insolvency Service<br>
-        16th Floor<br>
-        Castle View House<br>
-        East Lane<br>
-        Leeds<br>
-        LS9 8HA
-      </li>
-      <li>
-        <strong>Email:</strong> insolvency@insolvency.gsi.gov.uk
-      </li>
-      <li>
-        <strong>Telephone:</strong> 0300 456 4546
-      </li>
-    </ul>
+<p class="govuk-body">
+  If you have not already tried to resolve your complaint informally with the person you’ve been dealing with or their manager, we may refer your form to the appropriate business area to be dealt with outside of the complaints process.
+</p>
 
-    <p class="govuk-body"><a href="/customer-forms/v2/is-complaint/start" class="govuk-link">Submit another complaint</a></p>
+<p class="govuk-body">
+  Further details of our <a href="https://www.gov.uk/government/organisations/insolvency-service/about/complaints-procedure" class="govuk-link">complaints procedure</a> can be found on GOV.UK.
+</p> 
   </div>
 </div>
 {% endblock %}

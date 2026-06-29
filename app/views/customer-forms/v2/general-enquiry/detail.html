@@ -1,5 +1,6 @@
 {% extends "layouts/main-forms.html" %}
 
+
 {% block pageTitle %}
 {{ serviceName }} – {{ data.contactReason }} - About your complaint
 {% endblock %}
@@ -15,27 +16,26 @@
 {% block content %}
    <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
+
       <form action="upload-guard" method="post" novalidate>
+   <h1 class="govuk-heading-l">
+Your enquiry
+    </h1>
 
+    <p class="govuk-body">Please provide us with as much information as possible to help us deal with your enquiry.</p>
 
-  <h1 class="govuk-heading-l">Your complaint</h1>
-
-<p class="govuk-body">Where possible you should include details like:</p>
-<ul class="govuk-list govuk-list--bullet">
-  <li>the name of any individual that you have spoken to or wish to complain about;</li>
-  <li>details about what has gone wrong or not been handled properly;</li>
-  <li>how you would like us to resolve your complaint.</li>
-</ul>
 
 {{ govukCharacterCount({
-  name: "moreDetail",
-  id: "moreDetail",
+  name: "enquiryDetail",
+  id: "with-hint",
   maxlength: 2000,
-  rows: 10,
   label: {
-    text: "Describe your complaint",
+    text: "Describe your enquiry",
     classes: "govuk-label--m",
     isPageHeading: false
+  },
+  hint: {
+    text: "Do not include personal or financial information like your National Insurance number or credit card details"
   }
 }) }}
 

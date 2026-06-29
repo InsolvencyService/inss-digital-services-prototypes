@@ -14,7 +14,7 @@ https://prototype-kit.service.gov.uk/docs/how-to-use-layouts
     homepageUrl: "/"
   }) }}
 
-  {% if data.contactReason == "Complain about the Insolvency Service" %}
+{% if data.contactReason == "Complain about the Insolvency Service" %}
 {{ govukServiceNavigation({
   serviceName: 'Complain about the Insolvency Service',
   serviceUrl: '/customer-forms/v1/is-complaint/start.html'

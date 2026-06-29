@@ -16,14 +16,13 @@
    <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-  <h1 class="govuk-heading-l">Your complaint is not about a limited company</h1>
+  <h1 class="govuk-heading-l">You are looking to make a complaint</h1>
 
-<h2 class="govuk-heading-m">Other types of complaints</h2> 
+<h2 class="govuk-heading-m">Types of complaints</h2> 
+{% include "customer-forms/v2/Includes/company-complaint-details-reveal.html" %}
 {% include "customer-forms/v2/Includes/is-complaint-details-reveal.html" %}
 {% include "customer-forms/v2/Includes/ip-complaint-details-reveal.html" %}
 {% include "customer-forms/v2/Includes/ies-breach-details-reveal.html" %}
-<p>Or for any other enquires use:</p>
-{% include "customer-forms/v2/Includes/general-enquiry-details-reveal.html" %}
     </div>
   </div>
 {% endblock %}

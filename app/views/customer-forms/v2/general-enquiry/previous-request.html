@@ -1,8 +1,7 @@
 {% extends "layouts/main-forms.html" %}
 
-
 {% block pageTitle %}
-Do you want to provide us with any documents to support your enquiry or complaint? - {{ serviceName }} 
+{{ serviceName }} – {{ data.contactReason }} - About your complaint
 {% endblock %}
 
 {% block beforeContent %}
@@ -14,17 +13,21 @@ Do you want to provide us with any documents to support your enquiry or complain
 {% endblock %}
 
 {% block content %}
- <div class="govuk-grid-row">
+   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-  <form action="uploadDocumentsRoute" method="post" novalidate>
-{% from "govuk/components/radios/macro.njk" import govukRadios %}
+      {% if data.checkAnswers == 'true' %}
+      <form action="../check-your-answers" method="post" novalidate>
+      {% else %}
+      <form action="detail" method="post" novalidate>
+      {% endif %}
+
 
 {{ govukRadios({
   classes: "govuk-radios--inline",
-  name: "uploadDocuments",
+  name: "requestedInformation",
   fieldset: {
     legend: {
-      text: "Do you want to provide us with any documents to support your enquiry or complaint?",
+      text: "Are you supplying information that we requested?",
       isPageHeading: true,
       classes: "govuk-fieldset__legend--l"
     }
@@ -38,8 +41,10 @@ Do you want to provide us with any documents to support your enquiry or complain
       value: "No",
       text: "No"
     }
+    
   ]
 }) }}
+
 
 <button class="govuk-button" data-module="govuk-button">
 Continue

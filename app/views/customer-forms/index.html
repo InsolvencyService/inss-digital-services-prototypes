@@ -29,7 +29,6 @@
   <div class="govuk-summary-card__content">
 
       <form action="v2/is-complaint/start" method="post" novalidate>
-        {% set contactReason = 'Complain about the Insolvency Service' %}
         <button class="govuk-link" data-module="govuk-button">
           Complain about the Insolvency Service
         </button>
@@ -48,7 +47,6 @@
   <ul class="govuk-list">
     <li>
       <form action="v1/general-enquiry/start" method="post">
-        {% set contactReason = 'General enquiry' %}
         <button class="govuk-link" data-module="govuk-button">
           General enquiries   
         </button>
@@ -56,7 +54,7 @@
 </li>
     <li>
     <form action="v1/ip-complaint/start" method="post" novalidate>
-        {% set contactReason = 'Complain about an insolvency practitioner' %}
+
         <button class="govuk-link" data-module="govuk-button">
           Complain about an insolvency practitioner
         </button>
@@ -64,15 +62,15 @@
  </li>
  <li>
       <form action="v1/company-complaint/start" method="post" novalidate>
-        {% set contactReason = 'Company complaints form' %}
+   
         <button class="govuk-link" data-module="govuk-button">
-         Company complaints form 
+         Complain about a limited company
         </button>
       </form>
 </li>
 <li>
       <form action="v1/is-complaint/start" method="post" novalidate>
-        {% set contactReason = 'Complain about the Insolvency Service' %}
+    
         <button class="govuk-link" data-module="govuk-button">
           Complain about the Insolvency Service
         </button>
@@ -80,7 +78,7 @@
   </li>
   <li>
       <form action="v1/ies-breach/start" method="post" novalidate>
-        {% set contactReason = 'Investigations and enforcement services breach questionnaire' %}
+ 
         <button class="govuk-link" data-module="govuk-button">
          Investigations and Enforcement Services Breach Questionnaire 
         </button>
