@@ -15,17 +15,14 @@
 
 {% block content %}
    <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      {% if data.checkAnswers == 'true' %}
-      <form action="../check-your-answers" method="post" novalidate>
-      {% else %}
+        <div class="govuk-grid-column-two-thirds">
       <form action="previous-request" method="post" novalidate>
-      {% endif %}
+   
 
 {% set refHtml %}
 {{ govukInput({
-  id: "casereferenceYes",
-  name: "casereferenceYes",
+  id: "IScaseReferenceYes",
+  name: "IScaseReferenceYes",
   spellcheck: false,
   classes: "govuk-!-width-one-third",
   label: {
@@ -33,16 +30,16 @@
 "
   },
    hint: {
-    text: "This may begin with letters such as LN, DRO, BKT."
+    text: "This may begin with letters such as LN (loss of notice pay), DRO (debt relief order) or BKT (bankrupt)."
   }
 }) }}
 {% endset -%}
 
 {{ govukRadios({
-  name: "referenceNumber",
+  name: "isRef",
   fieldset: {
     legend: {
-      text: "Do you have a reference number?",
+      text: "Do you have an Insolvency Service reference number to support your complaint?",
       isPageHeading: true,
       classes: "govuk-fieldset__legend--l"
     }
@@ -62,6 +59,7 @@
     
   ]
 }) }}
+
 
 <button class="govuk-button" data-module="govuk-button">
 Continue

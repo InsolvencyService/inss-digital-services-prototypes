@@ -14,9 +14,11 @@ function formatSize(bytes) {
   return Math.ceil(bytes / 1024) + 'KB'
 }
 
+
 router.post('/customer-forms/v2/is-complaint/complaintType', function (request, response) {
  
     var isNotListed = request.session.data['complaint']
+    request.session.data['folder'] = 'is-complaint'
     
     if (isNotListed == "my complaint is not listed") {
     response.redirect('/customer-forms/v2/is-complaint/wrong-form')
@@ -26,7 +28,7 @@ router.post('/customer-forms/v2/is-complaint/complaintType', function (request, 
       delete request.session.data['returnTo']
       response.redirect('/customer-forms/v2/is-complaint/check-your-answers')
     } else {
-      response.redirect('/customer-forms/v2/is-complaint/name')
+      response.redirect('/customer-forms/v2/name')
     }
   }
 })
@@ -92,22 +94,14 @@ function captureReturnTo(req, res, next) {
   next()
 }
 
-router.get('/customer-forms/v2/is-complaint/name', captureReturnTo, function (request, response) {
-  response.render('customer-forms/v2/is-complaint/name')
+router.get('/customer-forms/v2/name', captureReturnTo, function (request, response) {
+  response.render('customer-forms/v2/name')
 })
 
-router.post('/customer-forms/v2/is-complaint/email', function (request, response) {
-  // standard flow would go to the next page, but if returnTo is set go back
-  if (request.session.data['returnTo'] === 'check-your-answers') {
-    delete request.session.data['returnTo']
-    response.redirect('/customer-forms/v2/is-complaint/check-your-answers')
-  } else {
-    response.redirect('/customer-forms/v2/is-complaint/do-you-have-an-insolvency-reference-number')
-  }
-})
 
-router.get('/customer-forms/v2/is-complaint/email', captureReturnTo, function (request, response) {
-  response.render('customer-forms/v2/is-complaint/email')
+
+router.get('/customer-forms/v2/email', captureReturnTo, function (request, response) {
+  response.render('customer-forms/v2/email')
 })
 
 router.post('/customer-forms/v2/is-complaint/do-you-have-an-insolvency-reference-number', function (request, response) {
@@ -150,18 +144,18 @@ router.get('/customer-forms/v2/is-complaint/complaint-details', captureReturnTo,
 })
 
 
-router.post('/customer-forms/v2/is-complaint/uploadDocumentsRoute', function (request, response) {
+router.post('/customer-forms/v2/uploadDocumentsRoute', function (request, response) {
  
     var uploadDocuments = request.session.data['uploadDocuments']
     
     if (uploadDocuments == "Yes") {
-    response.redirect('/customer-forms/v2/is-complaint/upload')
+    response.redirect('/customer-forms/v2/upload')
   } else {
-    response.redirect('/customer-forms/v2/is-complaint/check-your-answers')
+    response.redirect('/customer-forms/v2/'+ request.session.data['folder'] +'/check-your-answers')
   }
 })
 
-router.post('/customer-forms/v2/is-complaint/upload-list', function (request, response) {
+router.post('/customer-forms/v2/upload-list', function (request, response) {
   var uploadedFiles = request.body.fileUpload
 
   if (typeof uploadedFiles === 'string') {
@@ -212,28 +206,28 @@ router.post('/customer-forms/v2/is-complaint/upload-list', function (request, re
   request.session.data['totalUploadedSizeBytes'] = totalUploadedBytes
   request.session.data['totalUploadedSize'] = formatSize(totalUploadedBytes)
 
-  response.redirect('/customer-forms/v2/is-complaint/upload-list')
+  response.redirect('/customer-forms/v2/upload-list')
 })
 
-router.post('/customer-forms/v2/is-complaint/uploadAnotherDocument', function (request, response) {
+router.post('/customer-forms/v2/uploadAnotherDocument', function (request, response) {
   delete request.session.data['fileRemoved']
   if (request.session.data['uploadAnotherDocument'] === 'yes') {
-    response.redirect('/customer-forms/v2/is-complaint/upload')
+    response.redirect('/customer-forms/v2/upload')
   } else {
-    response.redirect('/customer-forms/v2/is-complaint/check-your-answers')
+    response.redirect('/customer-forms/v2/' + request.session.data['folder'] + '/check-your-answers')
   }
 })
 
-router.get('/customer-forms/v2/is-complaint/remove-upload', function (request, response) {
+router.get('/customer-forms/v2/remove-upload', function (request, response) {
   var fileToRemove = request.query.file || request.session.data['fileToRemove'] || ''
 
   request.session.data['fileToRemove'] = fileToRemove
-  response.render('customer-forms/v2/is-complaint/remove-upload', {
+  response.render('customer-forms/v2/remove-upload', {
     fileToRemove: fileToRemove
   })
 })
 
-router.post('/customer-forms/v2/is-complaint/removeUpload', function (request, response) {
+router.post('/customer-forms/v2/removeUpload', function (request, response) {
   var removeDocuments = request.session.data['removeDocuments']
   var fileToRemove = request.session.data['fileToRemove'] || ''
 
@@ -257,11 +251,29 @@ router.post('/customer-forms/v2/is-complaint/removeUpload', function (request, r
   delete request.session.data['fileToRemove']
   delete request.session.data['removeDocuments']
 
-  response.redirect('/customer-forms/v2/is-complaint/upload-list')
+  response.redirect('/customer-forms/v2/upload-list')
 })
 
-router.post('/customer-forms/v2/is-complaint/confirm-submission', function (request, response) {
-  response.redirect('/customer-forms/v2/is-complaint/confirmation')
+router.post('/customer-forms/v2/confirm-submission', function (request, response) {
+  response.redirect('/customer-forms/v2/confirmation')
+})
+
+
+router.post('/customer-forms/v2/emailRoute', function (request, response) {
+
+  var folder = request.session.data['folder']
+
+    if (request.session.data['returnTo'] === 'check-your-answers') {
+    delete request.session.data['returnTo']
+    response.redirect('/customer-forms/v2/' + folder + '/check-your-answers')
+    }
+      else if (folder == "is-complaint") {
+    response.redirect('/customer-forms/v2/is-complaint/do-you-have-an-insolvency-reference-number')
+  } 
+     else if (folder == "general-enquiry") {
+    response.redirect('/customer-forms/v2/general-enquiry/do-you-have-an-insolvency-reference-number')
+  } 
+    
 })
 
 
@@ -269,20 +281,20 @@ router.post('/customer-forms/v2/general-enquiry/generalEnquiries', function (req
  
     var enquiryChoice = request.session.data['generalEnquiry']
     
-    if (enquiryChoice == "redundancy") {
+    if (enquiryChoice == "Redundancy") {
     response.redirect('/customer-forms/v2/general-enquiry/redundancy')
   } 
   
-  else if (enquiryChoice == "debt relief order") {
+  else if (enquiryChoice == "Debt relief order") {
     response.redirect('/customer-forms/v2/general-enquiry/dro')
   }
 
-    else if (enquiryChoice == "bankruptcy") {
+    else if (enquiryChoice == "Bankruptcy") {
     response.redirect('/customer-forms/v2/general-enquiry/bankruptcy')
   }
 
 
-  else if (enquiryChoice == "breathing space") {
+  else if (enquiryChoice == "Breathing space") {
     response.redirect('/customer-forms/v2/general-enquiry/breathing-space')
   }
 
@@ -291,7 +303,54 @@ router.post('/customer-forms/v2/general-enquiry/generalEnquiries', function (req
   }
   
   else {
-    response.redirect('/customer-forms/v2/general-enquiry/name')
+    response.redirect('/customer-forms/v2/general-enquiry/wrong-form')
+  }
+})
+
+
+router.post('/customer-forms/v2/is-complaint/start', function(request, response) {
+
+    request.session.data['contactReason'] = 'Complain about the Insolvency Service'
+    request.session.data['folder'] = 'is-complaint'
+    request.session.data['version'] = 'v2'
+
+    response.redirect("/customer-forms/v2/is-complaint/start")
+
+})
+
+router.post('/customer-forms/v2/general-enquiry/start', function(request, response) {
+
+    request.session.data['contactReason'] = 'General enquiry'
+    request.session.data['folder'] = 'general-enquiry'
+    request.session.data['version'] = 'v2'
+
+    response.redirect("/customer-forms/v2/general-enquiry/start")
+
+})
+
+router.post('/customer-forms/v2/general-enquiry/dro', function (request, response) {
+ 
+    var enquiryChoice = request.session.data['enquirySubCategory']
+    
+    if (enquiryChoice == "Yes") {
+    response.redirect('/customer-forms/v2/name')
+  } 
+ 
+  else {
+    response.redirect('/customer-forms/v2/general-enquiry/options-for-dealing-with-your-debts')
+  }
+})
+
+router.post('/customer-forms/v2/general-enquiry/breathingSpace', function (request, response) {
+ 
+    var enquiryChoice = request.session.data['enquirySubCategory']
+    
+    if (enquiryChoice == "Yes") {
+    response.redirect('/customer-forms/v2/name')
+  } 
+ 
+  else {
+    response.redirect('/customer-forms/v2/general-enquiry/options-for-dealing-with-your-debts')
   }
 })
 

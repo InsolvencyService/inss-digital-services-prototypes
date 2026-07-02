@@ -53,38 +53,36 @@
   name: "generalEnquiry",
   fieldset: {
     legend: {
-      text: "What are you complaining about?",
+      text: "What is your enquiry about?",
       isPageHeading: false,
       classes: "govuk-fieldset__legend--m"
     }
   },
-  hint: {
-    text: "Select all options that apply"
-  },
+  
   items: [
     {
-      value: "redundancy",
-      text: "redundancy"
+      value: "Redundancy",
+      text: "Redundancy"
     },
     {
-      value: "debt relief order",
-      text: "debt relief order"
+      value: "Debt relief order",
+      text: "Debt relief order"
     },
     {
-      value: "bankruptcy",
-      text: "bankruptcy"
+      value: "Bankruptcy",
+      text: "Bankruptcy"
     },
     {
-      value: "company liquidation",
-      text: "company liquidation"
+      value: "Company liquidation",
+      text: "Company liquidation"
     },
     {
-      value: "breathing space",
-      text: "breathing space"
+      value: "Breathing space",
+      text: "Breathing space"
     },
     {
-      value: "other",
-      text: "other",
+      value: "Other",
+      text: "Other",
       conditional: {
       html: emailHtml
       }
@@ -95,7 +93,10 @@
     {
       value: "I want to make  a complaint",
       text: "I want to make a complaint",
-      behaviour: "exclusive"
+      behaviour: "exclusive",
+      hint: {
+        text: "For example, you want to complain about an insolvency practitioner or a disqualified director."
+      }
     }
   ]
 }) }}

@@ -17,17 +17,45 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-l">Check your answers</h1>
-    <p class="govuk-body">Review the information you have provided before submitting your complaint.</p>
+    <p class="govuk-body">Review the information you have provided before submitting your enquiry.</p>
 
-    <h2 class="govuk-heading-m">Your type of complaint</h2>
+    <h2 class="govuk-heading-m">Your type of enquiry</h2>
   
     <div class="govuk-summary-list">
       <div class="govuk-summary-list__row">
-        <div class="govuk-summary-list__key">What are you complaining about?</div>
+        <div class="govuk-summary-list__key">What is your enquiry about?</div>
         <div class="govuk-summary-list__value">
-          {{ data['complaint'] or 'you have made mistakes when handling my case' }}</div>
+          {{ data['generalEnquiry'] or 'Redundancy' }}</div>
         <div class="govuk-summary-list__actions"><a class="govuk-link" href="start?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> complaint type</span></a></div>
       </div>
+
+      {% if data['enquirySubCategory'] and data['generalEnquiry'] == 'Redundancy' %}
+      <div class="govuk-summary-list__row">
+        <div class="govuk-summary-list__key">What area of redundancy are you enquiring about?</div>
+        <div class="govuk-summary-list__value">{{ data['enquirySubCategory'] }}</div>
+        <div class="govuk-summary-list__actions"><a class="govuk-link" href="redundancy?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> enquiry sub-category</span></a></div>
+      </div>
+      {% elif data['enquirySubCategory'] and data['generalEnquiry'] == 'Bankruptcy' %}
+      <div class="govuk-summary-list__row">
+        <div class="govuk-summary-list__key">What area of bankruptcy are you enquiring about?</div>
+        <div class="govuk-summary-list__value">{{ data['enquirySubCategory'] }}</div>
+        <div class="govuk-summary-list__actions"><a class="govuk-link" href="bankruptcy?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> enquiry sub-category</span></a></div>
+      </div>
+      {% elif data['enquirySubCategory'] and data['generalEnquiry'] == 'Debt relief order' %}
+      <div class="govuk-summary-list__row">
+        <div class="govuk-summary-list__key">Is your enquiry about an existing dept relief order?</div>
+        <div class="govuk-summary-list__value">{{ data['enquirySubCategory'] }}</div>
+        <div class="govuk-summary-list__actions"><a class="govuk-link" href="dro?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> enquiry sub-category</span></a></div>
+      </div>
+      {% elif data['enquirySubCategory'] and data['generalEnquiry'] == 'Breathing space' %} 
+      <div class="govuk-summary-list__row">
+        <div class="govuk-summary-list__key">Is your enquiry about an existing breathing space?</div>
+        <div class="govuk-summary-list__value">{{ data['enquirySubCategory'] }}</div>
+        <div class="govuk-summary-list__actions"><a class="govuk-link" href="breathing-space?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> enquiry sub-category</span></a></div>
+      </div>
+      {% endif %}
+
+
     </div>
 
     <h2 class="govuk-heading-m">Your details</h2>
@@ -55,8 +83,8 @@
       </div>
       {%- endif -%}
       <div class="govuk-summary-list__row">
-        <div class="govuk-summary-list__key">Have you complained about this before?</div>
-        <div class="govuk-summary-list__value">{{ data['complaintBefore'] or 'No' }}</div>
+        <div class="govuk-summary-list__key">Are you suppling information that we have requested?</div>
+        <div class="govuk-summary-list__value">{{ data['requestedInformation'] or 'No' }}</div>
         <div class="govuk-summary-list__actions"><a class="govuk-link" href="have-you-complained-about-this-before?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> previous complaint</span></a></div>
       </div>
     </div>

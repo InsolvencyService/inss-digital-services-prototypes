@@ -541,12 +541,6 @@ router.post('/customer-forms/v1/phoneRoute', function(request, response) {
 })
 
 
-router.post('/customer-forms/v2/is-complaint/start', function(request, response) {
-
-    request.session.data['contactReason'] = 'Complain about the Insolvency Service'
-    response.redirect("/customer-forms/v2/is-complaint/start")
-
-})
 
 
 

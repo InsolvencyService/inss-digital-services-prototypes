@@ -16,31 +16,18 @@
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-    <form action="have-you-complained-about-this-before" method="post" novalidate>
 
 
 
-{% set refHtml %}
-{{ govukInput({
-  id: "IScaseReferenceYes",
-  name: "IScaseReferenceYes",
-  spellcheck: false,
-  classes: "govuk-!-width-one-third",
-  label: {
-    text: "What was your reference number?	
-"
-  },
-   hint: {
-    text: "This may begin with letters such as LN (loss of notice pay), DRO (debt relief order) or BKT (bankrupt).This may begin with letters such as LN, DRO, BKT."
-  }
-}) }}
-{% endset -%}
+    <form action="/customer-forms/v2/general-enquiry/dro" method="post" novalidate>
+
 
 {{ govukRadios({
-  name: "isRef",
+  classes: "govuk-radios--inline",
+  name: "enquirySubCategory",
   fieldset: {
     legend: {
-      text: "Do you have an Insolvency Service reference number?",
+      text: "Is your enquiry about an existing dept relief order?",
       isPageHeading: true,
       classes: "govuk-fieldset__legend--l"
     }
@@ -48,18 +35,16 @@
   items: [
     {
       value: "Yes",
-      text: "Yes",
-      conditional: {
-        html: refHtml
-      }
+      text: "Yes"
     },
     {
       value: "No",
       text: "No"
     }
-    
   ]
 }) }}
+
+
 
 
         {{ govukButton({
@@ -68,6 +53,7 @@
       </form>
 
     </div>
-  </div>
+ </div>
 
+ 
 {% endblock %}

@@ -1,0 +1,94 @@
+{% extends "layouts/main-forms.html" %}
+
+{% block pageTitle %}
+  {{ serviceName }} – {{ data.contactReason }}
+{% endblock %}
+
+
+
+{% block beforeContent %}
+  {{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+
+
+    <form action="/customer-forms/v2/name" method="post" novalidate>
+
+
+
+
+
+
+
+
+{{ govukRadios({
+  name: "enquirySubCategory",
+  fieldset: {
+    legend: {
+      text: "What area of redundancy are you enquiring about?",
+      isPageHeading: true,
+      classes: "govuk-fieldset__legend--l"
+    }
+  },
+  items: [
+    {
+      value: "Making a redundancy claim",
+      text: "Making a redundancy claim"
+    },
+    {
+      value: "Redundancy pay",
+      text: "Redundancy pay"
+    },
+    {
+      value: "Wages / money you're owed",
+      text: "Wages / money you're owed"
+    },
+    {
+      value: "Holiday pay taken but not paid",
+      text: "Holiday pay taken but not paid"
+    },
+    {
+      value: "Holiday outstanding",
+      text: "Holiday outstanding"
+    },
+    {
+      value: "Compensator notice pay",
+      text: "Compensator notice pay"
+    },
+    {
+      value: "Amendments",
+      text: "Amendments"
+    },
+    {
+      value: "Protective award",
+      text: "Protective award"
+    },
+    {
+      value: "Solvent case set up form",
+      text: "Solvent case set up form"
+    },
+    {
+      value: "Tribunal award",
+      text: "Tribunal award"
+    }
+  ]
+}) }}
+
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+      </form>
+
+    </div>
+ </div>
+
+ 
+{% endblock %}

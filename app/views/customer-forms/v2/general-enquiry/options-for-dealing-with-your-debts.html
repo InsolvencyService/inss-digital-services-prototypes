@@ -1,0 +1,51 @@
+{% extends "layouts/main-forms.html" %}
+
+{% block pageTitle %}
+{{ serviceName }} – {{ data.contactReason }} - About your complaint
+{% endblock %}
+
+{% block beforeContent %}
+
+  {{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+   <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+  <h1 class="govuk-heading-l">Options for dealing with your debts</h1>
+<p class="govuk-body">f you owe people money (your ‘creditors’) you can make arrangements to pay your debts. Your options depend on the amount of money and assets you have.</p>
+<h2 class="govuk-heading-m">Where you can get help</h2>
+
+<p class="govuk-body">Speak to a debt adviser to get help choosing the best way to deal with your debt.
+MoneyHelper has information about <a href="https://www.moneyhelper.org.uk/en/money-troubles/dealing-with-debt">debt management</a> and <a href="https://www.moneyhelper.org.uk/en/money-troubles/dealing-with-debt/debt-advice-locator">free debt advisory services</a>.</p>
+    
+<p class="govuk-body">Money advisors offer independent advice to tailer a solution that suits your circumstances, they may offer any of the following solutions to help you deal with your depts.</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>
+Breathing Space(Dept Respite Scheme)
+</li>
+  <li>
+Debt Management Plans
+</li>
+  <li>
+Administration orders
+</li>
+  <li>
+Individual Voluntary Arrangements
+</li>
+  <li>
+Debt Relief Orders
+</li>
+</ul>
+
+<p class="govuk-body">Read more on your <a href="https://www.gov.uk/options-for-dealing-with-your-debts">options for dealing with your debts</a>.</p>
+
+</div>
+
+
+  </div>
+{% endblock %}

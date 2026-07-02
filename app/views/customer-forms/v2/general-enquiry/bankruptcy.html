@@ -1,0 +1,66 @@
+{% extends "layouts/main-forms.html" %}
+
+{% block pageTitle %}
+  {{ serviceName }} – {{ data.contactReason }}
+{% endblock %}
+
+
+
+{% block beforeContent %}
+  {{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+
+
+    <form action="/customer-forms/v2/name" method="post" novalidate>
+
+
+
+
+
+
+
+
+{{ govukRadios({
+  name: "enquirySubCategory",
+  fieldset: {
+    legend: {
+      text: "What area of bankruptcy are you enquiring about?",
+      isPageHeading: true,
+      classes: "govuk-fieldset__legend--l"
+    }
+  },
+  items: [
+    {
+      value: "Applying for bankruptcy",
+      text: "Applying for bankruptcy"
+    },
+    {
+      value: "Exiting bankruptcy",
+      text: "Exiting bankruptcy"
+    },
+    {
+      value: "Discharge from bankruptcy",
+      text: "Discharge from bankruptcy"
+    }
+  ]
+}) }}
+
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+      </form>
+
+    </div>
+ </div>
+
+ 
+{% endblock %}
