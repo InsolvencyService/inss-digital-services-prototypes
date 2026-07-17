@@ -14,18 +14,18 @@
 {% block content %}
    <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <form action="/customer-forms/v2/emailRoute" method="post" novalidate>
+
+
+      <form action="other-addresses" method="post" novalidate>
+
 
 <div class="govuk-form-group">
     <h1 class="govuk-label-wrapper">
       <label class="govuk-label govuk-label--l" for="email">
-        What is your email address?
+        What is the company's website address? (optional)
       </label>
     </h1>
-  <div id="email-hint" class="govuk-hint">
-    We’ll only use this to contact you about your enquiry or complaint.
-  </div>
-  <input class="govuk-input" id="email" name="email" type="email" value="{{ data['email']}}" spellcheck="false" aria-describedby="email-hint" autocomplete="email">
+  <input class="govuk-input" id="companyWebsite" name="companyWebsite" type="url" value="{{ data['companyWebsite']}}" spellcheck="false" aria-describedby="website-hint" autocomplete="url">
 </div>
 
 

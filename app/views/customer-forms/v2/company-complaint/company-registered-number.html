@@ -1,0 +1,45 @@
+{% extends "layouts/main-forms.html" %}
+{% set serviceName = 'Insolvency Service' %}
+{% if data['anotherCompany'] == "Yes" %}
+  {% set companyRegisteredNumber = 'companyRegisteredNumber2' %}
+{% else %}
+  {% set companyRegisteredNumber = 'companyRegisteredNumber1' %}
+{% endif %}
+
+
+{% block pageTitle %}
+{{ serviceName }} – {{ data.contactReason }} - Your details
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+   <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form action="/customer-forms/v2/company-complaint/dissolvedCompany" method="post" novalidate>
+
+<div class="govuk-form-group">
+  <h1 class="govuk-label-wrapper">
+    <label class="govuk-label govuk-label--l" for="event-name">
+     Whats the companies registered number?(optional)
+    </label>
+  </h1>
+   <div id="event-name-hint" class="govuk-hint">
+    You can find this on the Companies House. Providing the company number helps us identify the company correctly.
+  </div>
+  <input class="govuk-input" id="companyRegisteredNumber" name="{{ companyRegisteredNumber }}" type="text" spellcheck="false" value="{{ data[companyRegisteredNumber] }}" aria-describedby="Value-hint" inputmode="text">
+</div>
+
+
+<button class="govuk-button" data-module="govuk-button">
+Continue
+</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

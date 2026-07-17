@@ -1,0 +1,58 @@
+{% extends "layouts/main-forms.html" %}
+
+{% if data['anotherCompany'] == "Yes" %}
+  {% set outsideUkGuard = 'outsideUkGuard2' %}
+{% else %}
+  {% set outsideUkGuard = 'outsideUkGuard1' %}
+{% endif %}
+
+
+{% block pageTitle %}
+{{ serviceName }} – {{ data.contactReason }} - About your complaint
+{% endblock %}
+
+{% block beforeContent %}
+
+  {{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+   <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form action="/customer-forms/v2/company-complaint/companyOutsideUK" method="post" novalidate>
+  
+
+{{ govukRadios({
+  classes: "govuk-radios--inline",
+  name: "outsideUkGuard",
+  fieldset: {
+    legend: {
+      text: "Was the company incorporated outside of the UK?",
+      isPageHeading: true,
+      classes: "govuk-fieldset__legend--l"
+    }
+  },
+  items: [
+    {
+      value: "Yes",
+      text: "Yes"
+    
+    },
+    {
+      value: "No",
+      text: "No"
+    }
+    
+  ]
+}) }}
+
+<button class="govuk-button" data-module="govuk-button">
+Continue
+</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

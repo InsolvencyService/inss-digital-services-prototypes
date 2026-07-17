@@ -31,9 +31,9 @@ https://prototype-kit.service.gov.uk/docs/how-to-use-layouts
   serviceUrl: '/customer-forms/' + data.version + '/ip-complaint/start.html'
 }) }}
 
-{% elif data.contactReason == "Company complaints form" %}
+{% elif data.contactReason == "Complain about a limited company" %}
 {{ govukServiceNavigation({
-  serviceName: 'Company complaints form',
+  serviceName: 'Complain about a limited company',
   serviceUrl: '/customer-forms/' + data.version + '/company-complaint/start.html'
 }) }}
 {% elif data.contactReason == "Investigations and enforcement services breach questionnaire" %}

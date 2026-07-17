@@ -1,6 +1,12 @@
 {% extends "layouts/main-forms.html" %}
 {% set serviceName = 'Insolvency Service' %}
 
+{% if data['anotherCompany'] == "Yes" %}
+  {% set companyName = 'companyName2' %}
+{% else %}
+  {% set companyName = 'companyName1' %}
+{% endif %}
+
 
 
 {% block pageTitle %}
@@ -15,21 +21,22 @@
 {% endblock %}
 
 {% block content %}
+
    <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <form action="email" method="post" novalidate>
+      {% if data.checkAnswers == 'true' %}
+      <form action="check-your-answers" method="post" novalidate>
+      {% else %}
+      <form action="company-registered-number" method="post" novalidate>
+      {% endif %}  
 <div class="govuk-form-group">
   <h1 class="govuk-label-wrapper">
     <label class="govuk-label govuk-label--l" for="event-name">
-     What is your full name?  
-    </label>
+What's the name of the company?
+</label>  
   </h1>
-  <div id="full-name-hint" class="govuk-hint">
-    Enter your first name, middle name (if applicable), and last name(s)
-  </div>
-  <input class="govuk-input" id="full-name" name="full-name" type="text" spellcheck="false" value="{{ data['full-name'] }}" aria-describedby="Value-hint" inputmode="text">
+  <input class="govuk-input" id="company-name" name="{{ companyName }}" type="text" spellcheck="false" value="{{ data[companyName] or '' }}" aria-describedby="Value-hint" inputmode="text">
 </div>
-
 
 <button class="govuk-button" data-module="govuk-button">
 Continue

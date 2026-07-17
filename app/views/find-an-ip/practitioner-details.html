@@ -2,7 +2,7 @@
 
 {% set serviceName = 'Find an insolvency practitioner' %}
 
-{% set pageName="Practitioner details" %}
+{% set pageName="Insolvency practitioner details" %}
 
 {% block beforeContent %}
   {{ govukBackLink({
@@ -44,7 +44,7 @@
         <dt class="govuk-summary-list__key">Telephone</dt>
         <dd class="govuk-summary-list__value">
           {% if data.telephone %}
-            <a href="tel:{{ data.telephone }}" class="govuk-link">{{ data.telephone }}</a>
+           {{ data.telephone }}</a>
           {% else %}
             Not available
           {% endif %}
@@ -80,6 +80,10 @@ EC2M 1JH</dd>
         <dt class="govuk-summary-list__key">Telephone</dt>
         <dd class="govuk-summary-list__value">020 8152 4980</dd>
       </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Fax</dt>
+        <dd class="govuk-summary-list__value">020 8152 4981</dd>
+      </div>
 </dl>
 <form action="/find-an-ip/find-a-insolvency-practitioner" method="post" novalidate>
 {{ govukButton({
@@ -89,4 +93,8 @@ EC2M 1JH</dd>
   </div>
 </div>
 
+{% endblock %}
+
+{% block footer %}
+  {% include "find-an-ip/includes/footer-content.html" %}
 {% endblock %}

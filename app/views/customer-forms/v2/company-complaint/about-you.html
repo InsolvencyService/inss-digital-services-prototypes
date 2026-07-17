@@ -1,0 +1,56 @@
+{% extends "layouts/main-forms.html" %}
+
+{% block pageTitle %}
+  {{ serviceName }} – {{ data.contactReason }}
+{% endblock %}
+
+
+
+{% block beforeContent %}
+  {{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-l">About you</h1>
+      <p class="govuk-body">You are able to submit your complaint anonymously, however if you do so, we will not be able to contact you if further information is needed.</p>
+<p class="govuk-body">If you provide your email address, a copy of your complaint will be forwarded to you on submission.</p>
+  
+
+    <form action="/customer-forms/v2/company-complaint/aboutYou" method="post" novalidate>
+{{ govukRadios({
+  classes: "govuk-radios--inline",
+  name: "aboutYou",
+  fieldset: {
+    legend: {
+      text: "Do you want to provide your contact information?",
+      isPageHeading: false,
+      classes: "govuk-fieldset__legend--m"
+    }
+  },
+  items: [
+    {
+      value: "Yes",
+      text: "Yes"
+    },
+    {
+      value: "No",
+      text: "No"
+    }
+  ]
+}) }}
+      
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+      </form>
+
+    </div>
+  </div>
+
+ 
+{% endblock %}

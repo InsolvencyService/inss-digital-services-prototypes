@@ -2,7 +2,7 @@
 
 {% set serviceName = 'Find an insolvency practitioner' %}
 
-{% set pageName="Search" %}
+{% set pageName="Search results" %}
 
 
 {% block beforeContent %}
@@ -35,7 +35,7 @@
   </div>
   <div class="govuk-grid-row">
 
-    <div class="govuk-grid-column-three-quarters">
+    <div class="govuk-grid-column-full">
 
       <p class="govuk-body">Showing 1 to 10 of 14 results for <strong>{{ data.searchTerm | default('search term') }}</strong></p>
       <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
@@ -111,4 +111,8 @@
   </div>
 </div>
 
+{% endblock %}
+
+{% block footer %}
+  {% include "find-an-ip/includes/footer-content.html" %}
 {% endblock %}

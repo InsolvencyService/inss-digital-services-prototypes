@@ -15,7 +15,7 @@
 
 {% block content %}
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
+  <div class="govuk-grid-column-full">
     <h1 class="govuk-heading-l">Check your answers</h1>
     <p class="govuk-body">Review the information you have provided before submitting your enquiry.</p>
 
@@ -89,12 +89,12 @@
       </div>
     </div>
 
-    <h2 class="govuk-heading-m">Your complaint</h2>
+    <h2 class="govuk-heading-m">Your enquiry</h2>
     <div class="govuk-summary-list">
       <div class="govuk-summary-list__row">
-        <div class="govuk-summary-list__key">Describe your complaint</div>
-        <div class="govuk-summary-list__value">{{ data['moreDetail'] or 'Not provided' }}</div>
-        <div class="govuk-summary-list__actions"><a class="govuk-link" href="complaint-details?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> complaint description</span></a></div>
+        <div class="govuk-summary-list__key">Describe your enquiry</div>
+        <div class="govuk-summary-list__value">{{ data['enquiryDetail'] or 'Enquiry details' }}</div>
+        <div class="govuk-summary-list__actions"><a class="govuk-link" href="detail?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> complaint description</span></a></div>
       </div>
     </div>
 <h2 class="govuk-heading-m">Supporting documents</h2>

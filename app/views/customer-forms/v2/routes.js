@@ -45,7 +45,7 @@ router.post('/customer-forms/v2/company-complaint/complaintType', function (requ
       delete request.session.data['returnTo']
       response.redirect('/customer-forms/v2/company-complaint/check-your-answers')
     } else {
-      response.redirect('/customer-forms/v2/company-complaint/name')
+      response.redirect('/customer-forms/v2/company-complaint/active-dissolved-companies-house')
     }
   }
 })
@@ -273,6 +273,24 @@ router.post('/customer-forms/v2/emailRoute', function (request, response) {
      else if (folder == "general-enquiry") {
     response.redirect('/customer-forms/v2/general-enquiry/do-you-have-an-insolvency-reference-number')
   } 
+       else if (folder == "company-complaint") {
+    response.redirect('/customer-forms/v2/organisation')
+  } 
+    
+})
+
+
+router.post('/customer-forms/v2/orgRoute', function (request, response) {
+
+  var folder = request.session.data['folder']
+
+    if (request.session.data['returnTo'] === 'check-your-answers') {
+    delete request.session.data['returnTo']
+    response.redirect('/customer-forms/v2/' + folder + '/check-your-answers')
+    }
+       else if (folder == "company-complaint") {
+    response.redirect('/customer-forms/v2/company-complaint/active-dissolved-guard')
+  } 
     
 })
 
@@ -328,6 +346,17 @@ router.post('/customer-forms/v2/general-enquiry/start', function(request, respon
 
 })
 
+
+router.post('/customer-forms/v2/company-complaint/start', function(request, response) {
+
+    request.session.data['contactReason'] = 'Complain about a limited company'
+    request.session.data['folder'] = 'company-complaint'
+    request.session.data['version'] = 'v2'
+
+    response.redirect("/customer-forms/v2/company-complaint/start")
+
+})
+
 router.post('/customer-forms/v2/general-enquiry/dro', function (request, response) {
  
     var enquiryChoice = request.session.data['enquirySubCategory']
@@ -354,5 +383,101 @@ router.post('/customer-forms/v2/general-enquiry/breathingSpace', function (reque
   }
 })
 
+router.post('/customer-forms/v2/company-complaint/companiesHouse', function(request, response) {
 
+    var companiesHouse = request.session.data['companiesHouse']
+    if (companiesHouse == "Yes"){
+        response.redirect("/customer-forms/v2/company-complaint/company-registered-outside-uk")
+    } else {
+        response.redirect("/customer-forms/v2/company-complaint/no-service")
+    }
+})
+
+
+router.post('/customer-forms/v2/company-complaint/companyOutsideUK', function(request, response) {
+
+    var outsideUkGuard = request.session.data['outsideUkGuard']
+    if (outsideUkGuard == "No"){
+        response.redirect("/customer-forms/v2/company-complaint/about-you")
+    } else {
+        response.redirect("/customer-forms/v2/company-complaint/no-service")
+    }
+})
+
+router.post('/customer-forms/v2/company-complaint/aboutYou', function(request, response) {
+
+    var aboutYou = request.session.data['aboutYou']
+    if (aboutYou == "Yes"){
+        response.redirect("/customer-forms/v2/name")
+    } else {
+        response.redirect("/customer-forms/v2/company-complaint/active-dissolved-guard")
+    }
+})
+
+
+router.post('/customer-forms/v2/company-complaint/dissolvedCompany', function(request, response) {
+
+    var activeOrDissolved = request.session.data['activeOrDissolved']
+    if (activeOrDissolved == "Dissolved"){
+        response.redirect("/customer-forms/v2/company-complaint/active-dissolved-after-3-years")
+    } else {
+        response.redirect("/customer-forms/v2/company-complaint/company-address-guard")
+    }
+})
+
+
+
+
+router.post('/customer-forms/v2/company-complaint/companyAddressGuardRoute', function(request, response) {
+
+    var activeOrDissolved = request.session.data['companyAddressGuard']
+    if (activeOrDissolved == "Yes"){
+        response.redirect("/customer-forms/v2/find-address")
+    } else {
+        response.redirect("/customer-forms/v2/company-complaint/company-email")
+    }
+})
+
+
+router.post('/customer-forms/v2/confirmAddress', function (request, response) {
+
+  var folder = request.session.data['folder']
+
+    if (request.session.data['returnTo'] === 'check-your-answers') {
+    delete request.session.data['returnTo']
+    response.redirect('/customer-forms/v2/' + folder + '/check-your-answers')
+    }
+       else if (folder == "company-complaint") {
+    response.redirect('/customer-forms/v2/company-complaint/company-email')
+  } 
+    
+})
+
+
+
+router.post('/customer-forms/v2/company-complaint/linkedCompanyGuard', function (request, response) {
+
+  var folder = request.session.data['folder']
+
+    if (request.session.data['returnTo'] === 'check-your-answers') {
+    delete request.session.data['returnTo']
+    response.redirect('/customer-forms/v2/' + folder + '/check-your-answers')
+    }
+       else if (folder == "company-complaint") {
+    response.redirect('/customer-forms/v2/company-complaint/company-email')
+  } 
+    
+})
+
+
+
+router.post('/customer-forms/v2/company-complaint/linkedCompany', function(request, response) {
+
+    var linkedCompanyGuard = request.session.data['linkedCompanyGuard']
+    if (linkedCompanyGuard == "Yes"){
+        response.redirect("/customer-forms/v2/company-complaint/linked-company-details")
+    } else {
+        response.redirect("/customer-forms/v2/upload-guard")
+    }
+})
 module.exports = router

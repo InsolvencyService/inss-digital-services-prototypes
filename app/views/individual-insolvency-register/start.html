@@ -1,0 +1,43 @@
+{% extends "layouts/main.html" %}
+{% set serviceName = 'Individual insolvency register' %}
+
+{% set pageName="Search" %}
+
+{% block content %}
+
+ <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+<form action="search-the-individual-insolvency-register-results" method="post" novalidate>     
+<h1 class="govuk-heading-l">Search the individual insolvency register</h1>
+
+<p>
+ Search using one or more of the following:
+</p> 
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>name</li>
+  <li>trading name</li>
+</ul>
+
+<div class="govuk-form-group">
+    <label class="govuk-label govuk-label--m" for="searchTerm">
+  Name of individual or trading name
+    </label>
+  <input class="govuk-input govuk-!-width-one-half" id="searchTerm" name="searchTerm" value="{{ searchTerm }}" type="text">
+  </div>
+  
+  {{ govukButton({
+  text: "Search"
+}) }}
+</form>
+      
+
+  </div>
+  </div>
+
+{% endblock %}
+
+
+{% block footer %}
+  {% include "find-an-ip/includes/footer-content.html" %}
+{% endblock %}

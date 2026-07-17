@@ -1,7 +1,7 @@
 {% extends "layouts/main.html" %}
 {% set serviceName = 'Find an insolvency practitioner' %}
 
-{% set pageName="Search" %}
+{% set pageName="" %}
 
 {% block content %}
 
@@ -38,3 +38,8 @@
   </div>
 
 {% endblock %}
+
+{% block footer %}
+  {% include "find-an-ip/includes/footer-content.html" %}
+{% endblock %}
+

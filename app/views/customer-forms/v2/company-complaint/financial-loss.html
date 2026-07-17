@@ -1,0 +1,73 @@
+{% extends "layouts/main-forms.html" %}
+
+{% block pageTitle %}
+  {{ serviceName }} – {{ data.contactReason }}
+{% endblock %}
+
+
+
+{% block beforeContent %}
+  {{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+    <form action="question" method="post" novalidate>
+    
+{% set refHtml %}
+{{ govukInput({
+  id: "financial-loss-amount",
+  name: "financialLossAmount",
+  label: {
+    text: "How much money did you lose, in pounds?",
+    classes: "govuk-label",
+    isPageHeading: false
+  },
+  prefix: {
+    text: "£"
+  },
+  classes: "govuk-input--width-5",
+  spellcheck: false
+}) }}
+{% endset -%}
+
+{{ govukRadios({
+  name: "financialLoss",
+  fieldset: {
+    legend: {
+      text: "Did you suffer any financial loss from the company?",
+      isPageHeading: true,
+      classes: "govuk-fieldset__legend--l"
+    }
+  },
+  items: [
+    {
+      value: "Yes",
+      text: "Yes",
+      conditional: {
+        html: refHtml
+      }
+    },
+    {
+      value: "No",
+      text: "No"
+    }
+    
+  ]
+}) }}
+      
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+      </form>
+
+    </div>
+  </div>
+
+ 
+{% endblock %}

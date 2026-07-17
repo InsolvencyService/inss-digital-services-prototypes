@@ -1,0 +1,298 @@
+{% extends "layouts/main-forms.html" %}
+
+{% set serviceName = 'Insolvency Service' %}
+
+{% block pageTitle %}
+{{ serviceName }} – Check your answers
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full-width">
+    <h1 class="govuk-heading-l">Check your answers</h1>
+    <p class="govuk-body">Review the information you have provided before submitting your complaint.</p>
+
+    
+    
+    <div class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <div class="govuk-summary-list__key">What are you complaining about?</div>
+        <div class="govuk-summary-list__value">
+          {{ data['complaint'] or 'a company is breaking the law' }}</div>
+        <div class="govuk-summary-list__actions"><a class="govuk-link" href="start?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> complaint type</span></a></div>
+      </div>
+
+
+
+      <div class="govuk-summary-list__row">
+        <div class="govuk-summary-list__key">Is the company registered as a private limited company (Ltd) or public limited company (PLC) with Companies House?</div>
+        <div class="govuk-summary-list__value">
+          {{ data['companiesHouse'] or 'Yes' }}</div>
+        <div class="govuk-summary-list__actions"><a class="govuk-link" href="start?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> complaint type</span></a></div>
+      </div>
+
+
+
+      <div class="govuk-summary-list__row">
+        <div class="govuk-summary-list__key">Is the company registered as Limited or PLC?</div>
+        <div class="govuk-summary-list__value">
+          {{ data['plcLtd'] or 'Yes' }}</div>
+        <div class="govuk-summary-list__actions"><a class="govuk-link" href="start?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> complaint type</span></a></div>
+      </div>
+    </div>
+    
+    
+    
+    <h2 class="govuk-heading-m">About you</h2>
+    <div class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <div class="govuk-summary-list__key">Do you want to provide your contact information?</div>
+        <div class="govuk-summary-list__value">{{ data['aboutYou'] or 'Not provided' }}</div>
+        <div class="govuk-summary-list__actions">
+          <a class="govuk-link" href="about-you?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> contact preference</span></a>
+        </div>
+       </div>
+        {% if data['aboutYou'] == 'Yes' %}
+          
+         <div class="govuk-summary-list__row">
+        <div class="govuk-summary-list__key">What is your fullname?</div>
+        <div class="govuk-summary-list__value">{{ data['full-name'] or 'Joe Black' }}</div>
+        <div class="govuk-summary-list__actions">
+          <a class="govuk-link" href="../name?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> contact preference</span></a>
+        </div>
+        </div>
+
+        <div class="govuk-summary-list__row">
+        <div class="govuk-summary-list__key">What is your email?</div>
+        <div class="govuk-summary-list__value">{{ data['email'] or 'joe.black@example.com' }}</div>
+        <div class="govuk-summary-list__actions">
+          <a class="govuk-link" href="../email?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> contact preference</span></a>
+        </div>
+</div>
+        
+        <div class="govuk-summary-list__row">
+        <div class="govuk-summary-list__key">Are you complaining on behalf of an organisation?</div>
+        <div class="govuk-summary-list__value">{{ data['organisationGuard'] or 'No' }}</div>
+        <div class="govuk-summary-list__actions">
+          <a class="govuk-link" href="../organisation?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> contact preference</span></a>
+        </div>
+        </div>
+
+        {% if data['organisationGuard'] == 'Yes' %}
+           <div class="govuk-summary-list__row">
+        <div class="govuk-summary-list__key">What is the name of the organisation?</div>
+        <div class="govuk-summary-list__value">{{ data['organisationName'] or 'Not provided' }}</div>
+        <div class="govuk-summary-list__actions">
+          <a class="govuk-link" href="../organisation?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> contact preference</span></a>
+        </div>
+        </div>
+        {% endif %}
+          
+         {% endif %}
+      </div>
+    
+    <h2 class="govuk-heading-m">Company details</h2>
+    <div class="govuk-summary-list">
+
+      <div class="govuk-summary-list__row">
+        <div class="govuk-summary-list__key">Is your complaint about a company that is currently trading or one that has been dissolved?</div>
+        <div class="govuk-summary-list__value">
+          {{ data['activeOrDissolved'] or 'Dissolved' }}
+        </div>
+        <div class="govuk-summary-list__actions">
+          <a class="govuk-link" href="active-dissolved-guard?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> company status</span></a>
+        </div>
+      </div>
+
+
+
+
+      <div class="govuk-summary-list__row">
+        <div class="govuk-summary-list__key">What's the name of the company?</div>
+        <div class="govuk-summary-list__value">
+          {{ data['companyName1'] or '123 LTD' }}
+          {% if data['anotherCompany'] == 'Yes' and data['companyName2'] %}<br>{{ data['companyName2'] }}{% endif %}
+        </div>
+        <div class="govuk-summary-list__actions">
+          <a class="govuk-link" href="company-name?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> company name</span></a>
+        </div>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <div class="govuk-summary-list__key">What is the company registered number? (optional)</div>
+        <div class="govuk-summary-list__value">
+          {% set regNumbers = [data['companyRegisteredNumber1'], data['companyRegisteredNumber2']] | reject('equalto', '') | list %}
+          {% if regNumbers.length %}
+            {{ regNumbers | join('<br>') | safe }}
+          {% else %}
+            Not provided
+          {% endif %}
+        </div>
+        <div class="govuk-summary-list__actions">
+          <a class="govuk-link" href="company-registered-number?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> registered number</span></a>
+        </div>
+      </div>
+
+            {% if data['afterDissolved3'] %}
+      <div class="govuk-summary-list__row">
+        <div class="govuk-summary-list__key">Did the company dissolve more than 3 years ago?</div>
+        <div class="govuk-summary-list__value">{{ data['afterDissolved3'] }}</div>
+        <div class="govuk-summary-list__actions">
+          <a class="govuk-link" href="active-dissolved-after-3-years?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> time since dissolution</span></a>
+        </div>
+      </div>
+      {% endif %}
+
+     <div class="govuk-summary-list__row">
+        <div class="govuk-summary-list__key">Do you know the company’s address?</div>
+        <div class="govuk-summary-list__value">
+        
+          {{ data['companyAddressGuard'] }}
+         
+        </div>
+        <div class="govuk-summary-list__actions">
+          <a class="govuk-link" href="company-address?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> company address</span></a>
+        </div>
+      </div>
+
+      {% if data['companyAddressGuard'] == 'Yes' %}
+
+      <div class="govuk-summary-list__row">
+        <div class="govuk-summary-list__key">Company address</div>
+        <div class="govuk-summary-list__value">
+          {% if data['select-an-address'] %}
+          {{ data['select-an-address'] | replace('\n', '<br>') | safe }}
+          {% else %}
+           vffff
+          {% endif %}
+        </div>
+        <div class="govuk-summary-list__actions">
+          <a class="govuk-link" href="company-address?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> company address</span></a>
+        </div>
+      </div>
+        {% endif %}
+
+      <div class="govuk-summary-list__row">
+        <div class="govuk-summary-list__key">What is the company's email address? (optional)</div>
+        <div class="govuk-summary-list__value">{{ data['companyEmail'] or 'Not provided' }}</div>
+        <div class="govuk-summary-list__actions">
+          <a class="govuk-link" href="company-email?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> company email address</span></a>
+        </div>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <div class="govuk-summary-list__key">What is the company's website address? (optional)</div>
+        <div class="govuk-summary-list__value">{{ data['companyWebsite'] or 'Not provided' }}</div>
+        <div class="govuk-summary-list__actions">
+          <a class="govuk-link" href="company-website?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> company website address</span></a>
+        </div>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <div class="govuk-summary-list__key">If you know the company's other addresses, list them here. (optional)</div>
+        <div class="govuk-summary-list__value">{{ data['otherAddresses'] or data['otherAdresses'] or 'Not provided' }}</div>
+        <div class="govuk-summary-list__actions">
+          <a class="govuk-link" href="other-addresses?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> other addresses</span></a>
+        </div>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <div class="govuk-summary-list__key">Who have you dealt with at the company and what were their roles? (optional)</div>
+        <div class="govuk-summary-list__value">{{ data['companyContacts'] or 'Not provided' }}</div>
+        <div class="govuk-summary-list__actions">
+          <a class="govuk-link" href="company-contacts?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> company contacts</span></a>
+        </div>
+      </div>
+
+
+          <div class="govuk-summary-list__row">
+        <div class="govuk-summary-list__key">Did you suffer any financial loss from the company?</div>
+        <div class="govuk-summary-list__value">{{ data['financialLoss'] or 'No' }}</div>
+        <div class="govuk-summary-list__actions">
+          <a class="govuk-link" href="financial-loss?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> financial loss amount</span></a>
+        </div>
+      </div>
+
+      {% if data['financialLoss'] == 'Yes' %}
+                <div class="govuk-summary-list__row">
+        <div class="govuk-summary-list__key">How much money did you lose, in pounds?</div>
+        <div class="govuk-summary-list__value">{{ data['financialLossAmount'] or 'Not provided' }}</div>
+        <div class="govuk-summary-list__actions">
+          <a class="govuk-link" href="financial-loss?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> financial loss amount</span></a>
+        </div>
+      </div>
+      {% endif %}
+</div>
+    
+
+    <h2 class="govuk-heading-m">Your complaint</h2>
+    <div class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <div class="govuk-summary-list__key">Describe your complaint</div>
+        <div class="govuk-summary-list__value">{{ data['companyComplaintDetails'] or 'Not provided' }}</div>
+        <div class="govuk-summary-list__actions">
+          <a class="govuk-link" href="question?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> complaint details</span></a>
+        </div>
+      </div>
+
+           <div class="govuk-summary-list__row">
+        <div class="govuk-summary-list__key">Is this complaint linked to another company?</div>
+        <div class="govuk-summary-list__value">{{ data['linkedCompanyGuard'] or 'No' }}</div>
+        <div class="govuk-summary-list__actions">
+          <a class="govuk-link" href="linked-company-guard?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> linked company answer</span></a>
+        </div>
+      </div>
+
+      {% if data['linkedCompanyDetails'] %}
+      <div class="govuk-summary-list__row">
+        <div class="govuk-summary-list__key">Linked company details</div>
+        <div class="govuk-summary-list__value">{{ data['linkedCompanyDetails'] }}</div>
+        <div class="govuk-summary-list__actions">
+          <a class="govuk-link" href="linked-company-details?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> linked company details</span></a>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+
+    <h2 class="govuk-heading-m">Supporting documents</h2>
+    <div class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <div class="govuk-summary-list__key">Do you want to provide us with any documents to support your enquiry or complaint?</div>
+        <div class="govuk-summary-list__value">
+             {{ data.uploadDocuments }}
+        </div>
+        <div class="govuk-summary-list__actions"><a class="govuk-link" href="../upload-guard?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> uploaded documents</span></a></div>
+      </div>
+
+      {% if data.uploadDocuments == 'Yes' %}
+ 
+      <div class="govuk-summary-list__row">
+        <div class="govuk-summary-list__key">Files uploaded</div>
+        <div class="govuk-summary-list__value">
+            {%- set uploadedFiles = data.uploadedFiles or [] -%}
+            {%- if uploadedFiles.length -%}
+            <div class="govuk-list">{%- for file in uploadedFiles -%}<div>{{ file }}</div>{%- endfor -%}</div>
+            {%- endif -%}
+        </div>
+        <div class="govuk-summary-list__actions"><a class="govuk-link" href="../upload-list?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> uploaded documents</span></a></div>
+      </div>
+    
+    {% else %}
+    {% endif %}
+</div>
+
+    <form action="confirmation" method="post" novalidate>
+      {{ govukButton({
+        text: "Submit"
+      }) }}
+    </form>
+  </div>
+</div>
+{% endblock %}

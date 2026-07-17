@@ -1,0 +1,43 @@
+{% extends "layouts/main-forms.html" %}
+
+{% block pageTitle %}
+{{ serviceName }} – {{ data.contactReason }} - About your complaint
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+   <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form action="../upload-guard" method="post" novalidate>
+
+<h1 class="govuk-heading-l">Linked company</h1>
+<p class="govuk-body">We need to know  about the linked company.</p>
+<p class="govuk-body">Things to include (if known):</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Company name</li>
+  <li>Company registration number</li>
+  <li>how it is linked</li>
+  <li>director or person involved</li>
+  </ul>
+<div class="govuk-form-group">
+<h1 class="govuk-label-wrapper">
+    <label class="govuk-label govuk-label--l" for="more-detail">
+    Linked company details
+    </label>
+</h1>
+  <textarea class="govuk-textarea" id="linkedCompanyDetails" name="linkedCompanyDetails" rows="8" aria-describedby="linkedCompanyDetails-hint">{{ data['linkedCompanyDetails'] }}</textarea>
+</div>
+
+<button class="govuk-button" data-module="govuk-button">
+Continue
+</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

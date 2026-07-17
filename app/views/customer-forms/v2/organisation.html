@@ -1,0 +1,63 @@
+{% extends "layouts/main-forms.html" %}
+
+{% block pageTitle %}
+{{ serviceName }} – {{ data.contactReason }} - Your details
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+   <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      
+      <form action="/customer-forms/v2/orgRoute" method="post" novalidate>
+
+{% set refHtml %}
+{{ govukInput({
+  id: "organisationName",
+  name: "organisationName",
+  spellcheck: false,
+  classes: "govuk-!-width-two-third",
+  label: {
+    text: "What is the name of your organisation?"
+  }
+}) }}
+{% endset -%}
+
+{{ govukRadios({
+  name: "organisationGuard",
+  fieldset: {
+    legend: {
+      text: "Are you complaining on behalf of an organisation?",
+      isPageHeading: true,
+      classes: "govuk-fieldset__legend--l"
+    }
+  },
+  items: [
+    {
+      value: "Yes",
+      text: "Yes",
+      conditional: {
+        html: refHtml
+      }
+    },
+    {
+      value: "No",
+      text: "No"
+    }
+    
+  ]
+}) }}
+
+<button class="govuk-button" data-module="govuk-button">
+Continue
+</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

@@ -12,6 +12,16 @@ router.use(customerFormsV2Routes)
 
 // Add your routes here
 
+router.post('/individual-insolvency-register/search-the-individual-insolvency-register-results', function (req, res) {
+  req.session.data.searchTerm = req.body.searchTerm || 'Smith'
+  res.redirect('/individual-insolvency-register/search-the-individual-insolvency-register-results')
+})
+
+router.post('/individual-insolvency-register/search-the-individual-insolvency-register-results-2', function (req, res) {
+  req.session.data.searchTerm = req.body.searchTerm || 'Smith'
+  res.redirect('/individual-insolvency-register/search-the-individual-insolvency-register-results-2')
+})
+
 // Route from upload to form-validation-errors
 router.post('/ipservice/ip-upload/v2/upload', function (req, res) {
   // Simulate validation - for demo purposes, always show errors first

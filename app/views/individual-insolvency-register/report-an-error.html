@@ -1,0 +1,82 @@
+{% extends "layouts/version-template.html" %}
+
+{% block pageTitle %}
+   {{ serviceName }} – prototype versions
+{% endblock %}
+
+{% block beforeContent %}
+
+{{ govukBackLink({
+  text: "Back",
+  href: "/"
+}) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+
+
+<form action="name" method="post" novalidate>
+
+
+      <h1 class="govuk-heading-l">Report an error or issue</h1>
+      <p>Tell us about any issues or errors in the details of an insolvency or bankruptcy case. For example, if the case name is spelt incorrectly.</p>
+
+<dl class="govuk-summary-list govuk-!-margin-bottom-9">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      Case name
+    </dt>
+    <dd class="govuk-summary-list__value">
+      Stuart Ronald John Parks
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      Type
+    </dt>
+    <dd class="govuk-summary-list__value">
+      Individual Voluntary Arrangement
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      Order or arrangement date
+    </dt>
+    <dd class="govuk-summary-list__value">
+      01 February 2024
+    </dd>
+  </div>
+</dl>
+
+
+{{ govukCharacterCount({
+  name: "withHint",
+  id: "with-hint",
+  maxlength: 200,
+  label: {
+    text: "What is the error or issue?",
+    classes: "govuk-label--m",
+    isPageHeading: false
+  },
+  hint: {
+    text: "Do not include personal or financial information, such as your National Insurance number or credit card details"
+  }
+}) }}
+     
+    </div>
+  </div>
+
+  <button class="govuk-button govuk-!-margin-top-6" data-module="govuk-button">Continue</button>
+</form>
+{% endblock %}
+
+{% block footer %}
+  {% include "find-an-ip/includes/footer-content.html" %}
+{% endblock %}
+
+
+
+
