@@ -15,7 +15,8 @@
 
 {% block content %}
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-full-width">
+  <div class="govuk-grid-column-full">
+    <form action="confirmation" method="post" novalidate>
     <h1 class="govuk-heading-l">Check your answers</h1>
     <p class="govuk-body">Review the information you have provided before submitting your complaint.</p>
 
@@ -75,7 +76,7 @@
         <div class="govuk-summary-list__actions">
           <a class="govuk-link" href="../email?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> contact preference</span></a>
         </div>
-</div>
+
         
         <div class="govuk-summary-list__row">
         <div class="govuk-summary-list__key">Are you complaining on behalf of an organisation?</div>
@@ -261,34 +262,8 @@
       {% endif %}
     </div>
 
-    <h2 class="govuk-heading-m">Supporting documents</h2>
-    <div class="govuk-summary-list">
-      <div class="govuk-summary-list__row">
-        <div class="govuk-summary-list__key">Do you want to provide us with any documents to support your enquiry or complaint?</div>
-        <div class="govuk-summary-list__value">
-             {{ data.uploadDocuments }}
-        </div>
-        <div class="govuk-summary-list__actions"><a class="govuk-link" href="../upload-guard?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> uploaded documents</span></a></div>
-      </div>
 
-      {% if data.uploadDocuments == 'Yes' %}
- 
-      <div class="govuk-summary-list__row">
-        <div class="govuk-summary-list__key">Files uploaded</div>
-        <div class="govuk-summary-list__value">
-            {%- set uploadedFiles = data.uploadedFiles or [] -%}
-            {%- if uploadedFiles.length -%}
-            <div class="govuk-list">{%- for file in uploadedFiles -%}<div>{{ file }}</div>{%- endfor -%}</div>
-            {%- endif -%}
-        </div>
-        <div class="govuk-summary-list__actions"><a class="govuk-link" href="../upload-list?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> uploaded documents</span></a></div>
-      </div>
     
-    {% else %}
-    {% endif %}
-</div>
-
-    <form action="confirmation" method="post" novalidate>
       {{ govukButton({
         text: "Submit"
       }) }}
