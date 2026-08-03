@@ -22,8 +22,15 @@
 Your enquiry
     </h1>
 
-    <p class="govuk-body">Please provide us with as much information as possible to help us deal with your enquiry.</p>
+    <p class="govuk-body">Tell us what your enquiry is about.</p>
 
+   <p class="govuk-body">You should include:</p>
+   <ul class="govuk-list govuk-list--bullet">
+     <li>any relevant dates</li>
+     <li>reference numbers</li>
+     <li>claim details</li>
+     <li>previous contact with us</li>
+   </ul>
 
 {{ govukCharacterCount({
   name: "enquiryDetail",
@@ -33,9 +40,6 @@ Your enquiry
     text: "Describe your enquiry",
     classes: "govuk-label--m",
     isPageHeading: false
-  },
-  hint: {
-    text: "Do not include personal or financial information like your National Insurance number or credit card details"
   }
 }) }}
 

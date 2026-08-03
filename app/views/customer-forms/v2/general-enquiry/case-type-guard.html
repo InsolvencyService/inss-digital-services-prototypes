@@ -1,0 +1,78 @@
+{% extends "layouts/main-forms.html" %}
+
+
+{% block pageTitle %}
+{{ serviceName }} – {{ data.contactReason }} - About your complaint
+{% endblock %}
+
+{% block beforeContent %}
+
+  {{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+{% set referenceValue = (data['referenceValue'] or data['IScaseReferenceYes'] or data['isRef'] or '') | string %}
+{% set referenceValueUpper = referenceValue | upper %}
+{% set isBktReference = referenceValueUpper | slice(0, 3) == 'BKT' %}
+{% set caseLabel = data['caseTypeLabel'] or ('Bankruptcy' if isBktReference elseif is 'Redundancy') %}
+{% set caseQuestionText = data['caseQuestionText'] or ('Is this a bankruptcy case?' if isBktReference else 'Is this a redundancy case?') %}
+   <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+      <form action="/customer-forms/v2/general-enquiry/caseRefConfirmation" method="post" novalidate>
+
+  <h1 class="govuk-heading-l">Case details</h1>
+
+  <p class="govuk-body">We have matched the reference number:</p>
+  <dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      Case reference 
+    </dt>
+    <dd class="govuk-summary-list__value">
+    {{ referenceValue | default('CN12345678') }}
+    </dd>
+  </div>
+    <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+     Type of case
+    </dt>
+    <dd class="govuk-summary-list__value">
+      {{ caseLabel }}
+    </dd>
+  </div>
+</dl>        
+
+
+{{ govukRadios({
+  name: "isTypeCase",
+  fieldset: {
+    legend: {
+      text: caseQuestionText,
+      isPageHeading: true,
+      classes: "govuk-fieldset__legend--l"
+    }
+  },
+  items: [
+    {
+      value: "Yes",
+      text: "Yes"
+    },
+    {
+      value: "No, I need to re enter my reference number",
+      text: "No, I need to re enter my reference number"
+    }
+    
+  ]
+}) }}
+
+
+<button class="govuk-button" data-module="govuk-button">
+Continue
+</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

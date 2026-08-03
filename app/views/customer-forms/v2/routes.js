@@ -271,7 +271,7 @@ router.post('/customer-forms/v2/emailRoute', function (request, response) {
     response.redirect('/customer-forms/v2/is-complaint/do-you-have-an-insolvency-reference-number')
   } 
      else if (folder == "general-enquiry") {
-    response.redirect('/customer-forms/v2/general-enquiry/do-you-have-an-insolvency-reference-number')
+    response.redirect('/customer-forms/v2/general-enquiry/detail')
   } 
        else if (folder == "company-complaint") {
     response.redirect('/customer-forms/v2/organisation')
@@ -324,6 +324,64 @@ router.post('/customer-forms/v2/general-enquiry/generalEnquiries', function (req
     response.redirect('/customer-forms/v2/general-enquiry/wrong-form')
   }
 })
+
+
+router.post('/customer-forms/v2/general-enquiry/generalEnquiryStart', function (request, response) {
+ 
+    var enquiryChoice = request.session.data['generalEnquiryGuard']
+    
+    if (enquiryChoice == "Make a complaint") {
+    response.redirect('/customer-forms/v2/general-enquiry/wrong-form')
+  } 
+  
+  else {
+    response.redirect('/customer-forms/v2/general-enquiry/do-you-have-an-insolvency-reference-number')
+  }
+})
+
+router.post('/customer-forms/v2/general-enquiry/insReference', function (request, response) {
+  var enquiryChoice = request.session.data['isRef']
+  var referenceValue = request.body.IScaseReferenceYes || request.body.isRef || ''
+  var referenceValueUpper = String(referenceValue).toUpperCase()
+  var isBktReference = referenceValueUpper.slice(0, 3) === 'BKT'
+  var isRedundancyReference = referenceValueUpper.startsWith('LN') || referenceValueUpper.startsWith('CN')
+  var isRedundancyCase = isRedundancyReference || !isBktReference
+
+  request.session.data['referenceValue'] = referenceValue
+  request.session.data['caseTypeLabel'] = 'Breathing space'
+  request.session.data['caseQuestionText'] = 'Is this a breathing space case?'
+
+  if (enquiryChoice == "Yes") {
+    response.redirect('/customer-forms/v2/general-enquiry/case-type-guard')
+  }
+
+  else {
+    response.redirect('/customer-forms/v2/general-enquiry/what-type-of-enquiry')
+  }
+})
+
+
+router.post('/customer-forms/v2/general-enquiry/caseRefConfirmation', function (request, response) {
+ 
+    var enquiryChoice = request.session.data['isTypeCase']
+    
+    if (enquiryChoice == "Yes") {
+    response.redirect('/customer-forms/v2/general-enquiry/case-type-guard')
+  } 
+  
+  else {
+    response.redirect('/customer-forms/v2/general-enquiry/do-you-have-an-insolvency-reference-number')
+  }
+})
+
+
+
+
+
+
+
+
+
 
 
 router.post('/customer-forms/v2/is-complaint/start', function(request, response) {

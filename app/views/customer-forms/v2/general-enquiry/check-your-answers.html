@@ -20,13 +20,20 @@
     <p class="govuk-body">Review the information you have provided before submitting your enquiry.</p>
 
     <h2 class="govuk-heading-m">Your type of enquiry</h2>
-  
-    <div class="govuk-summary-list">
+
+        <div class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <div class="govuk-summary-list__key">What do you want to do?</div>
+        <div class="govuk-summary-list__value">
+          {{ data['generalEnquiryGuard'] or 'Redundancy' }}</div>
+        <div class="govuk-summary-list__actions"><a class="govuk-link" href="start?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> complaint type</span></a></div>
+      </div>
+
       <div class="govuk-summary-list__row">
         <div class="govuk-summary-list__key">What is your enquiry about?</div>
         <div class="govuk-summary-list__value">
           {{ data['generalEnquiry'] or 'Redundancy' }}</div>
-        <div class="govuk-summary-list__actions"><a class="govuk-link" href="start?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> complaint type</span></a></div>
+        <div class="govuk-summary-list__actions"><a class="govuk-link" href="what-type-of-case?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> complaint type</span></a></div>
       </div>
 
       {% if data['enquirySubCategory'] and data['generalEnquiry'] == 'Redundancy' %}

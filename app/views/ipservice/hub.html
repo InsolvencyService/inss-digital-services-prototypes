@@ -1,0 +1,129 @@
+{% extends "layouts/main.html" %}
+
+{% set serviceName = 'Insolvency practitioner service' %}
+
+{% block pageTitle %}
+  {{ serviceName }} – homepage
+{% endblock %}
+
+{% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
+{% block header %}
+  {{ govukHeader() }}
+{{ govukServiceNavigation({
+  serviceName: 'Insolvency practitioner service',
+  serviceUrl: "start.html",
+  navigation: [
+    {
+      href: "home.html",
+      text: "Home",
+      active: true
+    },
+    {
+      href: "user-management/settings.html",
+      text: "Settings"
+    }
+  ]
+}) }}
+
+
+{% endblock %}
+
+{% block content %}
+
+<form>
+
+    <div class="grid-row">
+        <div class="column-two-thirds">
+
+<div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+        <div class="govuk-notification-banner__header">
+            <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+                Important
+            </h2>
+        </div>
+        <div class="govuk-notification-banner__content">
+            <h3 class="govuk-notification-banner__heading">
+                Upload a completed RP14/A form (Beta)
+            </h3>
+            
+            <p class="govuk-notification-banner__paragraph">
+                You can use our new service for uploading RP14/A forms while we test it.</p>
+            <a href="https://preprod.ipus.redundancy-payments.service.gov.uk/" class="govuk-notification-banner__link">Use the beta upload service</a>
+        </div>
+    </div>
+
+
+
+            <span class="govuk-caption-l">** INSS Princess Account. INSS Test One. Please ignore **</span>
+                <h1 class="govuk-heading-l">
+                <span>TESTONE INSS</span>
+            </h1>
+            
+
+            <ul class="govuk-list portal-card">
+                <li class="portal-card-item">
+                    <a class="portal-card__link" href="/users/dashboard">
+                        <h3 id="conductReports" class="portal-card__heading govuk-heading-s govuk-!-margin-bottom-0 govuk-!-padding-bottom-1">Conduct Reports</h3>
+                        <p class="portal-card__description govuk-body-s">Complete &amp; Submit Conduct Reports</p>
+                    </a>
+                </li>
+                
+
+                <li class="portal-card-item">
+                    <a class="portal-card__link" href="/users/ip-upload-declaration">
+                        <h3 class="portal-card__heading govuk-heading-s govuk-!-margin-bottom-0 govuk-!-padding-bottom-1">Upload RP14/14A</h3>
+                        <p class="portal-card__description govuk-body-s">Upload RP14/14A</p>
+                    </a>
+                </li>
+
+                <li class="portal-card-item">
+                    <a class="portal-card__link" href="/users/ip-upload-declaration">
+                        <h3 class="portal-card__heading govuk-heading-s govuk-!-margin-bottom-0 govuk-!-padding-bottom-1">Upload RP14/14A</h3>
+                        <p class="portal-card__description govuk-body-s">Upload RP14/14A</p>
+                    </a>
+                </li>    
+                
+
+                <!-- <li class="portal-card-item">
+                  <a class="portal-card__link" href="">
+                    <h3 class="portal-card__heading govuk-heading-s govuk-!-margin-bottom-0 govuk-!-padding-bottom-1">Case Financial Data</h3>
+                    <p class="portal-card__description govuk-body-s">View financial data for bankruptcies and liqudations</p>
+                  </a>
+                </li> -->
+            </ul>
+
+            <h2 class="govuk-heading-m govuk-!-margin-bottom-0">
+                Guidance
+            </h2>
+            <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-5">
+
+            <ul class="govuk-list portal-card">
+                <li class="portal-card-item">
+                    <a class="portal-card__link" href="https://www.gov.uk/government/publications/director-conduct-report-service" target="_blank">
+                        <h3 class="portal-card__heading govuk-heading-s govuk-!-margin-bottom-0 govuk-!-padding-bottom-1">Direct Conduct Reporting</h3>
+                        <p class="portal-card__description govuk-body-s">https://www.gov.uk/government/publications/director-conduct-report-service</p>
+                    </a>
+                </li>
+                <li class="portal-card-item">
+                    <a class="portal-card__link" href="https://www.gov.uk/government/collections/redundancy-payment-forms-and-guidance-for-insolvency-practitioners" target="_blank">
+                        <h3 class="portal-card__heading govuk-heading-s govuk-!-margin-bottom-0 govuk-!-padding-bottom-1">RP14/14A Upload</h3>
+                        <p class="portal-card__description govuk-body-s">https://www.gov.uk/government/collections/redundancy-payment-forms-and-guidance-for-insolvency-practitioners</p>
+                    </a>
+                </li>
+                <li class="portal-card-item">
+                    <h3 class="portal-card__heading govuk-heading-s govuk-!-margin-bottom-0 govuk-!-padding-bottom-1">Contact Support</h3>
+                    <a href="https://report-director-conduct.service.gov.uk/users/contact-us" target="_blank">
+                        <p class="portal-card__description govuk-body-s">For problems with Director Conduct Reporting:</p>
+                        <p class="portal-card__description govuk-body-s">https://report-director-conduct.service.gov.uk/users/contact-us</p>
+                    </a>
+                    <a href="mailto:IPHelpdesk@insolvency.gov.uk" target="_blank">
+                        <p class="portal-card__description govuk-body-s">For problems with RP14/14A Upload:</p>
+                        <p class="portal-card__description govuk-body-s"> IPHelpdesk@insolvency.gov.uk</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</form>
+  
+{% endblock %}

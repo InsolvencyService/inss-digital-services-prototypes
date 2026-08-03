@@ -2,7 +2,7 @@
 
 {% set serviceName = 'Find an insolvency practitioner' %}
 
-{% set pageName="Search" %}
+{% set pageName="Search results: '" + serviceName + "'" %}
 
 {% block beforeContent %}
   {{ govukBackLink({
@@ -30,7 +30,7 @@
   </div>
   <div class="govuk-grid-row">
 
-    <div class="govuk-grid-column-three-quarters">
+    <div class="govuk-grid-column-full">
 
       <p class="govuk-body">Showing 11 to 14 of 14 results for <strong>{{ data.searchTerm | default('search term') }}</strong></p>
       <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">

@@ -19,7 +19,7 @@
 
 
 
-    <form action="/customer-forms/v2/general-enquiry/generalEnquiryStart" method="post" novalidate>
+    <form action="/customer-forms/v2/general-enquiry/generalEnquiries" method="post" novalidate>
 
       <h1 class="govuk-heading-l">General enquiries</h1>
 
@@ -34,14 +34,26 @@
 </ul>
 
 
+{% set emailHtml %}
+{{ govukInput({
+  id: "otherEnquiryType",
+  name: "otherEnquiryType",
+  type: "text",
+  spellcheck:true,
+  classes: "govuk-!-width-one-half",
+  label: {
+    text: "What is your enquiry about?"
+  }
+}) }}
+{% endset -%}
 
 
 
 {{ govukRadios({
-  name: "generalEnquiryGuard",
+  name: "generalEnquiry",
   fieldset: {
     legend: {
-      text: "What do you want to do?",
+      text: "What is your enquiry about?",
       isPageHeading: false,
       classes: "govuk-fieldset__legend--m"
     }
@@ -49,21 +61,38 @@
   
   items: [
     {
-      value: "Make an enquiry",
-      text: "Make an enquiry"
+      value: "Redundancy",
+      text: "Redundancy"
     },
     {
-      value: "Provide information",
-      text: "Provide information"
+      value: "Debt relief order",
+      text: "Debt relief order"
     },
-    
-   
+    {
+      value: "Bankruptcy",
+      text: "Bankruptcy"
+    },
+    {
+      value: "Company liquidation",
+      text: "Company liquidation"
+    },
+    {
+      value: "Breathing space",
+      text: "Breathing space"
+    },
+    {
+      value: "Other",
+      text: "Other",
+      conditional: {
+      html: emailHtml
+      }
+    },
     {
       divider: "or"
     },
     {
-      value: "Make a complaint",
-      text: "Make a complaint",
+      value: "I want to make  a complaint",
+      text: "I want to make a complaint",
       behaviour: "exclusive",
       hint: {
         text: "For example, you want to complain about an insolvency practitioner or a disqualified director."
