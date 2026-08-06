@@ -1,0 +1,221 @@
+{% extends "layouts/main-forms.html" %}
+
+{% set serviceName = 'Insolvency Service' %}
+
+{% block pageTitle %}
+{{ serviceName }} – Check your answers
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <form action="confirmation" method="post" novalidate>
+    <h1 class="govuk-heading-l">Check your answers</h1>
+    <p class="govuk-body">Review the information you have provided before submitting your complaint.</p>
+
+    
+    
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">What are you complaining about?</dt>
+        <dd class="govuk-summary-list__value">
+          {{ data['complaint'] or 'failure to meet professional standard' }}</dd>
+        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="start?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> complaint type</span></a></dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Have you complained to the insolvency practitioner or their staff?</dt>
+        <dd class="govuk-summary-list__value">
+          {{ data['complainedBefore'] or 'Yes' }}</dd>
+        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="start?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> complaint type</span></a></dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Has your complaint been assessed by the authorising body before and fully considered?</dt>
+        <dd class="govuk-summary-list__value">
+          {{ data['complaintConsidered'] or 'No' }}</dd>
+        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="start?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> complaint type</span></a></dd>
+      </div>
+
+         <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Do you have any evidence to support your complaint?</dt>
+        <dd class="govuk-summary-list__value">
+          {{ data['evidence'] or 'Yes' }}</dd>
+        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="start?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> complaint type</span></a></dd>
+      </div>
+
+      
+      </dl>
+
+
+          <h2 class="govuk-heading-m">About you</h2>
+
+         <dl class="govuk-summary-list"> 
+         <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">What is your fullname?</dt>
+        <dd class="govuk-summary-list__value">{{ data['full-name'] or 'Joe Black' }}</dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link" href="../name?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> contact preference</span></a>
+        </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">What is your email?</dt>
+        <dd class="govuk-summary-list__value">{{ data['email'] or 'joe.black@example.com' }}</dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link" href="../email?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> contact preference</span></a>
+        </dd>
+        </div>
+        
+        <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Are you complaining on behalf of an organisation?</dt>
+        <dd class="govuk-summary-list__value">{{ data['organisationGuard'] or 'No' }}</dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link" href="../organisation?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> contact preference</span></a>
+        </dd>
+        </div>
+
+        {% if data['organisationGuard'] == 'Yes' %}
+           <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">What is the name of the organisation?</dt>
+        <dd class="govuk-summary-list__value">{{ data['organisationName'] or 'Not provided' }}</dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link" href="../organisation?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> contact preference</span></a>
+        </dd>
+        </div>
+        {% endif %}
+          
+ 
+      </dl>
+
+         <h2 class="govuk-heading-m">Complaint details</h2>
+
+         <dl class="govuk-summary-list"> 
+         <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Who do you want to complain about?</dt>
+        <dd class="govuk-summary-list__value">{{ data['practitionerName'] or 'Joe Black' }}</dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link" href="who-do-you-want-to-complain-about?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> contact preference</span></a>
+        </dd>
+        </div>
+
+               <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Where does the insolvency practitioner you're complaining about work?</dt>
+        <dd class="govuk-summary-list__value">{{ data['practitionerWork'] or 'Elsada Ltd' }}</dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link" href="where-does-the-insolvency-practitioner-youre-complaining-about-work?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> contact preference</span></a>
+        </dd>
+        </div>
+
+        
+               <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">What is the email address of the insolvency practitioner you are complaining about? (optional)?</dt>
+        <dd class="govuk-summary-list__value">{{ data['practitionerEmail'] or 'Not provided' }}</dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link" href="email?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> contact preference</span></a>
+        </dd>
+        </div>
+
+                
+               <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">What is the name of the authorising body?</dt>
+        <dd class="govuk-summary-list__value">{{ data['authorisingBody'] or 'Dont know' }}</dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link" href="authorising-body?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> contact preference</span></a>
+        </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Is your complaint about an individual or a company?</dt>
+        <dd class="govuk-summary-list__value">{{ data['individualOrCompany'] or 'Individual' }}</dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link" href="is-your-complaint-about-an-individual-or-a-company?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> contact preference</span></a>
+        </dd>
+        </div>
+
+        {% if data['individualOrCompany'] == 'Company' %}
+           <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">What type of company insolvency was it about??</dt>
+        <dd class="govuk-summary-list__value">{{ data['company'] or 'Administration' }}</dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link" href="what-type-of-insolvency-was-it-about.html">Change<span class="govuk-visually-hidden"> contact preference</span></a>
+        </dd>
+        </div>
+        {% endif %}
+
+            {% if data['individualOrCompany'] == 'Individual' %}
+           <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">What type of individual insolvency was it about?</dt>
+        <dd class="govuk-summary-list__value">{{ data['individual'] or 'Bankruptcy' }}</dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link" href="what-type-of-individual-insolvency-procedure-was-it-about?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> contact preference</span></a>
+        </dd>
+        </div>
+        {% endif %}
+
+        
+        <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">What is your connection to the insolvency?</dt>
+        <dd class="govuk-summary-list__value">{{ data['companyConnection'] or 'Creditor' }}</dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link" href="what-is-your-connection-to-the-insolvency?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> contact preference</span></a>
+        </dd>
+        </div>
+
+        {% if data['companyConnection'] == 'Other' %}
+        <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">What is your connection? (optional)</dt>
+        <dd class="govuk-summary-list__value">{{ data['isConnectionOther'] or 'Not provided' }}</dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link" href="what-is-your-connection-to-the-insolvency?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> contact preference</span></a>
+        </dd>
+        </div>
+        {% endif %}
+
+          <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Describe your complaint</dt>
+        <dd class="govuk-summary-list__value">{{ data['ipComplaintDetails'] or 'Not provided' }}</dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link" href="your-complaint?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> contact preference</span></a>
+        </dd>
+        </div>
+
+        </dl>
+        
+
+             <h2 class="govuk-heading-m">Supporting evidence</h2>
+      <dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Files uploaded</dt>
+        <dd class="govuk-summary-list__value">
+            {%- set uploadedFiles = data.uploadedFiles or [] -%}
+            {%- if uploadedFiles.length -%}
+            <div class="govuk-list">{%- for file in uploadedFiles -%}<div>{{ file }}</div>{%- endfor -%}</div>
+            {%- endif -%}
+        </dd>
+        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="../upload-list?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> uploaded documents</span></a></dd>
+      </div>
+
+
+      
+      </dl>
+
+
+
+      
+
+    
+      {{ govukButton({
+        text: "Submit"
+      }) }}
+    </form>
+  </div>
+</div>
+{% endblock %}

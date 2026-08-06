@@ -1,0 +1,79 @@
+{% extends "layouts/main-forms.html" %}
+
+{% block pageTitle %}
+  {{ serviceName }} – {{ data.contactReason }}
+{% endblock %}
+
+
+
+{% block beforeContent %}
+  {{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+    <form action="supporting-evidence" method="post" novalidate>
+
+      <h1 class="govuk-heading-l">Supporting evidence</h1>
+
+
+<p class="govuk-body">To complete this form, you need to attach evidence about your complaint at the end.</p>
+<p class="govuk-body">We can only look at your complaint using the information and evidence you give us.</p>
+<p class="govuk-body">In most cases, the authorising body can only uphold a complaint if there is evidence showing that the IP has done something wrong.</p>
+<p class="govuk-body">For a disciplinary investigation to go ahead, there needs to be clear evidence of wrongdoing by the IP, or by someone working under the IP’s direction.
+</p>
+
+<h2 class="govuk-heading-m">What evidence should you upload?</h2>
+
+<p class="govuk-body">Please upload anything you think supports your complaint, for example:</p>
+
+<ul class="govuk-list govuk-list--bullet">
+<li>agreements between you and the IP (such as an IVA or settlement agreement)</li>
+<li>emails, letters, or messages</li>
+<li>a copy of the complaint you sent to the IP</li>
+<li>the IP’s reply to your complaint</li>
+<li>if your complaint is about an IVA, a copy of the IVA proposal and the chairman’s report</li>
+
+</ul>
+
+
+{{ govukRadios({
+  classes: "govuk-radios--inline",
+  name: "evidence",
+  fieldset: {
+    legend: {
+      text: "Do you have any evidence to support your complaint?",
+      isPageHeading: false,
+      classes: "govuk-fieldset__legend--m"
+    }
+  },
+  hint: {
+    text: "to complete this form, you will need to give us supporting evidence."
+  },
+  items: [
+    {
+      value: "Yes",
+      text: "Yes"
+    },
+    {
+      value: "No",
+      text: "No"
+    }
+  ]
+}) }}
+
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+      </form>
+
+    </div>
+  </div>
+
+ 
+{% endblock %}

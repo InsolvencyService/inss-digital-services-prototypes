@@ -1,0 +1,38 @@
+{% extends "layouts/main-forms.html" %}
+
+{% block pageTitle %}
+{{ serviceName }} – {{ data.contactReason }} - Your details
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+   <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form action="email" method="post" novalidate>
+<div class="govuk-form-group">
+  <h1 class="govuk-label-wrapper">
+    <label class="govuk-label govuk-label--l" for="event-name">
+   Where does the Insolvency Practitioner you're complaining about work?
+    </label>
+  </h1>
+  <div id="practitioner-work-hint" class="govuk-hint">
+Tell us the name of the company or organisation where the insolvency practitioner you're complaining about works.
+
+  </div>
+  <input class="govuk-input" id="practitioner-work" name="practitionerWork" type="text" spellcheck="false" value="" aria-describedby="Value-hint" inputmode="text">
+</div>
+
+
+<button class="govuk-button" data-module="govuk-button">
+Continue
+</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

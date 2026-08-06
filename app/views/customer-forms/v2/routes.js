@@ -79,10 +79,59 @@ router.post('/customer-forms/v2/ip-complaint/complaintType', function (request, 
       delete request.session.data['returnTo']
       response.redirect('/customer-forms/v2/ip-complaint/check-your-answers')
     } else {
-      response.redirect('/customer-forms/v2/ip-complaint/name')
+      response.redirect('/customer-forms/v2/ip-complaint/before-you-complete-this-form')
     }
   }
 })
+
+
+router.post('/customer-forms/v2/ip-complaint/start-content-route', function(request, response) {
+
+    var complainedBefore = request.session.data['complainedBefore']
+    if (complainedBefore == "Yes"){
+        response.redirect("/customer-forms/v2/ip-complaint/already-reviewed")
+    } else {
+        response.redirect("/customer-forms/v2/ip-complaint/not-eligible-for-this-service")
+    }
+})
+
+
+router.post('/customer-forms/v2/ip-complaint/already-reviewed', function(request, response) {
+
+    var complaintConsidered = request.session.data['complaintConsidered']
+    if (complaintConsidered == "yes"){
+        response.redirect("/customer-forms/v2/ip-complaint/not-eligible-for-this-service")
+    } else {
+        response.redirect("/customer-forms/v2/ip-complaint/supporting-evidence")
+    }
+})
+
+
+
+router.post('/customer-forms/v2/ip-complaint/individual-or-company', function(request, response) {
+
+    var individualOrCompany = request.session.data['individualOrCompany']
+    if (individualOrCompany == "Individual"){
+        response.redirect("/customer-forms/v2/ip-complaint/what-type-of-individual-insolvency-procedure-was-it-about")
+    } else {
+        response.redirect("/customer-forms/v2/ip-complaint/what-type-of-insolvency-was-it-about")
+    }
+})
+
+router.post('/customer-forms/v2/ip-complaint/supporting-evidence', function(request, response) {
+
+    var evidence = request.session.data['evidence']
+    if (evidence == "Yes"){
+        response.redirect("/customer-forms/v2/name")
+    } else {
+        response.redirect("/customer-forms/v2/ip-complaint/not-eligible-for-this-service")
+    }
+})
+
+
+
+
+
 
 // When user navigates to editing pages via a "Change" link, they may have
 // a `returnTo=check-your-answers` query. Capture that on GET so POST handlers
@@ -276,7 +325,9 @@ router.post('/customer-forms/v2/emailRoute', function (request, response) {
        else if (folder == "company-complaint") {
     response.redirect('/customer-forms/v2/organisation')
   } 
-    
+     else if (folder == "ip-complaint") {
+    response.redirect('/customer-forms/v2/organisation')
+  }
 })
 
 
@@ -290,6 +341,10 @@ router.post('/customer-forms/v2/orgRoute', function (request, response) {
     }
        else if (folder == "company-complaint") {
     response.redirect('/customer-forms/v2/company-complaint/active-dissolved-guard')
+  } 
+
+         else if (folder == "ip-complaint") {
+    response.redirect('/customer-forms/v2/ip-complaint/who-do-you-want-to-complain-about')
   } 
     
 })
@@ -412,6 +467,16 @@ router.post('/customer-forms/v2/company-complaint/start', function(request, resp
     request.session.data['version'] = 'v2'
 
     response.redirect("/customer-forms/v2/company-complaint/start")
+
+})
+
+router.post('/customer-forms/v2/ip-complaint/start', function(request, response) {
+
+    request.session.data['contactReason'] = 'Complain about an insolvency practitioner'
+    request.session.data['folder'] = 'ip-complaint'
+    request.session.data['version'] = 'v2'
+
+    response.redirect("/customer-forms/v2/ip-complaint/start")
 
 })
 
@@ -538,4 +603,11 @@ router.post('/customer-forms/v2/company-complaint/linkedCompany', function(reque
         response.redirect("/customer-forms/v2/upload-guard")
     }
 })
+
+
+
+
+
+
+
 module.exports = router

@@ -22,9 +22,54 @@
   
 <form class="form" action="upload-list" method="post">
 
-<input type="hidden" id="totalUploadedSize" name="totalUploadedSize" value="0MB">
+  <input type="hidden" id="totalUploadedSize" name="totalUploadedSize" value="0MB">
 <input type="hidden" id="totalUploadedSizeBytes" name="totalUploadedSizeBytes" value="0">
 <input type="hidden" id="uploadedFileSizes" name="uploadedFileSizes" value="[]">
+
+ {% if data.contactReason == "Complain about an insolvency practitioner" %}
+<h1 class="govuk-heading-l">Your evidence</h1>
+<h2 class="govuk-heading-m">What evidence should you upload?</h2>
+<p class="govuk-body">
+  Upload anything you think supports your complaint, for example:
+</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li> 
+agreements between you and the IP (such as an IVA or settlement agreement)</li>
+  <li>    
+emails, letters, or messages
+</li>
+  <li>
+a copy of the complaint you sent to the IP
+</li>
+  <li>
+the IP’s reply to your complaint
+</li>
+  <li>
+if your complaint is about an IVA, a copy of the IVA proposal and the chairman’s report
+</li>
+</ul>
+
+{{ govukFileUpload({
+  id: "file-upload-1",
+  name: "fileUpload",
+  hint: {
+    text: "You can upload one or more files up to 35MB in total. We accept .jpg, .jpeg, .png, .pdf, .doc, .docx, .xls, .xlsx formats."
+  },
+
+  label: {
+    text: "Upload a file",
+    isPageHeading: false,
+    classes: "govuk-label--m"
+  },
+  javascript: true,
+  multiple: true
+
+}) }}
+
+ {% else %}
+
+
+
 
 {{ govukFileUpload({
   id: "file-upload-1",
@@ -43,6 +88,7 @@
 
 }) }}
 
+ {% endif %}
 
 
   {{ govukButton({

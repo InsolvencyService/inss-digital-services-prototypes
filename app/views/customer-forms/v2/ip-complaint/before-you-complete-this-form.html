@@ -1,0 +1,67 @@
+{% extends "layouts/main-forms.html" %}
+
+{% block pageTitle %}
+  {{ serviceName }} – {{ data.contactReason }}
+{% endblock %}
+
+
+
+{% block beforeContent %}
+  {{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+    <form action="/customer-forms/v2/ip-complaint/start-content-route" method="post" novalidate>
+
+      <h1 class="govuk-heading-l">Before you complete this form</h1>
+
+
+<p class="govuk-body">Before you complete this form, you must read <a href="https://www.gov.uk/government/publications/insolvency-practitioners-guidance-for-those-who-want-to-complain/insolvency-practitioners-guidance-on-how-to-complain-about-an-insolvency-practitioner" class="govuk-link" rel="noreferrer noopener" target="_blank">our guidance (opens in new tab)</a> on complaining about an insolvency practitioner.</p>
+<p class="govuk-body">We will consider your complaint based on the evidence you provide. Please note that we can only send your complaint onto the Insolvency Practitioner's authorising body if:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>you have already complained to the Insolvency Practitioner directly and you can evidence this</li>
+<li>your complaint has not already been assessed by the authorising body or the Gateway</li>
+<li>your complaint meets the criteria for referral <a href="https://www.gov.uk/government/publications/insolvency-practitioners-guidance-for-those-who-want-to-complain/insolvency-practitioners-guidance-on-how-to-complain-about-an-insolvency-practitioner" class="govuk-link" rel="noreferrer noopener" target="_blank">listed in our guidance (opens in new tab)</a></li>
+<li>you have provided evidence to support your claims</li>
+
+</ul>
+
+
+{{ govukRadios({
+  classes: "govuk-radios--inline",
+  name: "complainedBefore",
+  fieldset: {
+    legend: {
+      text: "Have you complained to the insolvency practitioner or their staff?",
+      isPageHeading: false,
+      classes: "govuk-fieldset__legend--m"
+    }
+  },
+  items: [
+    {
+      value: "Yes",
+      text: "Yes"
+    },
+    {
+      value: "No",
+      text: "No"
+    }
+  ]
+}) }}
+
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+      </form>
+
+    </div>
+  </div>
+
+ 
+{% endblock %}

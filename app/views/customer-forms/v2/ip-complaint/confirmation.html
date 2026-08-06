@@ -1,0 +1,32 @@
+{% extends "layouts/main-forms.html" %}
+
+{% set serviceName = 'Insolvency Service' %}
+
+{% block pageTitle %}
+{{ serviceName }} – Complaint submitted
+{% endblock %}
+
+{% block beforeContent %}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+{% call govukPanel({
+  titleText: "Complaint submitted"
+}) %}
+  Your reference number<br>
+  <strong>HDJ2123F</strong>
+{% endcall %}
+
+    <h2 class="govuk-heading-m">What happens next</h2>
+
+    <p class="govuk-body">
+  A copy of your complaint has been sent to the email address you provided on the form.
+</p>
+
+    <h3 class="govuk-heading-s">How long we take to reply</h3>
+<p class="govuk-body">content tbc</p>
+  </div>
+</div>
+{% endblock %}

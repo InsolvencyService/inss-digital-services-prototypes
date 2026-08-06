@@ -1,0 +1,47 @@
+{% extends "layouts/main-forms.html" %}
+
+{% block pageTitle %}
+  {{ serviceName }} – confirmation
+{% endblock %}
+{% block beforeContent %}
+  {{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+   <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+  <h1 class="govuk-heading-l"> You're not eligible for this service</h1>
+
+{% if data.evidence == "No" %}
+ <p class="govuk-body">To complete this form, you need to attach evidence about your complaint at the end.</p>
+<p class="govuk-body">We can only look at your complaint using the information and evidence you give us.
+</p>
+<p class="govuk-body">Upload anything you think supports your complaint, for example:
+</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>agreements between you and the IP (such as an IVA or settlement agreement)</li>
+  <li>emails, letters, or messages</li>
+  <li>a copy of the complaint you sent to the IP</li>
+  <li>the IP’s reply to your complaint</li>
+  <li>if your complaint is about an IVA, a copy of the IVA proposal and the chairman’s report</li>
+</ul>
+{% else %}
+
+    <p class="govuk-body">The insolvency service will not consider your complaint if you have not made a formal complaint to the insolvency practitioner. For more information, <a href="https://www.gov.uk/government/publications/insolvency-practitioners-guidance-for-those-who-want-to-complain/insolvency-practitioners-guidance-on-how-to-complain-about-an-insolvency-practitioner" class="govuk-link" rel="noreferrer noopener" target="_blank">read the guidance (opens in new tab)</a>.</p>
+<p class="govuk-body">If you make a complaint to the insolvency practitioner and remain dissatisfied by their response, you can make a complaint to us.</p>
+<p class="govuk-body">You will need to provide a copy of that complaint to the Insolvency Service and of any reply you receive from the Insolvency Practitioner.</p>
+
+
+{% endif %}
+</div>
+    </div>
+
+
+
+    
+
+{% endblock %}

@@ -25,9 +25,28 @@
       <div class="govuk-summary-list__row">
         <div class="govuk-summary-list__key">What do you want to do?</div>
         <div class="govuk-summary-list__value">
-          {{ data['generalEnquiryGuard'] or 'Redundancy' }}</div>
+          {{ data['generalEnquiryGuard'] or 'Make an enquiry' }}</div>
         <div class="govuk-summary-list__actions"><a class="govuk-link" href="start?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> complaint type</span></a></div>
       </div>
+
+            <div class="govuk-summary-list__row">
+        <div class="govuk-summary-list__key">Do you have an insolvency reference number?</div>
+        <div class="govuk-summary-list__value">{{ data['isRef'] or 'No' }}</div>
+        <div class="govuk-summary-list__actions"><a class="govuk-link" href="do-you-have-an-insolvency-reference-number?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> insolvency reference</span></a></div>
+      </div>
+      {%- if data['isRef'] == 'Yes' -%}
+      <div class="govuk-summary-list__row">
+        <div class="govuk-summary-list__key">Insolvency reference number</div>
+        <div class="govuk-summary-list__value">{{ data['IScaseReferenceYes'] or 'CN12345678' }}</div>
+        <div class="govuk-summary-list__actions"><a class="govuk-link" href="do-you-have-an-insolvency-reference-number?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> insolvency reference number</span></a></div>
+      </div>
+
+         <div class="govuk-summary-list__row">
+        <div class="govuk-summary-list__key">Insolvency reference number</div>
+        <div class="govuk-summary-list__value">{{ data['IScaseReferenceYes'] or 'CN12345678' }}</div>
+        <div class="govuk-summary-list__actions"><a class="govuk-link" href="do-you-have-an-insolvency-reference-number?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> insolvency reference number</span></a></div>
+      </div>
+      {%- endif -%}
 
       <div class="govuk-summary-list__row">
         <div class="govuk-summary-list__key">What is your enquiry about?</div>
@@ -77,18 +96,6 @@
         <div class="govuk-summary-list__value">{{ data['email'] or 'jb10@somewhere.com' }}</div>
         <div class="govuk-summary-list__actions"><a class="govuk-link" href="../email?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> email address</span></a></div>
       </div>
-      <div class="govuk-summary-list__row">
-        <div class="govuk-summary-list__key">Do you have an insolvency reference number?</div>
-        <div class="govuk-summary-list__value">{{ data['isRef'] or 'No' }}</div>
-        <div class="govuk-summary-list__actions"><a class="govuk-link" href="do-you-have-an-insolvency-reference-number?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> insolvency reference</span></a></div>
-      </div>
-      {%- if data['isRef'] == 'Yes' -%}
-      <div class="govuk-summary-list__row">
-        <div class="govuk-summary-list__key">Insolvency reference number</div>
-        <div class="govuk-summary-list__value">{{ data['IScaseReferenceYes'] or 'CN12345678' }}</div>
-        <div class="govuk-summary-list__actions"><a class="govuk-link" href="do-you-have-an-insolvency-reference-number?returnTo=check-your-answers">Change<span class="govuk-visually-hidden"> insolvency reference number</span></a></div>
-      </div>
-      {%- endif -%}
       <div class="govuk-summary-list__row">
         <div class="govuk-summary-list__key">Are you suppling information that we have requested?</div>
         <div class="govuk-summary-list__value">{{ data['requestedInformation'] or 'No' }}</div>
