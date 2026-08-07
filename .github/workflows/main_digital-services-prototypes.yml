@@ -7,6 +7,11 @@ on:
   push:
     branches:
       - main
+
+  schedule:
+    # Runs daily at 7am and 7pm UTC
+    - cron: '0 7,19 * * *'
+
   workflow_dispatch:
 
 jobs:
