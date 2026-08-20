@@ -543,16 +543,127 @@ router.post('/customer-forms/v1/phoneRoute', function(request, response) {
 })
 
 
+function applyCaseSessionData(req, insolvencyType, status, endDate, registerRemovalDate, startDate) {
+  req.session.data = req.session.data || {}
+  req.session.data['insolvencyType'] = insolvencyType
+  req.session.data['status'] = status
+  req.session.data['endDate'] = endDate
+  req.session.data['registerRemovalDate'] = registerRemovalDate
+  req.session.data['startDate'] = startDate
+}
+
+router.get([
+  '/individual-insolvency-register/v2/case-details-bankruptcy',
+  '/individual-insolvency-register/v2/case-details-bankruptcy.html'
+], function (req, res) {
+  applyCaseSessionData(req, 'Bankruptcy', 'Completed', '1 September 2026', '1 December 2026', '12 September 2025')
+  res.render('individual-insolvency-register/v2/case-details-bankruptcy')
+})
+
+router.post([
+  '/individual-insolvency-register/v2/case-details-bankruptcy',
+  '/individual-insolvency-register/v2/case-details-bankruptcy.html'
+], function (req, res) {
+  applyCaseSessionData(req, 'Bankruptcy', 'Completed', '1 September 2026', '1 December 2026', '12 September 2025')
+  res.render('individual-insolvency-register/v2/case-details-bankruptcy')
+})
+
+router.get([
+  '/individual-insolvency-register/v2/case-details-bankruptcy-restrictions-undertaking',
+  '/individual-insolvency-register/v2/case-details-bankruptcy-restrictions-undertaking.html'
+], function (req, res) {
+  applyCaseSessionData(req, 'Bankruptcy restrictions undertaking', 'Current', '12 June 2022', '12 June 2027', '12 June 2022')
+  res.render('individual-insolvency-register/v2/case-details-bankruptcy-restrictions-undertaking')
+})
+
+
+router.get([
+  '/individual-insolvency-register/v2/case-details-debt-relief-undertaking',
+  '/individual-insolvency-register/v2/case-details-debt-relief-undertaking.html'
+], function (req, res) {
+  applyCaseSessionData(req, 'Debt relief restrictions undertaking', 'Current', '12 June 2022', '12 June 2027', '12 June 2022')
+  res.render('individual-insolvency-register/v2/case-details-debt-relief-undertaking')
+})
+
+router.get([
+  '/individual-insolvency-register/v2/case-details-debt-relief-order',
+  '/individual-insolvency-register/v2/case-details-debt-relief-order.html'
+], function (req, res) {
+  applyCaseSessionData(req, 'Debt relief order', 'Current', '12 June 2022', '12 June 2027', '12 June 2022')
+  res.render('individual-insolvency-register/v2/case-details-debt-relief-order')
+})
+
+
+router.get([
+  '/individual-insolvency-register/v2/case-details-individual-voluntary-arrangement',
+  '/individual-insolvency-register/v2/case-details-individual-voluntary-arrangement.html'
+], function (req, res) {
+  applyCaseSessionData(req, 'Individual voluntary arrangement', 'Current', '12 June 2022', '12 June 2027', '12 June 2022')
+  res.render('individual-insolvency-register/v2/case-details-individual-voluntary-arrangement')
+})
 
 
 
+router.post('/individual-insolvency-register/v2/errorIssueGuard', function(request, response) {
+
+    var errorIssue = request.session.data['typeOfErrorOrIssue']
+    var insolvencyType = request.session.data['insolvencyType']
+
+  if (errorIssue == "Still on register after the insolvency has ended" && insolvencyType == "Individual voluntary arrangement"){
+        response.redirect("/individual-insolvency-register/v2/when-was-the-insolvency-completed")
+    }
+
+    else if (errorIssue == "Still on register after the insolvency has ended"){
+        response.redirect("/individual-insolvency-register/v2/knockout-status-completed")
+    }
+
+    else {
+        response.redirect("/individual-insolvency-register/v2/name")
+    }
+})
+
+router.post('/individual-insolvency-register/v2/insolvencyCompleted', function(request, response) {
+  var day = request.body['insolvencyCompletedDate-day']
+  var month = request.body['insolvencyCompletedDate-month']
+  var year = request.body['insolvencyCompletedDate-year']
+
+  if (!day || !month || !year) {
+    response.redirect('/individual-insolvency-register/v2/name')
+    return
+  }
+
+  var completedDate = new Date(Number(year), Number(month) - 1, Number(day))
+  var today = new Date()
+  today.setHours(0, 0, 0, 0)
+
+  var diffInDays = Math.round((today - completedDate) / 86400000)
+
+  if (completedDate <= today && diffInDays >= 0 && diffInDays <= 28) {
+    response.redirect('/individual-insolvency-register/v2/knockout-status-current-under28')
+  } else {
+    response.redirect('/individual-insolvency-register/v2/provide-evidence-guard')
+  }
+})
+
+router.post('/individual-insolvency-register/v2/provideEvidenceGuard', function(request, response) {
+  var provideEvidence = request.session.data['provideEvidence']
+
+  if (provideEvidence == 'no') {
+    response.redirect('/individual-insolvency-register/v2/knockout-status-current-no-evidence')
+  } else {
+    response.redirect('/individual-insolvency-register/v2/name')
+  }
+})
 
 
+router.post('/individual-insolvency-register/v2/uploadGuard', function(request, response) {
+  var uploadDocument = request.session.data['uploadDocument']
 
-
-
-
-
-
-    
+  if (uploadDocument == 'Yes') {
+    response.redirect('/individual-insolvency-register/v2/upload')
+  } else {
+    response.redirect('/individual-insolvency-register/v2/check-your-answers')
+  }
+})
+        
            

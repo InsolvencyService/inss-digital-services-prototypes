@@ -15,7 +15,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <h1 class="govuk-heading-l">Case details</h1>
+    <h1 class="govuk-heading-l">Case details {{ data.insolvencyType }}</h1>
 
     <h2 class="govuk-heading-m">Individual details</h2>
     <dl class="govuk-summary-list">
@@ -38,11 +38,11 @@
                             </div>
                             <div class="govuk-summary-list__row">
                                 <dt class="govuk-summary-list__key">Date of birth</dt>
-                                <dd class="govuk-summary-list__value">{{ data.caseResult.dob | default('17/09/1981') }}</dd>
+                                <dd class="govuk-summary-list__value">12 March 1981</dd>
                             </div>
                             <div class="govuk-summary-list__row">
                                 <dt class="govuk-summary-list__key"> Last known address </dt>
-                                <dd class="govuk-summary-list__value"> 44 Bancroft, Tamworth,  {{ data.caseResult.postcode | default('B77 2ES') }}</dd>
+                                <dd class="govuk-summary-list__value"> 44 Bancroft, Tamworth, EC1A 1BB</dd>
                             </div>
                             <div class="govuk-summary-list__row">
                                 <dt class="govuk-summary-list__key"> Previous address(es)</dt>
@@ -77,23 +77,23 @@
         <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key"> Start date (court order)</dt>
             <dd class="govuk-summary-list__value">
-                01 September 2025
+               {{ data.startDate }}
             </dd>
         </div>
         <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key"> Status </dt>
-            <dd class="govuk-summary-list__value"> Current </dd>
+            <dd class="govuk-summary-list__value"> {{ data.status }} </dd>
         </div>
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">End date (Discharge)</dt>
                 <dd class="govuk-summary-list__value">
-  01 September 2026            </dd>
+  {{ data.endDate }}            </dd>
             </div>
 
                         <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">Register removal date</dt>
                 <dd class="govuk-summary-list__value">
-  01 December 2026            </dd>
+  {{ data.registerRemovalDate }}            </dd>
             </div>
 
     </dl>
@@ -128,8 +128,7 @@
     </li> 
 </ul>
 
-<h2 class="govuk-heading-m">Errors or issues</h2>
-<p class="govuk-body">If you believe that the details provided are inaccurate, please report this using <a class="govuk-link--no-visited-state" href="report-an-error-or-issue.html">report an error or issue</a>.</p>
+ {% include "individual-insolvency-register/v2/includes/section-error-or-issues.html" %}
         
 
 <!--
