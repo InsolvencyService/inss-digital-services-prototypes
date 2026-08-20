@@ -15,18 +15,18 @@
    <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <form action="upload-guard" method="post" novalidate>
-        <h1 class="govuk-heading-l">Your complaint</h1>
+        <h1 class="govuk-heading-l">Your error or issue</h1>
 
-        <p class="govuk-body">Provide a brief description of your complaint, if we require any further details in order to assess your complaint we will contact you.
+        <p class="govuk-body">Provide a brief description of your error or issue, if we require any further details in order to assess your report we will contact you.
 </p>
 
 <div class="govuk-form-group">
 
     <label class="govuk-label govuk-label--m" for="more-detail">
-    Describe your complaint
+    Describe your error or issue
     </label>
 
-  <textarea class="govuk-textarea" id="companyComplaintDetails" name="companyComplaintDetails" rows="8" aria-describedby="companyComplaintDetails-hint">{{ data['companyComplaintDetails'] }}</textarea>
+  <textarea class="govuk-textarea" id="details" name="details" rows="8" aria-describedby="companyComplaintDetails-hint">{{ data['companyComplaintDetails'] }}</textarea>
 </div>
 
 <button class="govuk-button" data-module="govuk-button">
