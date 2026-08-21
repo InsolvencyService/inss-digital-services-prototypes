@@ -23,7 +23,7 @@
     <label class="govuk-label govuk-label--m" for="searchTerm">
   Name of individual or trading name
     </label>
-  <input class="govuk-input govuk-!-width-one-half" id="searchTerm" name="searchTerm" value="{{ searchTerm }}" type="text">
+  <input class="govuk-input govuk-!-width-one-half" id="searchTerm" name="searchTerm" value="{{ data.searchTerm | default('') }}" type="text">
   </div>
   
   {{ govukButton({

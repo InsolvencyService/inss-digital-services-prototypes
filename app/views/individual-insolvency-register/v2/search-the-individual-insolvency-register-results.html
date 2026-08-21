@@ -3,7 +3,7 @@
 {% set serviceName = 'Individual insolvency register' %}
 
 {% set pageName="Search results" %}
-{% set searchTerm = data.searchTerm | default('Smith') %}
+{% set searchTerm = data.searchTerm | default('') %}
 {% set pageOneResults = [
   {name: searchTerm, dob: '12 March 2003', trading: 'No trading name found', postcode: 'EC1A 1BB', insolvencyType: 'Bankruptcy', detailsPage: 'case-details-bankruptcy.html'},
   {name: searchTerm, dob: '14 August 1998', trading: searchTerm ~ ' Recovery Ltd', postcode: 'WC2N 5DU', insolvencyType: 'Debt Relief Order', detailsPage: 'case-details-debt-relief-order.html'},
