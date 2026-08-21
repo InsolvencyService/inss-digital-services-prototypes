@@ -7,7 +7,7 @@
 
  <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
-<form action="search-the-individual-insolvency-register-results" method="post" novalidate>     
+<form action="/individual-insolvency-register/v2/search-the-individual-insolvency-register-results" method="post" novalidate>
 <h1 class="govuk-heading-l">Search the individual insolvency register</h1>
 
 <p>
@@ -23,7 +23,7 @@
     <label class="govuk-label govuk-label--m" for="searchTerm">
   Name of individual or trading name
     </label>
-  <input class="govuk-input govuk-!-width-one-half" id="searchTerm" name="searchTerm" value="{{ data.searchTerm | default('') }}" type="text">
+  <input class="govuk-input govuk-!-width-one-half" id="searchTerm" name="searchTerm" value="" type="text">
   </div>
   
   {{ govukButton({

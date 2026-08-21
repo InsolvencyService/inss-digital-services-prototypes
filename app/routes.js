@@ -561,6 +561,36 @@ function applyCaseSessionData(req, insolvencyType, status, startDate, endDate, r
   req.session.data['registerRemovalDate'] = registerRemovalDate
 }
 
+router.post('/individual-insolvency-register/v2/search-the-individual-insolvency-register-results', function (req, res) {
+  req.session.data = req.session.data || {}
+  req.session.data['searchTerm'] = req.body.searchTerm || ''
+  res.redirect(303, '/individual-insolvency-register/v2/search-the-individual-insolvency-register-results')
+})
+
+router.post('/individual-insolvency-register/v2/search-the-individual-insolvency-register-results-2', function (req, res) {
+  req.session.data = req.session.data || {}
+  req.session.data['searchTerm'] = req.body.searchTerm || ''
+  res.redirect(303, '/individual-insolvency-register/v2/search-the-individual-insolvency-register-results-2')
+})
+
+router.post('/individual-insolvency-register/v2/search-the-individual-insolvency-register-results-3', function (req, res) {
+  req.session.data = req.session.data || {}
+  req.session.data['searchTerm'] = req.body.searchTerm || ''
+  res.redirect(303, '/individual-insolvency-register/v2/search-the-individual-insolvency-register-results-3')
+})
+
+router.post('/individual-insolvency-register/v2/search-the-individual-insolvency-register-results-4', function (req, res) {
+  req.session.data = req.session.data || {}
+  req.session.data['searchTerm'] = req.body.searchTerm || ''
+  res.redirect(303, '/individual-insolvency-register/v2/search-the-individual-insolvency-register-results-4')
+})
+
+router.post('/individual-insolvency-register/v2/search-the-individual-insolvency-register-results-5', function (req, res) {
+  req.session.data = req.session.data || {}
+  req.session.data['searchTerm'] = req.body.searchTerm || ''
+  res.redirect(303, '/individual-insolvency-register/v2/search-the-individual-insolvency-register-results-5')
+})
+
 router.get([
   '/individual-insolvency-register/v2/case-details-bankruptcy',
   '/individual-insolvency-register/v2/case-details-bankruptcy.html'
