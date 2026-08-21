@@ -543,53 +543,60 @@ router.post('/customer-forms/v1/phoneRoute', function(request, response) {
 })
 
 
-function applyCaseSessionData(req, insolvencyType, status, endDate, registerRemovalDate, startDate) {
+function applyCaseResultFromQuery(req) {
+  req.session.data = req.session.data || {}
+  req.session.data['name'] = req.query.name || req.session.data['name'] || ''
+  req.session.data['caseResult'] = req.session.data['caseResult'] || {}
+  req.session.data['caseResult'].trading = req.query.trading || req.session.data['caseResult'].trading || 'No trading name found'
+  req.session.data['caseResult'].postcode = req.query.postcode || req.session.data['caseResult'].postcode || 'B77 2ES'
+  req.session.data['caseResult'].dob = req.query.dob || req.session.data['caseResult'].dob || '17/09/1981'
+}
+
+function applyCaseSessionData(req, insolvencyType, status, startDate, endDate, registerRemovalDate) {
   req.session.data = req.session.data || {}
   req.session.data['insolvencyType'] = insolvencyType
+  req.session.data['startDate'] = startDate
   req.session.data['status'] = status
   req.session.data['endDate'] = endDate
   req.session.data['registerRemovalDate'] = registerRemovalDate
-  req.session.data['startDate'] = startDate
 }
 
 router.get([
   '/individual-insolvency-register/v2/case-details-bankruptcy',
   '/individual-insolvency-register/v2/case-details-bankruptcy.html'
 ], function (req, res) {
-  applyCaseSessionData(req, 'Bankruptcy', 'Completed', '1 September 2026', '1 December 2026', '12 September 2025')
+  applyCaseSessionData(req, 'Bankruptcy', 'Current', '12 September 2025', '12 September 2026', '12 December 2026')
+  applyCaseResultFromQuery(req)
   res.render('individual-insolvency-register/v2/case-details-bankruptcy')
 })
 
-router.post([
-  '/individual-insolvency-register/v2/case-details-bankruptcy',
-  '/individual-insolvency-register/v2/case-details-bankruptcy.html'
-], function (req, res) {
-  applyCaseSessionData(req, 'Bankruptcy', 'Completed', '1 September 2026', '1 December 2026', '12 September 2025')
-  res.render('individual-insolvency-register/v2/case-details-bankruptcy')
-})
 
 router.get([
   '/individual-insolvency-register/v2/case-details-bankruptcy-restrictions-undertaking',
   '/individual-insolvency-register/v2/case-details-bankruptcy-restrictions-undertaking.html'
 ], function (req, res) {
-  applyCaseSessionData(req, 'Bankruptcy restrictions undertaking', 'Current', '12 June 2022', '12 June 2027', '12 June 2022')
+  applyCaseSessionData(req, 'Bankruptcy restrictions undertaking', 'Current', '21 May 2026', '21 May 2036', '21 May 2036')
+  applyCaseResultFromQuery(req)
   res.render('individual-insolvency-register/v2/case-details-bankruptcy-restrictions-undertaking')
 })
 
 
 router.get([
-  '/individual-insolvency-register/v2/case-details-debt-relief-undertaking',
-  '/individual-insolvency-register/v2/case-details-debt-relief-undertaking.html'
+  '/individual-insolvency-register/v2/case-details-debt-relief-restrictions-undertaking',
+  '/individual-insolvency-register/v2/case-details-debt-relief-restrictions-undertaking.html'
+
 ], function (req, res) {
-  applyCaseSessionData(req, 'Debt relief restrictions undertaking', 'Current', '12 June 2022', '12 June 2027', '12 June 2022')
-  res.render('individual-insolvency-register/v2/case-details-debt-relief-undertaking')
+  applyCaseSessionData(req, 'Debt relief restrictions undertaking', 'Current', '12 June 2022', '12 June 2022', '12 June 2027')
+  applyCaseResultFromQuery(req)
+  res.render('individual-insolvency-register/v2/case-details-debt-relief-restrictions-undertaking')
 })
 
 router.get([
   '/individual-insolvency-register/v2/case-details-debt-relief-order',
   '/individual-insolvency-register/v2/case-details-debt-relief-order.html'
 ], function (req, res) {
-  applyCaseSessionData(req, 'Debt relief order', 'Current', '12 June 2022', '12 June 2027', '12 June 2022')
+  applyCaseSessionData(req, 'Debt relief order', 'Completed', '27 July 2025', '27 July 2026', '27 October 2026')
+  applyCaseResultFromQuery(req)
   res.render('individual-insolvency-register/v2/case-details-debt-relief-order')
 })
 
@@ -599,6 +606,7 @@ router.get([
   '/individual-insolvency-register/v2/case-details-individual-voluntary-arrangement.html'
 ], function (req, res) {
   applyCaseSessionData(req, 'Individual voluntary arrangement', 'Current', '12 June 2022', '12 June 2027', '12 June 2022')
+  applyCaseResultFromQuery(req)
   res.render('individual-insolvency-register/v2/case-details-individual-voluntary-arrangement')
 })
 
