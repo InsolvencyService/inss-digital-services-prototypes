@@ -3,7 +3,7 @@
 {% set serviceName = 'Individual insolvency register' %}
 
 {% set pageName="Search results" %}
-{% set searchTerm = data.searchTerm | default('') %}
+{% set searchTerm = data.searchTerm | default('John Smith') %}
 {% set pageThreeResults = [
   {name: 'Ursula ' ~ searchTerm, dob: '01 January 1973', trading: 'Westminster Recovery', postcode: 'SW1A 2AA', insolvencyType: 'Bankruptcy', detailsPage: 'case-details-bankruptcy.html'},
   {name: 'Victor ' ~ searchTerm, dob: '12 February 1962', trading: 'City Debt Solutions', postcode: 'EC2M 4PL', insolvencyType: 'Debt Relief Order', detailsPage: 'case-details-debt-relief-order.html'},

@@ -3,7 +3,7 @@
 {% set serviceName = 'Individual insolvency register' %}
 
 {% set pageName="Search results" %}
-{% set searchTerm = data.searchTerm | default('') %}
+{% set searchTerm = data.searchTerm | default('John Smith') %}
 {% set pageFiveResults = [
   {name: 'Olive ' ~ searchTerm, dob: '05 September 1984', trading: 'Northgate Resolutions', postcode: 'LS1 4HR', insolvencyType: 'Debt Relief Order', detailsPage: 'case-details-debt-relief-order.html'},
   {name: 'Patrick ' ~ searchTerm, dob: '11 October 1978', trading: 'Meridian Solutions', postcode: 'G2 6NH', insolvencyType: 'Bankruptcy restrictions undertaking', detailsPage: 'case-details-bankruptcy-restrictions-undertaking.html'},
