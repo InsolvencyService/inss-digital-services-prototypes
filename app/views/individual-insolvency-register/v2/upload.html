@@ -18,9 +18,9 @@
 {% block content %}
    <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-<form action="check-your-answers" method="post" enctype="multipart/form-data" novalidate>
+<form action="check-your-answers" method="post" novalidate>
 {{ govukFileUpload({
-  id: "file-upload-1",
+  id: "fileUpload",
   name: "fileUpload",
   hint: {
     text: "You can upload one or more files up to 35MB in total. We accept .jpg, .jpeg, .png, .pdf, .doc, .docx, .xls, .xlsx formats."

@@ -65,7 +65,7 @@
 
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">Your error or issue</dt>
-          <dd class="govuk-summary-list__value">{{ data['details'] | default('Not provided') }}</dd>
+          <dd class="govuk-summary-list__value">{{ data['details'] | default('I have evidence that my IVA has been completed and should not be listed') }}</dd>
           <dd class="govuk-summary-list__actions">
             <a class="govuk-link" href="details">
               Change<span class="govuk-visually-hidden"> your error or issue</span>
@@ -74,7 +74,7 @@
         </div>
     <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">Do you want to provide us with any documents to support the error or issue?</dt>
-          <dd class="govuk-summary-list__value">{{ data['uploadDocument'] | default('Not provided') }}</dd>
+          <dd class="govuk-summary-list__value">{{ data['uploadDocument'] | default('No') }}</dd>
           <dd class="govuk-summary-list__actions">
             <a class="govuk-link" href="upload-guard">
               Change<span class="govuk-visually-hidden"> upload documents</span>
@@ -85,11 +85,7 @@
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">Uploaded files</dt>
           <dd class="govuk-summary-list__value">
-          
-              {% for file in data['fileUpload'] %}
-              {{ file }}
-              {% endfor %}
-            
+           {{ data['fileUpload'] | default('Test Certificate') }}
           </dd>
           <dd class="govuk-summary-list__actions">
             <a class="govuk-link" href="upload">
