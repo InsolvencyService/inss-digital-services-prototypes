@@ -22,7 +22,7 @@
       <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">What type of error or issue are you reporting?</dt>
-          <dd class="govuk-summary-list__value">{{ data['typeOfErrorOrIssue'] | default('Not provided') }}</dd>
+          <dd class="govuk-summary-list__value">{{ data['typeOfErrorOrIssue'] | default('Still on register after the insolvency has ended') }}</dd>
           <dd class="govuk-summary-list__actions">
             <a class="govuk-link" href="report-an-error-or-issue">
               Change<span class="govuk-visually-hidden"> type of error or issue</span>
@@ -30,7 +30,7 @@
           </dd>
         </div>
 
-                {% if data.insolvencyCompletedDate %}
+        
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">When was the insolvency completed?</dt>
           <dd class="govuk-summary-list__value">{{ (data['insolvencyCompletedDate-day'] | default('')) ~ ' ' ~ (data['insolvencyCompletedDate-month'] | default('')) ~ ' ' ~ (data['insolvencyCompletedDate-year'] | default('')) | default('Not provided') }}</dd>
@@ -40,7 +40,18 @@
             </a>
           </dd>
         </div>
-        {% endif %}
+
+              
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Can you provide evidence that the individual insolvency is complete?</dt>
+          <dd class="govuk-summary-list__value">{{ (data['provideEvidence'] | default('Yes')) }}</dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="provide-evidence-guard">
+              Change<span class="govuk-visually-hidden"> when was the insolvency completed</span>
+            </a>
+          </dd>
+        </div>
+  
 
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">Full name</dt>
