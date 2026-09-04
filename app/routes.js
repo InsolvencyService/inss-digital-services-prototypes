@@ -686,7 +686,7 @@ router.post('/individual-insolvency-register/v2/insolvencyCompleted', function(r
 router.post('/individual-insolvency-register/v2/provideEvidenceGuard', function(request, response) {
   var provideEvidence = request.session.data['provideEvidence']
 
-  if (provideEvidence == 'no') {
+  if (provideEvidence == 'No') {
     response.redirect('/individual-insolvency-register/v2/knockout-status-current-no-evidence')
   } else {
     response.redirect('/individual-insolvency-register/v2/name')

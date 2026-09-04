@@ -1,4 +1,7 @@
 {% extends "layouts/main-forms.html" %}
+{% set serviceName = 'Individual insolvency register' %}
+
+
 
 {% block pageTitle %}
 {{ serviceName }} – {{ data.contactReason }} - Your details
@@ -18,14 +21,13 @@
 <div class="govuk-form-group">
   <h1 class="govuk-label-wrapper">
     <label class="govuk-label govuk-label--l" for="event-name">
-   Where does the insolvency practitioner you're complaining about work?
+     What is your full name?  
     </label>
   </h1>
-  <div id="practitioner-work-hint" class="govuk-hint">
-Tell us the name of the company or organisation where the insolvency practitioner you're complaining about works.
-
+  <div id="full-name-hint" class="govuk-hint">
+    Enter your first name, middle name (if applicable), and last name(s)
   </div>
-  <input class="govuk-input" id="practitioner-work" name="practitionerWork" type="text" spellcheck="false" value="" aria-describedby="Value-hint" inputmode="text">
+  <input class="govuk-input" id="fullName" name="fullName" type="text" spellcheck="false" value="{{ data['fullName'] }}" aria-describedby="Value-hint" inputmode="text">
 </div>
 
 
@@ -35,4 +37,8 @@ Continue
       </form>
     </div>
   </div>
+{% endblock %}
+
+{% block footer %}
+  {% include "find-an-ip/includes/footer-content.html" %}
 {% endblock %}

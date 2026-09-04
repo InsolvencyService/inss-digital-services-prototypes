@@ -15,7 +15,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <h1 class="govuk-heading-l">Case details</h1>
+    <h1 class="govuk-heading-l">Case details {{ data.insolvencyType }}</h1>
 
     <h2 class="govuk-heading-m">Individual details</h2>
     <dl class="govuk-summary-list">
@@ -29,20 +29,20 @@
                                 <dd class="govuk-summary-list__value">Mr</dd>
                             </div>
                             <div class="govuk-summary-list__row">
-                                <dt class="govuk-summary-list__key">Gender</dt>
+                                <dt class="govuk-summary-list__key">Sex</dt>
                                 <dd class="govuk-summary-list__value">Male</dd>
                             </div>
                             <div class="govuk-summary-list__row">
                                 <dt class="govuk-summary-list__key">Work status</dt>
-                                <dd class="govuk-summary-list__value">Unemployed</dd>
+                                <dd class="govuk-summary-list__value">Employed</dd>
                             </div>
                             <div class="govuk-summary-list__row">
                                 <dt class="govuk-summary-list__key">Date of birth</dt>
-                                <dd class="govuk-summary-list__value">{{ data.caseResult.dob | default('17/09/1981') }}</dd>
+                                <dd class="govuk-summary-list__value">12 March 1981</dd>
                             </div>
                             <div class="govuk-summary-list__row">
                                 <dt class="govuk-summary-list__key"> Last known address </dt>
-                                <dd class="govuk-summary-list__value"> 44 Bancroft, Tamworth,  {{ data.caseResult.postcode | default('B77 2ES') }}</dd>
+                                <dd class="govuk-summary-list__value"> 44 Bancroft, Tamworth, EC1A 1BB</dd>
                             </div>
                             <div class="govuk-summary-list__row">
                                 <dt class="govuk-summary-list__key"> Previous address(es)</dt>
@@ -55,100 +55,80 @@
                         </dl>
 
  <p class="govuk-body"> The individual details may have changed since the insolvency and therefore might not reflect the person's current address or occupation. </p>                       
- <h2 class="govuk-heading-m">Insolvency case details</h2>
-<dl class="govuk-summary-list">
 
+
+
+    <h2 class="govuk-heading-m">Insolvency case details</h2>
+<dl class="govuk-summary-list">
            <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key"> Type </dt>
-            <dd class="govuk-summary-list__value">Debt Relief Restrictions Undertaking</dd>
+            <dd class="govuk-summary-list__value"> Bankruptcy </dd>
         </div>
+
         <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key"> Case name </dt>
             <dd class="govuk-summary-list__value">{{ data.name }} </dd>
         </div>
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">Start date (accepted)</dt>
-            <dd class="govuk-summary-list__value">12 June 2022</dd>
+   <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Court details</dt>
+            <dd class="govuk-summary-list__value">Office of the Adjudicator, case number 5179178 of 2026</dd>
         </div>
 
         <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">End date</dt>
+            <dt class="govuk-summary-list__key"> Start date (court order)</dt>
             <dd class="govuk-summary-list__value">
-               12 June 2027
+          12 September 2025
             </dd>
         </div>
         <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">Duration</dt>
-            <dd class="govuk-summary-list__value">5 years</dd>
+            <dt class="govuk-summary-list__key"> Status </dt>
+            <dd class="govuk-summary-list__value">Current </dd>
         </div>
             <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">Restriction reason (misconduct)</dt>
+                <dt class="govuk-summary-list__key">End date (Discharge)</dt>
                 <dd class="govuk-summary-list__value">
- On 11 March 2021 I overstated my turnover to obtain a £50,000 Bounce Back Loan (BBL) to which I was not fully entitled and failed to disclose the BBL in my application for a Debt Relief Order (DRO). </dd>
+12 September 2026         </dd>
             </div>
 
                         <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">Register removal date</dt>
                 <dd class="govuk-summary-list__value">
- 12 June 2027          </dd>
+12 December 2026          </dd>
             </div>
 
     </dl>
 
-    <p class="govuk-body">This Debt Relief Restrictions Undertaking was preceded by a Debt Relief Order</p>
-
-<div class="govuk-inset-text">
-    <h2 class="govuk-heading-m">Debt Relief Order details</h2>
-<dl class="govuk-summary-list">
-
-           <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key"> Type </dt>
-            <dd class="govuk-summary-list__value">Debt Relief Order</dd>
-        </div>
-        <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key"> Case name </dt>
-            <dd class="govuk-summary-list__value">{{ data.name }} </dd>
-        </div>
+    <h3 class="govuk-heading-s">Trading details</h3>
+    <dl class="govuk-summary-list">
           <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">Insolvency Service reference number</dt>
-            <dd class="govuk-summary-list__value">DRO5796739</dd>
-        </div>
-
-        <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key"> Start date (order)</dt>
-            <dd class="govuk-summary-list__value">
-                5 September 2021
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key"> Status </dt>
-            <dd class="govuk-summary-list__value">Revoked </dd>
-        </div>
+                                <dt class="govuk-summary-list__key">Trading name</dt>
+                                <dd class="govuk-summary-list__value">{{ data.caseResult.trading | default('No trading name found') }}</dd>
+        </div> 
             <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">End date (moratorium period)</dt>
-                <dd class="govuk-summary-list__value">
-12 June 2022          </dd>
-            </div>
-    </dl>
-</div>
+                                <dt class="govuk-summary-list__key">Trading address</dt>
+                                <dd class="govuk-summary-list__value">23 Guilford Road, Tamworth,  B77 5TY  </dd>
+        </div> 
+              <div class="govuk-summary-list__row">
+                                <dt class="govuk-summary-list__key">Type of business</dt>
+                                <dd class="govuk-summary-list__value">Construction</dd>
+        </div> 
+        </dl>
 
 <h2 class="govuk-heading-m">Guidance</h2>
-<p class="govuk-body"><a href="https://www.gov.uk/government/publications/debt-relief-restrictions-orders-and-undertakings/debt-relief-restrictions-orders-and-undertakings">Debt relief restrictions orders and undertakings</a></p>
-<p class="govuk-body"><a href="https://www.gov.uk/options-for-dealing-with-your-debts/debt-relief-orders">Options for dealing with your debts: Debt Relief Orders</a></p>
+<p class="govuk-body"><a href="https://www.gov.uk/government/publications/guide-to-bankruptcy/guide-to-bankruptcy">Guide to bankruptcy</a></p>
 
-<h2 class="govuk-heading-m">This register and credit files [content to be verified]</h2>
+<h2 class="govuk-heading-m" >This register and credit files</h2>
 <p>
-    Due to legislation this Debt Relief Restrictions Undertaking will:</p>
+    Due to legislation this bankruptcy will:</p>
 <ul class="govuk-list govuk-list--bullet">
     <li>be removed from this register 3 months after it ends.</li>
-    <li>stay on your credit file for 6 years after the Debt Relief Restrictions Undertaking is made. You should check if the entry has been removed after 6 years.
+    <li>stay on your credit file for 6 years after the bankruptcy order is made. You should check if the entry has been removed after 6 years.
         <br><br>
         The 3 main UK credit agencies are <a href="https://www.transunion.co.uk/">TransUnion</a>, <a href="https://www.equifax.co.uk/">Equifax</a> and <a href="https://www.experian.co.uk/consumer/experian-credit-score.html">Experian</a>.
     </li> 
 </ul>
 
-<h2 class="govuk-heading-m">Errors or issues</h2>
-<p class="govuk-body">If you believe that the details provided are inaccurate, please report this using <a class="govuk-link--no-visited-state" href="report-an-error-or-issue.html">report an error or issue</a>.</p>
+ {% include "individual-insolvency-register/v2/includes/section-error-or-issues.html" %}
         
 
 <!--

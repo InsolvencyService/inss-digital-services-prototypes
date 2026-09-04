@@ -4,17 +4,17 @@
 
 {% set pageName="Search results" %}
 {% set searchTerm = data.searchTerm | default('John Smith') %}
-{% set pageOneResults = [
-  {name: searchTerm, dob: '12 March 2003', trading: 'No trading name found', postcode: 'EC1A 1BB', insolvencyType: 'Bankruptcy', detailsPage: 'case-details-bankruptcy.html'},
-  {name: searchTerm, dob: '14 August 1998', trading: searchTerm ~ ' Recovery Ltd', postcode: 'WC2N 5DU', insolvencyType: 'Debt Relief Order', detailsPage: 'case-details-debt-relief-order.html'},
-  {name: searchTerm, dob: '09 November 1991', trading: 'Southfield Advisory', postcode: 'SW1A 1AA', insolvencyType: 'Bankruptcy restrictions undertaking', detailsPage: 'case-details-bankruptcy-restrictions-undertaking.html'},
-  {name: searchTerm, dob: '27 May 1968', trading: 'No trading name found', postcode: 'E1 6AN', insolvencyType: 'Debt relief restrictions undertaking', detailsPage: 'case-details-debt-relief-restrictions-undertaking.html'},
-  {name: 'Ella ' ~ searchTerm, dob: '03 February 1974', trading: 'Riverbank Advisors', postcode: 'N1 9GU', insolvencyType: 'Individual Voluntary Arrangement', detailsPage: 'case-details-individual-voluntary-arrangement.html'},
-  {name: 'Fred ' ~ searchTerm, dob: '18 June 1982', trading: 'North' ~ searchTerm ~ ' Restructuring', postcode: 'SE1 7PB', insolvencyType: 'Bankruptcy', detailsPage: 'case-details-bankruptcy.html'},
-  {name: 'Georgia ' ~ searchTerm, dob: '21 January 1979', trading: 'Lakeside Recovery', postcode: 'N7 8XS', insolvencyType: 'Debt Relief Order', detailsPage: 'case-details-debt-relief-order.html'},
-  {name: 'Harry ' ~ searchTerm, dob: '30 September 1989', trading: 'Crown Solutions', postcode: 'SW3 4AA', insolvencyType: 'Bankruptcy restrictions undertaking', detailsPage: 'case-details-bankruptcy-restrictions-undertaking.html'},
-  {name: 'Isobel ' ~ searchTerm, dob: '11 July 1996', trading: 'Bridgepoint Partners', postcode: 'E14 5AB', insolvencyType: 'Debt relief restrictions undertaking', detailsPage: 'case-details-debt-relief-restrictions-undertaking.html'},
-  {name: 'James ' ~ searchTerm, dob: '05 April 2001', trading: 'Regency Restructuring', postcode: 'SW8 1QP', insolvencyType: 'Individual Voluntary Arrangement', detailsPage: 'case-details-individual-voluntary-arrangement.html'}
+{% set pageFourResults = [
+  {name: 'Eleanor ' ~ searchTerm, dob: '09 November 1970', trading: 'Avalon Recovery', postcode: 'SW2 3AA', insolvencyType: 'Bankruptcy', detailsPage: 'case-details-bankruptcy.html'},
+  {name: 'Finn ' ~ searchTerm, dob: '23 December 1975', trading: 'Harbour Administrators', postcode: 'SE10 0AA', insolvencyType: 'Debt Relief Order', detailsPage: 'case-details-debt-relief-order.html'},
+  {name: 'Georgia ' ~ searchTerm, dob: '14 January 1981', trading: 'Bridge Debt Solutions', postcode: 'N4 5HQ', insolvencyType: 'Individual Voluntary Arrangement', detailsPage: 'case-details-individual-voluntary-arrangement.html'},
+  {name: 'Hannah ' ~ searchTerm, dob: '19 February 1992', trading: 'Capital Recovery Ltd', postcode: 'E2 8AA', insolvencyType: 'Individual Voluntary Arrangement', detailsPage: 'case-details-individual-voluntary-arrangement.html'},
+  {name: 'Ian ' ~ searchTerm, dob: '26 March 1984', trading: 'Apex Advisory', postcode: 'B1 1AA', insolvencyType: 'Individual Voluntary Arrangement', detailsPage: 'case-details-individual-voluntary-arrangement.html'},
+  {name: 'Jasmine ' ~ searchTerm, dob: '02 April 1987', trading: searchTerm ~ 'field Insolvency', postcode: 'M3 2ER', insolvencyType: 'Bankruptcy', detailsPage: 'case-details-bankruptcy.html'},
+  {name: 'Kyle ' ~ searchTerm, dob: '15 May 1993', trading: 'Northgate Resolutions', postcode: 'LS1 4HR', insolvencyType: 'Debt Relief Order', detailsPage: 'case-details-debt-relief-order.html'},
+  {name: 'Leah ' ~ searchTerm, dob: '07 June 1985', trading: 'Meridian Solutions', postcode: 'G2 6NH', insolvencyType: 'Individual Voluntary Arrangement', detailsPage: 'case-details-individual-voluntary-arrangement.html'},
+  {name: 'Mason ' ~ searchTerm, dob: '18 July 1990', trading: 'Bristol Recovery Group', postcode: 'BS1 5DP', insolvencyType: 'Individual Voluntary Arrangement', detailsPage: 'case-details-individual-voluntary-arrangement.html'},
+  {name: 'Nora ' ~ searchTerm, dob: '01 August 1988', trading: 'Hawthorn Advisory', postcode: 'YO1 7NP', insolvencyType: 'Individual Voluntary Arrangement', detailsPage: 'case-details-individual-voluntary-arrangement.html'}
 ] %}
 
 {% block beforeContent %}
@@ -31,10 +31,10 @@
 <h1 class="govuk-heading-l">Search results</h1>
 <p class="govuk-body">Your results may include individuals with an alias or a previous name which matches your search criteria.</p><p class="govuk-body"> If you expected to see a name in the register and it is not there, <a href="" >tell the Insolvency Service.</a></p>
 
-<form action="/individual-insolvency-register/v2/search-the-individual-insolvency-register-results" method="post" novalidate>
+<form action="/individual-insolvency-register/v3/search-the-individual-insolvency-register-results-4" method="post" novalidate>
   <div class="govuk-form-group">
     <label class="govuk-label govuk-label--m" for="searchTerm">
-      Search
+      Name of individual or trading name
     </label>
     <input class="govuk-input govuk-!-width-one-half" id="searchTerm" name="searchTerm" value="{{ searchTerm }}" type="text">
   </div>
@@ -42,18 +42,16 @@
   <button class="govuk-button" type="submit">Search</button>
 </form>
 
-      <p class="govuk-body">Showing 1 to 10 of 47 results for <strong>{{ data.searchTerm }}</strong></p>
+  </div>
+  </div>
+
+
+      <p class="govuk-body">Showing 31 to 40 of 47 results for <strong>{{ searchTerm }}</strong></p>
       <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
-      
 
-  </div>
-  </div>
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-
-          <ul class="govuk-list govuk-list--divided">{%- for result in pageOneResults %}
+          <ul class="govuk-list govuk-list--divided">{%- for result in pageFourResults %}
               <li>
-                <h2 class="govuk-heading-s"><a class="govuk-link" href="/individual-insolvency-register/v2/{{ result.detailsPage }}?name={{ result.name | urlencode }}&trading={{ result.trading | urlencode }}&postcode={{ result.postcode | urlencode }}&dob={{ result.dob | urlencode }}">{{ result.name }}</a></h2>
+                <h2 class="govuk-heading-s"><a class="govuk-link" href="/individual-insolvency-register/v3/{{ result.detailsPage }}?name={{ result.name | urlencode }}&trading={{ result.trading | urlencode }}&postcode={{ result.postcode | urlencode }}&dob={{ result.dob | urlencode }}">{{ result.name }}</a></h2>
                 <dl class="govuk-summary-list govuk-summary-list--no-border">
                      <div class="govuk-summary-list__row">
                     <dt class="govuk-summary-list__key govuk-!-padding-top-1 govuk-!-padding-bottom-1">
@@ -96,13 +94,11 @@
 
 
 
-
-
 <!--  pagination  -->
 
 <nav class="govuk-pagination" aria-label="Pagination">
-  <!-- <div class="govuk-pagination__prev">
-    <a class="govuk-link govuk-pagination__link" href="#" rel="prev">
+  <div class="govuk-pagination__prev">
+    <a class="govuk-link govuk-pagination__link" href="search-the-individual-insolvency-register-results-3.html" rel="prev">
       <svg class="govuk-pagination__icon govuk-pagination__icon--prev" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
         <path d="m6.5938-0.0078125-6.7266 6.7266 6.7441 6.4062 1.377-1.449-4.1856-3.9768h12.896v-2h-12.984l4.2931-4.293-1.414-1.414z"></path>
       </svg>
@@ -110,10 +106,10 @@
         Previous<span class="govuk-visually-hidden"> page</span>
       </span>
     </a>
-  </div> -->
+  </div>
   <ul class="govuk-pagination__list">
-    <li class="govuk-pagination__item govuk-pagination__item--current">
-      <a class="govuk-link govuk-pagination__link" href="search-the-individual-insolvency-register-results.html" aria-label="Page 1" aria-current="page">
+    <li class="govuk-pagination__item">
+      <a class="govuk-link govuk-pagination__link" href="search-the-individual-insolvency-register-results.html" aria-label="Page 1">
         1
       </a>
     </li>
@@ -127,8 +123,8 @@
         3
       </a>
     </li>
-    <li class="govuk-pagination__item">
-      <a class="govuk-link govuk-pagination__link" href="search-the-individual-insolvency-register-results-4.html" aria-label="Page 4">
+    <li class="govuk-pagination__item govuk-pagination__item--current">
+      <a class="govuk-link govuk-pagination__link" href="#" aria-label="Page 4" aria-current="page">
         4
       </a>
     </li>
@@ -139,7 +135,7 @@
     </li>
   </ul>
   <div class="govuk-pagination__next">
-    <a class="govuk-link govuk-pagination__link" href="search-the-individual-insolvency-register-results-2.html" rel="next">
+    <a class="govuk-link govuk-pagination__link" href="search-the-individual-insolvency-register-results-5.html" rel="next">
       <span class="govuk-pagination__link-title">
         Next<span class="govuk-visually-hidden"> page</span>
       </span>
