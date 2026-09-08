@@ -3,18 +3,18 @@
 {% set serviceName = 'Individual insolvency register' %}
 
 {% set pageName="Search results" %}
-{% set searchTerm = data.searchTerm | default('John Smith') %}
+{% set searchTerm = 'John Hall' %}
 {% set pageTwoResults = [
-  {name: 'Katherine ' ~ searchTerm, dob: '22 May 1965', trading: 'West End Recovery', postcode: 'SW1V 3DG', insolvencyType: 'Bankruptcy', detailsPage: 'case-details-bankruptcy.html'},
-  {name: 'Liam ' ~ searchTerm, dob: '08 January 1972', trading: 'Harbour Administrators', postcode: 'SE10 0DX', insolvencyType: 'Debt Relief Order', detailsPage: 'case-details-debt-relief-order.html'},
-  {name: 'Maya ' ~ searchTerm, dob: '14 September 1980', trading: 'Bridge Debt Solutions', postcode: 'N4 3HQ', insolvencyType: 'Bankruptcy restrictions undertaking', detailsPage: 'case-details-bankruptcy-restrictions-undertaking.html'},
-  {name: 'Noah ' ~ searchTerm, dob: '19 March 1987', trading: 'Capital Recovery Ltd', postcode: 'E2 8AA', insolvencyType: 'Debt relief restrictions undertaking', detailsPage: 'case-details-debt-relief-restrictions-undertaking.html'},
-  {name: 'Olivia ' ~ searchTerm, dob: '26 July 1978', trading: 'Apex Advisory', postcode: 'B1 1AA', insolvencyType: 'Individual Voluntary Arrangement', detailsPage: 'case-details-individual-voluntary-arrangement.html'},
-  {name: 'Peter ' ~ searchTerm, dob: '02 October 1962', trading: searchTerm ~ 'field Insolvency', postcode: 'M3 2ER', insolvencyType: 'Bankruptcy', detailsPage: 'case-details-bankruptcy.html'},
-  {name: 'Quincy ' ~ searchTerm, dob: '15 December 1984', trading: 'Northgate Resolutions', postcode: 'LS1 4HR', insolvencyType: 'Debt Relief Order', detailsPage: 'case-details-debt-relief-order.html'},
-  {name: 'Ruth ' ~ searchTerm, dob: '07 June 1971', trading: 'Meridian Solutions', postcode: 'G2 6NH', insolvencyType: 'Bankruptcy restrictions undertaking', detailsPage: 'case-details-bankruptcy-restrictions-undertaking.html'},
-  {name: 'Samuel ' ~ searchTerm, dob: '18 April 1990', trading: 'Bristol Recovery Group', postcode: 'BS1 5DP', insolvencyType: 'Debt relief restrictions undertaking', detailsPage: 'case-details-debt-relief-restrictions-undertaking.html'},
-  {name: 'Tara ' ~ searchTerm, dob: '01 August 1988', trading: 'Hawthorn Advisory', postcode: 'YO1 7NP', insolvencyType: 'Individual Voluntary Arrangement', detailsPage: 'case-details-individual-voluntary-arrangement.html'}
+  {name: 'John Edward Hall', dob: '22 May 1965', trading: 'West End Recovery', postcode: 'SW1V 3DG', insolvencyType: 'Bankruptcy', detailsPage: 'case-details-bankruptcy.html'},
+  {name: 'John Ethan Hall', dob: '08 January 1972', trading: 'Harbour Administrators', postcode: 'SE10 0DX', insolvencyType: 'Debt Relief Order', detailsPage: 'case-details-debt-relief-order.html'},
+  {name: 'John Felix Hall', dob: '14 September 1980', trading: 'Bridge Debt Solutions', postcode: 'N4 3HQ', insolvencyType: 'Bankruptcy restrictions undertaking', detailsPage: 'case-details-bankruptcy-restrictions-undertaking.html'},
+  {name: 'John Finn Hall', dob: '19 March 1987', trading: 'Capital Recovery Ltd', postcode: 'E2 8AA', insolvencyType: 'Debt relief restrictions undertaking', detailsPage: 'case-details-debt-relief-restrictions-undertaking.html'},
+  {name: 'John Gabriel Hall', dob: '26 July 1978', trading: 'Apex Advisory', postcode: 'B1 1AA', insolvencyType: 'Individual Voluntary Arrangement', detailsPage: 'case-details-individual-voluntary-arrangement.html'},
+  {name: 'John George Hall', dob: '02 October 1962', trading: 'John Hallfield Insolvency', postcode: 'M3 2ER', insolvencyType: 'Bankruptcy', detailsPage: 'case-details-bankruptcy.html'},
+  {name: 'John Henry Hall', dob: '15 December 1984', trading: 'Northgate Resolutions', postcode: 'LS1 4HR', insolvencyType: 'Debt Relief Order', detailsPage: 'case-details-debt-relief-order.html'},
+  {name: 'John Hugo Hall', dob: '07 June 1971', trading: 'Meridian Solutions', postcode: 'G2 6NH', insolvencyType: 'Bankruptcy restrictions undertaking', detailsPage: 'case-details-bankruptcy-restrictions-undertaking.html'},
+  {name: 'John Ian Hall', dob: '18 April 1990', trading: 'Bristol Recovery Group', postcode: 'BS1 5DP', insolvencyType: 'Debt relief restrictions undertaking', detailsPage: 'case-details-debt-relief-restrictions-undertaking.html'},
+  {name: 'John Isaac Hall', dob: '01 August 1988', trading: 'Hawthorn Advisory', postcode: 'YO1 7NP', insolvencyType: 'Individual Voluntary Arrangement', detailsPage: 'case-details-individual-voluntary-arrangement.html'}
 ] %}
 
 {% block beforeContent %}

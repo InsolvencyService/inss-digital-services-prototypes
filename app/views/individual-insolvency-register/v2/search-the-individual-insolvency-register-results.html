@@ -3,18 +3,18 @@
 {% set serviceName = 'Individual insolvency register' %}
 
 {% set pageName="Search results" %}
-{% set searchTerm = data.searchTerm | default('John Smith') %}
+{% set searchTerm = 'John Hall' %}
 {% set pageOneResults = [
-  {name: searchTerm, dob: '12 March 2003', trading: 'No trading name found', postcode: 'EC1A 1BB', insolvencyType: 'Bankruptcy', detailsPage: 'case-details-bankruptcy.html'},
-  {name: searchTerm, dob: '14 August 1998', trading: searchTerm ~ ' Recovery Ltd', postcode: 'WC2N 5DU', insolvencyType: 'Debt Relief Order', detailsPage: 'case-details-debt-relief-order.html'},
-  {name: searchTerm, dob: '09 November 1991', trading: 'Southfield Advisory', postcode: 'SW1A 1AA', insolvencyType: 'Bankruptcy restrictions undertaking', detailsPage: 'case-details-bankruptcy-restrictions-undertaking.html'},
-  {name: searchTerm, dob: '27 May 1968', trading: 'No trading name found', postcode: 'E1 6AN', insolvencyType: 'Debt relief restrictions undertaking', detailsPage: 'case-details-debt-relief-restrictions-undertaking.html'},
-  {name: 'Ella ' ~ searchTerm, dob: '03 February 1974', trading: 'Riverbank Advisors', postcode: 'N1 9GU', insolvencyType: 'Individual Voluntary Arrangement', detailsPage: 'case-details-individual-voluntary-arrangement.html'},
-  {name: 'Fred ' ~ searchTerm, dob: '18 June 1982', trading: 'North' ~ searchTerm ~ ' Restructuring', postcode: 'SE1 7PB', insolvencyType: 'Bankruptcy', detailsPage: 'case-details-bankruptcy.html'},
-  {name: 'Georgia ' ~ searchTerm, dob: '21 January 1979', trading: 'Lakeside Recovery', postcode: 'N7 8XS', insolvencyType: 'Debt Relief Order', detailsPage: 'case-details-debt-relief-order.html'},
-  {name: 'Harry ' ~ searchTerm, dob: '30 September 1989', trading: 'Crown Solutions', postcode: 'SW3 4AA', insolvencyType: 'Bankruptcy restrictions undertaking', detailsPage: 'case-details-bankruptcy-restrictions-undertaking.html'},
-  {name: 'Isobel ' ~ searchTerm, dob: '11 July 1996', trading: 'Bridgepoint Partners', postcode: 'E14 5AB', insolvencyType: 'Debt relief restrictions undertaking', detailsPage: 'case-details-debt-relief-restrictions-undertaking.html'},
-  {name: 'James ' ~ searchTerm, dob: '05 April 2001', trading: 'Regency Restructuring', postcode: 'SW8 1QP', insolvencyType: 'Individual Voluntary Arrangement', detailsPage: 'case-details-individual-voluntary-arrangement.html'}
+  {name: 'John Aaron Hall', dob: '12 March 2003', trading: 'No trading name found', postcode: 'EC1A 1BB', insolvencyType: 'Bankruptcy', detailsPage: 'case-details-bankruptcy.html'},
+  {name: 'John Adam Hall', dob: '14 August 1998', trading: 'John Hall Recovery Ltd', postcode: 'WC2N 5DU', insolvencyType: 'Debt Relief Order', detailsPage: 'case-details-debt-relief-order.html'},
+  {name: 'John Adrian Hall', dob: '09 November 1991', trading: 'Southfield Advisory', postcode: 'SW1A 1AA', insolvencyType: 'Bankruptcy restrictions undertaking', detailsPage: 'case-details-bankruptcy-restrictions-undertaking.html'},
+  {name: 'John Alexander Hall', dob: '27 May 1968', trading: 'No trading name found', postcode: 'E1 6AN', insolvencyType: 'Debt relief restrictions undertaking', detailsPage: 'case-details-debt-relief-restrictions-undertaking.html'},
+  {name: 'John Benjamin Hall', dob: '03 February 1974', trading: 'Riverbank Advisors', postcode: 'N1 9GU', insolvencyType: 'Individual Voluntary Arrangement', detailsPage: 'case-details-individual-voluntary-arrangement.html'},
+  {name: 'John Blake Hall', dob: '18 June 1982', trading: 'North John Hall Restructuring', postcode: 'SE1 7PB', insolvencyType: 'Bankruptcy', detailsPage: 'case-details-bankruptcy.html'},
+  {name: 'John Caleb Hall', dob: '21 January 1979', trading: 'Lakeside Recovery', postcode: 'N7 8XS', insolvencyType: 'Debt Relief Order', detailsPage: 'case-details-debt-relief-order.html'},
+  {name: 'John Cameron Hall', dob: '30 September 1989', trading: 'Crown Solutions', postcode: 'SW3 4AA', insolvencyType: 'Bankruptcy restrictions undertaking', detailsPage: 'case-details-bankruptcy-restrictions-undertaking.html'},
+  {name: 'John Daniel Hall', dob: '11 July 1996', trading: 'Bridgepoint Partners', postcode: 'E14 5AB', insolvencyType: 'Debt relief restrictions undertaking', detailsPage: 'case-details-debt-relief-restrictions-undertaking.html'},
+  {name: 'John Dylan Hall', dob: '05 April 2001', trading: 'Regency Restructuring', postcode: 'SW8 1QP', insolvencyType: 'Individual Voluntary Arrangement', detailsPage: 'case-details-individual-voluntary-arrangement.html'}
 ] %}
 
 {% block beforeContent %}
@@ -36,7 +36,7 @@
     <label class="govuk-label govuk-label--m" for="searchTerm">
       Search
     </label>
-    <input class="govuk-input govuk-!-width-one-half" id="searchTerm" name="searchTerm" value="{{ searchTerm }}" type="text">
+    <input class="govuk-input govuk-!-width-one-half" id="searchTerm" name="searchTerm" value="John Hall" type="text">
   </div>
 
   <button class="govuk-button" type="submit">Search</button>
