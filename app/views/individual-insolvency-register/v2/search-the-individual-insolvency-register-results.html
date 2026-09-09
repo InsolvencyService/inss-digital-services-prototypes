@@ -56,7 +56,7 @@
 
           <ul class="govuk-list govuk-list--divided">{%- for result in pageOneResults %}
               <li>
-                <h2 class="govuk-heading-s"><a class="govuk-link" href="/individual-insolvency-register/v3/{{ result.detailsPage }}?name={{ result.name | urlencode }}&trading={{ result.trading | urlencode }}&postcode={{ result.postcode | urlencode }}&dob={{ result.dob | urlencode }}">{{ result.name }}</a></h2>
+                <h2 class="govuk-heading-s"><a class="govuk-link" href="/individual-insolvency-register/v2/{{ result.detailsPage }}?name={{ result.name | urlencode }}&trading={{ result.trading | urlencode }}&postcode={{ result.postcode | urlencode }}&dob={{ result.dob | urlencode }}">{{ result.name }}</a></h2>
                 <dl class="govuk-summary-list govuk-summary-list--no-border">
                      <div class="govuk-summary-list__row">
                     <dt class="govuk-summary-list__key govuk-!-padding-top-1 govuk-!-padding-bottom-1">
