@@ -38,7 +38,7 @@
                             </div>
                             <div class="govuk-summary-list__row">
                                 <dt class="govuk-summary-list__key">Date of birth</dt>
-                                <dd class="govuk-summary-list__value">12 March 1981</dd>
+                                <dd class="govuk-summary-list__value">{{ data.caseResult.dob | default('9 November 1970') }}</dd>
                             </div>
                             <div class="govuk-summary-list__row">
                                 <dt class="govuk-summary-list__key"> Last known address </dt>
