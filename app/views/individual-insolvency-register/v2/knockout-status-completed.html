@@ -35,9 +35,16 @@
                                 <dd class="govuk-summary-list__value">{{ data.registerRemovalDate }}</dd>
                             </div>
                             </dl> 
-                            
+
+
+{% if data.insolvencyType == 'Debt Relief Restrictions Undertaking'
+   or data.insolvencyType == 'Bankruptcy Restrictions Undertaking' %}   
+    <p class="govuk-body">Due to legislation, this {{ data.insolvencyType }} will be removed from the register the day after the end date.</p>                           
+{% else %}                            
         <p class="govuk-body">Due to legislation, information will remain on the register for three months following the discharge or notification of completion to the Insolvency Service.</p>                      
-  </div>
+ {% endif %}
+ 
+      </div>
 
 </div>
 

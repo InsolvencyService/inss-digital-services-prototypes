@@ -605,7 +605,7 @@ router.get([
   '/individual-insolvency-register/v2/case-details-bankruptcy-restrictions-undertaking',
   '/individual-insolvency-register/v2/case-details-bankruptcy-restrictions-undertaking.html'
 ], function (req, res) {
-  applyCaseSessionData(req, 'Bankruptcy restrictions undertaking', 'Current', '21 May 2026', '21 May 2036', '21 May 2036')
+  applyCaseSessionData(req, 'Bankruptcy Restrictions Undertaking', 'Current', '21 May 2026', '21 May 2036', '22 May 2036')
   applyCaseResultFromQuery(req)
   res.render('individual-insolvency-register/v2/case-details-bankruptcy-restrictions-undertaking')
 })
@@ -616,7 +616,7 @@ router.get([
   '/individual-insolvency-register/v2/case-details-debt-relief-restrictions-undertaking.html'
 
 ], function (req, res) {
-  applyCaseSessionData(req, 'Debt relief restrictions undertaking', 'Current', '12 June 2022', '12 June 2022', '12 June 2027')
+  applyCaseSessionData(req, 'Debt Relief Restrictions Undertaking', 'Current', '12 June 2022', '12 June 2027', '13 June 2027')
   applyCaseResultFromQuery(req)
   res.render('individual-insolvency-register/v2/case-details-debt-relief-restrictions-undertaking')
 })
@@ -625,7 +625,7 @@ router.get([
   '/individual-insolvency-register/v2/case-details-debt-relief-order',
   '/individual-insolvency-register/v2/case-details-debt-relief-order.html'
 ], function (req, res) {
-  applyCaseSessionData(req, 'Debt relief order', 'Completed', '27 July 2025', '27 July 2026', '27 October 2026')
+  applyCaseSessionData(req, 'Debt Relief Order', 'Completed', '27 July 2025', '27 July 2026', '27 October 2026')
   applyCaseResultFromQuery(req)
   res.render('individual-insolvency-register/v2/case-details-debt-relief-order')
 })
@@ -635,7 +635,7 @@ router.get([
   '/individual-insolvency-register/v2/case-details-individual-voluntary-arrangement',
   '/individual-insolvency-register/v2/case-details-individual-voluntary-arrangement.html'
 ], function (req, res) {
-  applyCaseSessionData(req, 'Individual voluntary arrangement', 'Current', '12 June 2022', '12 June 2027', '12 June 2022')
+  applyCaseSessionData(req, 'Individual Voluntary Arrangement', 'Current', '12 June 2022', '12 June 2027', '12 June 2022')
   applyCaseResultFromQuery(req)
   res.render('individual-insolvency-register/v2/case-details-individual-voluntary-arrangement')
 })
