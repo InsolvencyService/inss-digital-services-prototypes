@@ -14,25 +14,22 @@
 {% endblock %}
 
 {% block content %}
-{% set referenceValue = (data['referenceValue'] or data['IScaseReferenceYes'] or data['isRef'] or '') | string %}
-{% set referenceValueUpper = referenceValue | upper %}
-{% set isBktReference = referenceValueUpper | slice(0, 3) == 'BKT' %}
 
-{% set caseQuestionText = data['caseQuestionText'] or ('Is this a bankruptcy case?' if isBktReference else 'Is this a redundancy case?') %}
+{% set caseQuestionText = "Is this a " + (data.caseType | lower) + " case?" %}
    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
       <form action="/customer-forms/v2/general-enquiry/caseRefConfirmation" method="post" novalidate>
 
   <h1 class="govuk-heading-l">Case details</h1>
 
-  <p class="govuk-body">We have matched the reference number:</p>
+  <p class="govuk-body">We have matched the type of reference number:</p>
   <dl class="govuk-summary-list">
   <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">
       Case reference here
     </dt>
     <dd class="govuk-summary-list__value">
-    {{ referenceValue | default('CN12345678') }}
+    {{ data.IScaseReferenceYes }}
     </dd>
   </div>
     <div class="govuk-summary-list__row">
@@ -40,7 +37,7 @@
      Type of case
     </dt>
     <dd class="govuk-summary-list__value">
-      {{ caseLabel }}
+      {{ data.caseType }}
     </dd>
   </div>
 </dl>        

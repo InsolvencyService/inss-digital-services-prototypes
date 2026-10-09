@@ -21,18 +21,6 @@
 
     <form action="/customer-forms/v2/general-enquiry/generalEnquiries" method="post" novalidate>
 
-      <h1 class="govuk-heading-l">General enquiries</h1>
-
-      <p class="govuk-body">
-        Complete this form to contact us about processes we administer or regulate. </p>
-<p class="govuk-body">We cannot give you:</p>
-<ul class="govuk-list govuk-list--bullet">
-  <li>legal or financial advice</li>
-  <li>information or advice about other government departments</li>
-  <li>information on specific insolvency cases</li>
-  <li>information about redundancy payments</li>
-</ul>
-
 
 {% set emailHtml %}
 {{ govukInput({
@@ -53,32 +41,40 @@
   name: "generalEnquiry",
   fieldset: {
     legend: {
-      text: "What is your enquiry about?",
-      isPageHeading: false,
-      classes: "govuk-fieldset__legend--m"
+      text: "Which area of the Insolvency Service does it relate to?",
+      isPageHeading: true,
+      classes: "govuk-fieldset__legend--l"
     }
   },
   
   items: [
     {
-      value: "Redundancy",
-      text: "Redundancy"
-    },
-    {
-      value: "Debt relief order",
-      text: "Debt relief order"
-    },
-    {
       value: "Bankruptcy",
       text: "Bankruptcy"
+    },
+    {
+      value: "Breathing space",
+      text: "Breathing space"
     },
     {
       value: "Company liquidation",
       text: "Company liquidation"
     },
     {
-      value: "Breathing space",
-      text: "Breathing space"
+      value: "Debt relief order",
+      text: "Debt relief order"
+    },
+    {
+      value: "Individual voluntary arrangement",
+      text: "Individual voluntary arrangement"
+    },
+    {
+      value: "Payment protection insurance",
+      text: "Payment protection insurance"
+    },
+    {
+      value: "Redundancy",
+      text: "Redundancy"
     },
     {
       value: "Other",
@@ -86,17 +82,7 @@
       conditional: {
       html: emailHtml
       }
-    },
-    {
-      divider: "or"
-    },
-    {
-      value: "I want to make  a complaint",
-      text: "I want to make a complaint",
-      behaviour: "exclusive",
-      hint: {
-        text: "For example, you want to complain about an insolvency practitioner or a disqualified director."
-      }
+    
     }
   ]
 }) }}

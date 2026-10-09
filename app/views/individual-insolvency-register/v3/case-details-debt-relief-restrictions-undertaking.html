@@ -29,7 +29,7 @@
                                 <dd class="govuk-summary-list__value">Mr</dd>
                             </div>
                             <div class="govuk-summary-list__row">
-                                <dt class="govuk-summary-list__key">Gender</dt>
+                                <dt class="govuk-summary-list__key">Sex</dt>
                                 <dd class="govuk-summary-list__value">Male</dd>
                             </div>
                             <div class="govuk-summary-list__row">
@@ -38,7 +38,7 @@
                             </div>
                             <div class="govuk-summary-list__row">
                                 <dt class="govuk-summary-list__key">Date of birth</dt>
-                                <dd class="govuk-summary-list__value">{{ data.caseResult.dob | default('14 January 1981') }}</dd>
+                                <dd class="govuk-summary-list__value">{{ data.caseResult.dob | default('17/09/1981') }}</dd>
                             </div>
                             <div class="govuk-summary-list__row">
                                 <dt class="govuk-summary-list__key"> Last known address </dt>
@@ -50,52 +50,97 @@
                             </div>
                             <div class="govuk-summary-list__row">
                                 <dt class="govuk-summary-list__key"> This person may also be known as </dt>
-                                <dd class="govuk-summary-list__value">Ellis Endo</dd>
+                                <dd class="govuk-summary-list__value"> No other names found </dd>
                             </div>
                         </dl>
 
  <p class="govuk-body"> The individual details may have changed since the insolvency and therefore might not reflect the person's current address or occupation. </p>                       
-
-
-
-    <h2 class="govuk-heading-m">Insolvency case details</h2>
+ <h2 class="govuk-heading-m">Insolvency case details</h2>
 <dl class="govuk-summary-list">
 
            <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key"> Type </dt>
-            <dd class="govuk-summary-list__value">Individual Voluntary Arrangement</dd>
+            <dd class="govuk-summary-list__value">Debt Relief Restrictions Undertaking</dd>
         </div>
         <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key"> Case name </dt>
             <dd class="govuk-summary-list__value">{{ data.name }} </dd>
         </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Start date (accepted)</dt>
+            <dd class="govuk-summary-list__value">12 June 2022</dd>
+        </div>
+
         <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key"> Start date (arrangement)</dt>
+            <dt class="govuk-summary-list__key">End date</dt>
             <dd class="govuk-summary-list__value">
-                5 September 2025
+             12 June 2027
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Duration</dt>
+            <dd class="govuk-summary-list__value">5 years</dd>
+        </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">Restriction reason (misconduct)</dt>
+                <dd class="govuk-summary-list__value">
+ On 11 March 2021 {{ data.name }} overstated their turnover to obtain a £50,000 Bounce Back Loan (BBL) to which they were not fully entitled and failed to disclose the BBL in their application for a Debt Relief Order (DRO). </dd>
+            </div>
+
+                        <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">Register removal date</dt>
+                <dd class="govuk-summary-list__value">
+13 June 2027      
+                </dd>
+            </div>
+
+    </dl>
+
+    <p class="govuk-body">This debt relief restrictions order (DRRO) was preceded by a debt relief order (DRO)</p>
+
+<div class="govuk-inset-text">
+    <h2 class="govuk-heading-m">Debt Relief Order details</h2>
+<dl class="govuk-summary-list">
+
+           <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key"> Type </dt>
+            <dd class="govuk-summary-list__value">Debt Relief Order</dd>
+        </div>
+        <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key"> Case name </dt>
+            <dd class="govuk-summary-list__value">{{ data.name }} </dd>
+        </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Insolvency Service reference number</dt>
+            <dd class="govuk-summary-list__value">DRO5796739</dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key"> Start date (order)</dt>
+            <dd class="govuk-summary-list__value">
+                5 September 2021
             </dd>
         </div>
         <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key"> Status </dt>
-            <dd class="govuk-summary-list__value"> Current </dd>
+            <dd class="govuk-summary-list__value">Revoked </dd>
         </div>
             <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">Last updated</dt>
+                <dt class="govuk-summary-list__key">End date (moratorium period)</dt>
                 <dd class="govuk-summary-list__value">
-  5 September 2025            </dd>
+12 June 2022          </dd>
             </div>
-
-
     </dl>
+</div>
 
 
 
-<h2 class="govuk-heading-m">This register and credit files</h2>
+<h2 class="govuk-heading-m">This register and credit files [content to be verified]</h2>
 <p>
-    Due to legislation this individual voluntary arrangement will order will:</p>
+    Due to legislation this Debt Relief Restrictions Undertaking will:</p>
 <ul class="govuk-list govuk-list--bullet">
-    <li>be removed from this register 3 months after the Insolvency Service are notified that it has ended.</li>
-    <li>stay on your credit file for 6 years after the individual voluntary arrangement is made. 
+    <li>be removed from this register the day after it ends.</li>
+    <li>stay on your credit file for 6 years after the Debt Relief Restrictions Undertaking is made.
         <br><br>
         The 3 main UK credit agencies are <a href="https://www.transunion.co.uk/">TransUnion</a>, <a href="https://www.equifax.co.uk/">Equifax</a> and <a href="https://www.experian.co.uk/consumer/experian-credit-score.html">Experian</a>.
     </li> 
@@ -103,10 +148,13 @@
 
 <h2 class="govuk-heading-m">Errors or issues</h2>
 <p class="govuk-body">If you believe that the details provided are inaccurate, please report this using <a class="govuk-link--no-visited-state" href="report-an-error-or-issue.html">report an error or issue</a>.</p>
-        
-<h2 class="govuk-heading-m">Guidance</h2>
-<p class="govuk-body"><a href="https://www.gov.uk/options-for-dealing-with-your-debts/individual-voluntary-arrangements">What is an individual voluntary arrangement(IVA)</a></p>
+   
 
+<h2 class="govuk-heading-m">Guidance</h2>
+<p class="govuk-body"><a href="https://www.gov.uk/government/publications/debt-relief-restrictions-orders-and-undertakings/debt-relief-restrictions-orders-and-undertakings">What is a debt relief restrictions order(DRRO)</a></p>
+<p class="govuk-body"><a href="https://www.gov.uk/options-for-dealing-with-your-debts/debt-relief-orders">What is a debt relief order(DRO)</a></p>
+
+<!--
 <h2 class="govuk-heading-m">Insolvency practioner contact details</h2>
 
 <dl class="govuk-summary-list">
@@ -128,7 +176,7 @@
                                     <dt class="govuk-summary-list__key"> Telephone </dt>
                                     <dd class="govuk-summary-list__value"> 0161 850 1018 </dd>
                                 </div>
-                            </dl> 
+                            </dl> -->
 
 <h2 class="govuk-heading-m">Insolvency service contact details</h2>    
 

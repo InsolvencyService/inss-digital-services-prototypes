@@ -29,7 +29,7 @@
                                 <dd class="govuk-summary-list__value">Mr</dd>
                             </div>
                             <div class="govuk-summary-list__row">
-                                <dt class="govuk-summary-list__key">Sex</dt>
+                                <dt class="govuk-summary-list__key">Gender</dt>
                                 <dd class="govuk-summary-list__value">Male</dd>
                             </div>
                             <div class="govuk-summary-list__row">
@@ -38,7 +38,7 @@
                             </div>
                             <div class="govuk-summary-list__row">
                                 <dt class="govuk-summary-list__key">Date of birth</dt>
-                                <dd class="govuk-summary-list__value">12 March 1981</dd>
+                                <dd class="govuk-summary-list__value">{{ data.caseResult.dob | default('9 November 1970') }}</dd>
                             </div>
                             <div class="govuk-summary-list__row">
                                 <dt class="govuk-summary-list__key"> Last known address </dt>
@@ -114,8 +114,7 @@
         </div> 
         </dl>
 
-<h2 class="govuk-heading-m">Guidance</h2>
-<p class="govuk-body"><a href="https://www.gov.uk/government/publications/guide-to-bankruptcy/guide-to-bankruptcy">Guide to bankruptcy</a></p>
+
 
 <h2 class="govuk-heading-m" >This register and credit files</h2>
 <p>
@@ -128,7 +127,13 @@
     </li> 
 </ul>
 
+
  {% include "individual-insolvency-register/v2/includes/section-error-or-issues.html" %}
+
+<h2 class="govuk-heading-m">Guidance</h2>
+<p class="govuk-body"><a href="https://www.gov.uk/government/publications/guide-to-bankruptcy/guide-to-bankruptcy">What is bankruptcy</a></p>
+
+
         
 
 <!--

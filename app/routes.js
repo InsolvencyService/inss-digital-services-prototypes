@@ -561,112 +561,93 @@ function applyCaseSessionData(req, insolvencyType, status, startDate, endDate, r
   req.session.data['registerRemovalDate'] = registerRemovalDate
 }
 
-router.post('/individual-insolvency-register/v2/search-the-individual-insolvency-register-results', function (req, res) {
+function registerPath(req, path) {
+  return '/individual-insolvency-register/' + req.params.version + '/' + path
+}
+
+router.post('/individual-insolvency-register/:version(v2|v3)/search-the-individual-insolvency-register-results', function (req, res) {
   req.session.data = req.session.data || {}
   req.session.data['searchTerm'] = req.body.searchTerm || ''
-  res.redirect(303, '/individual-insolvency-register/v2/search-the-individual-insolvency-register-results')
+  res.redirect(303, registerPath(req, 'search-the-individual-insolvency-register-results'))
 })
 
-router.post('/individual-insolvency-register/v2/search-the-individual-insolvency-register-results-2', function (req, res) {
+router.post('/individual-insolvency-register/:version(v2|v3)/search-the-individual-insolvency-register-results-2', function (req, res) {
   req.session.data = req.session.data || {}
   req.session.data['searchTerm'] = req.body.searchTerm || ''
-  res.redirect(303, '/individual-insolvency-register/v2/search-the-individual-insolvency-register-results-2')
+  res.redirect(303, registerPath(req, 'search-the-individual-insolvency-register-results-2'))
 })
 
-router.post('/individual-insolvency-register/v2/search-the-individual-insolvency-register-results-3', function (req, res) {
+router.post('/individual-insolvency-register/:version(v2|v3)/search-the-individual-insolvency-register-results-3', function (req, res) {
   req.session.data = req.session.data || {}
   req.session.data['searchTerm'] = req.body.searchTerm || ''
-  res.redirect(303, '/individual-insolvency-register/v2/search-the-individual-insolvency-register-results-3')
+  res.redirect(303, registerPath(req, 'search-the-individual-insolvency-register-results-3'))
 })
 
-router.post('/individual-insolvency-register/v2/search-the-individual-insolvency-register-results-4', function (req, res) {
+router.post('/individual-insolvency-register/:version(v2|v3)/search-the-individual-insolvency-register-results-4', function (req, res) {
   req.session.data = req.session.data || {}
   req.session.data['searchTerm'] = req.body.searchTerm || ''
-  res.redirect(303, '/individual-insolvency-register/v2/search-the-individual-insolvency-register-results-4')
+  res.redirect(303, registerPath(req, 'search-the-individual-insolvency-register-results-4'))
 })
 
-router.post('/individual-insolvency-register/v2/search-the-individual-insolvency-register-results-5', function (req, res) {
+router.post('/individual-insolvency-register/:version(v2|v3)/search-the-individual-insolvency-register-results-5', function (req, res) {
   req.session.data = req.session.data || {}
   req.session.data['searchTerm'] = req.body.searchTerm || ''
-  res.redirect(303, '/individual-insolvency-register/v2/search-the-individual-insolvency-register-results-5')
+  res.redirect(303, registerPath(req, 'search-the-individual-insolvency-register-results-5'))
 })
 
-router.get([
-  '/individual-insolvency-register/v2/case-details-bankruptcy',
-  '/individual-insolvency-register/v2/case-details-bankruptcy.html'
-], function (req, res) {
-  applyCaseSessionData(req, 'Bankruptcy', 'Current', '12 September 2025', '12 September 2026', '12 December 2026')
+function renderCaseDetails(req, res, page, insolvencyType, status, startDate, endDate, registerRemovalDate) {
+  applyCaseSessionData(req, insolvencyType, status, startDate, endDate, registerRemovalDate)
   applyCaseResultFromQuery(req)
-  res.render('individual-insolvency-register/v2/case-details-bankruptcy')
+  res.render('individual-insolvency-register/' + req.params.version + '/' + page)
+}
+
+router.get('/individual-insolvency-register/:version(v2|v3)/case-details-bankruptcy(.html)?', function (req, res) {
+  renderCaseDetails(req, res, 'case-details-bankruptcy', 'Bankruptcy', 'Current', '12 September 2025', '12 September 2026', '12 December 2026')
 })
 
-
-router.get([
-  '/individual-insolvency-register/v2/case-details-bankruptcy-restrictions-undertaking',
-  '/individual-insolvency-register/v2/case-details-bankruptcy-restrictions-undertaking.html'
-], function (req, res) {
-  applyCaseSessionData(req, 'Bankruptcy Restrictions Undertaking', 'Current', '21 May 2026', '21 May 2036', '22 May 2036')
-  applyCaseResultFromQuery(req)
-  res.render('individual-insolvency-register/v2/case-details-bankruptcy-restrictions-undertaking')
+router.get('/individual-insolvency-register/:version(v2|v3)/case-details-bankruptcy-restrictions-undertaking(.html)?', function (req, res) {
+  renderCaseDetails(req, res, 'case-details-bankruptcy-restrictions-undertaking', 'Bankruptcy Restrictions Undertaking', 'Current', '21 May 2026', '21 May 2036', '22 May 2036')
 })
 
-
-router.get([
-  '/individual-insolvency-register/v2/case-details-debt-relief-restrictions-undertaking',
-  '/individual-insolvency-register/v2/case-details-debt-relief-restrictions-undertaking.html'
-
-], function (req, res) {
-  applyCaseSessionData(req, 'Debt Relief Restrictions Undertaking', 'Current', '12 June 2022', '12 June 2027', '13 June 2027')
-  applyCaseResultFromQuery(req)
-  res.render('individual-insolvency-register/v2/case-details-debt-relief-restrictions-undertaking')
+router.get('/individual-insolvency-register/:version(v2|v3)/case-details-debt-relief-restrictions-undertaking(.html)?', function (req, res) {
+  renderCaseDetails(req, res, 'case-details-debt-relief-restrictions-undertaking', 'Debt relief restrictions order (DRRO)', 'Current', '12 June 2022', '12 June 2027', '13 June 2027')
 })
 
-router.get([
-  '/individual-insolvency-register/v2/case-details-debt-relief-order',
-  '/individual-insolvency-register/v2/case-details-debt-relief-order.html'
-], function (req, res) {
-  applyCaseSessionData(req, 'Debt Relief Order', 'Completed', '27 July 2025', '27 July 2026', '27 October 2026')
-  applyCaseResultFromQuery(req)
-  res.render('individual-insolvency-register/v2/case-details-debt-relief-order')
+router.get('/individual-insolvency-register/:version(v2|v3)/case-details-debt-relief-order(.html)?', function (req, res) {
+  renderCaseDetails(req, res, 'case-details-debt-relief-order', 'Debt Relief Order', 'Completed', '27 July 2025', '27 July 2026', '27 October 2026')
 })
 
-
-router.get([
-  '/individual-insolvency-register/v2/case-details-individual-voluntary-arrangement',
-  '/individual-insolvency-register/v2/case-details-individual-voluntary-arrangement.html'
-], function (req, res) {
-  applyCaseSessionData(req, 'Individual Voluntary Arrangement', 'Current', '12 June 2022', '12 June 2027', '12 June 2022')
-  applyCaseResultFromQuery(req)
-  res.render('individual-insolvency-register/v2/case-details-individual-voluntary-arrangement')
+router.get('/individual-insolvency-register/:version(v2|v3)/case-details-individual-voluntary-arrangement(.html)?', function (req, res) {
+  renderCaseDetails(req, res, 'case-details-individual-voluntary-arrangement', 'Individual Voluntary Arrangement', 'Current', '12 June 2022', '12 June 2027', '12 June 2022')
 })
 
 
 
-router.post('/individual-insolvency-register/v2/errorIssueGuard', function(request, response) {
+router.post('/individual-insolvency-register/:version(v2|v3)/errorIssueGuard', function(request, response) {
 
     var errorIssue = request.session.data['typeOfErrorOrIssue']
     var insolvencyType = request.session.data['insolvencyType']
 
   if (errorIssue == "Still on register after the insolvency has ended" && insolvencyType == "Individual Voluntary Arrangement"){
-        response.redirect("/individual-insolvency-register/v2/when-was-the-insolvency-completed")
+        response.redirect(registerPath(request, 'when-was-the-insolvency-completed'))
     }
 
     else if (errorIssue == "Still on register after the insolvency has ended"){
-        response.redirect("/individual-insolvency-register/v2/knockout-status-completed")
+        response.redirect(registerPath(request, 'knockout-status-completed'))
     }
 
     else {
-        response.redirect("/individual-insolvency-register/v2/name")
+        response.redirect(registerPath(request, 'name'))
     }
 })
 
-router.post('/individual-insolvency-register/v2/insolvencyCompleted', function(request, response) {
+router.post('/individual-insolvency-register/:version(v2|v3)/insolvencyCompleted', function(request, response) {
   var day = request.body['insolvencyCompletedDate-day']
   var month = request.body['insolvencyCompletedDate-month']
   var year = request.body['insolvencyCompletedDate-year']
 
   if (!day || !month || !year) {
-    response.redirect('/individual-insolvency-register/v2/name')
+    response.redirect(registerPath(request, 'name'))
     return
   }
 
@@ -677,30 +658,30 @@ router.post('/individual-insolvency-register/v2/insolvencyCompleted', function(r
   var diffInDays = Math.round((today - completedDate) / 86400000)
 
   if (completedDate <= today && diffInDays >= 0 && diffInDays <= 28) {
-    response.redirect('/individual-insolvency-register/v2/knockout-status-current-under28')
+    response.redirect(registerPath(request, 'knockout-status-current-under28'))
   } else {
-    response.redirect('/individual-insolvency-register/v2/provide-evidence-guard')
+    response.redirect(registerPath(request, 'provide-evidence-guard'))
   }
 })
 
-router.post('/individual-insolvency-register/v2/provideEvidenceGuard', function(request, response) {
+router.post('/individual-insolvency-register/:version(v2|v3)/provideEvidenceGuard', function(request, response) {
   var provideEvidence = request.session.data['provideEvidence']
 
   if (provideEvidence == 'No') {
-    response.redirect('/individual-insolvency-register/v2/knockout-status-current-no-evidence')
+    response.redirect(registerPath(request, 'knockout-status-current-no-evidence'))
   } else {
-    response.redirect('/individual-insolvency-register/v2/name')
+    response.redirect(registerPath(request, 'name'))
   }
 })
 
 
-router.post('/individual-insolvency-register/v2/uploadGuard', function(request, response) {
+router.post('/individual-insolvency-register/:version(v2|v3)/uploadGuard', function(request, response) {
   var uploadDocument = request.session.data['uploadDocument']
 
   if (uploadDocument == 'Yes') {
-    response.redirect('/individual-insolvency-register/v2/upload')
+    response.redirect(registerPath(request, 'upload'))
   } else {
-    response.redirect('/individual-insolvency-register/v2/check-your-answers')
+    response.redirect(registerPath(request, 'check-your-answers'))
   }
 })
         

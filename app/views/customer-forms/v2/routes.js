@@ -396,22 +396,34 @@ router.post('/customer-forms/v2/general-enquiry/generalEnquiryStart', function (
 
 router.post('/customer-forms/v2/general-enquiry/insReference', function (request, response) {
   var enquiryChoice = request.session.data['isRef']
-  var referenceValue = request.body.IScaseReferenceYes || request.body.isRef || ''
-  var referenceValueUpper = String(referenceValue).toUpperCase()
-  var isBktReference = referenceValueUpper.slice(0, 3) === 'BKT'
-  var isRedundancyReference = referenceValueUpper.startsWith('LN') || referenceValueUpper.startsWith('CN')
-  var isRedundancyCase = isRedundancyReference || !isBktReference
 
-  request.session.data['referenceValue'] = referenceValue
-  request.session.data['caseTypeLabel'] = 'Breathing space'
-  request.session.data['caseQuestionText'] = 'Is this a breathing space case?'
 
   if (enquiryChoice == "Yes") {
+    var referenceNumber = (request.session.data['IScaseReferenceYes'] || '').trim().toUpperCase()
+    var caseTypes = {
+      CN: 'Redundancy',
+      LN: 'Redundancy payments',
+      DRO: 'Debt relief order',
+      BKT: 'Bankruptcy',
+      LQD: 'Company liquidation',
+      PPI: 'Payment protection insurance',
+      BSS: 'Breathing space'
+    }
+    var referencePrefix = Object.keys(caseTypes).find(function (prefix) {
+      return referenceNumber.startsWith(prefix)
+    })
+
+    if (referencePrefix) {
+      request.session.data['caseType'] = caseTypes[referencePrefix]
+    } else {
+      delete request.session.data['caseType']
+    }
+
     response.redirect('/customer-forms/v2/general-enquiry/case-type-guard')
   }
 
   else {
-    response.redirect('/customer-forms/v2/general-enquiry/what-type-of-enquiry')
+    response.redirect('/customer-forms/v2/general-enquiry/what-type-of-case')
   }
 })
 
