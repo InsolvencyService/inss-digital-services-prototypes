@@ -5,6 +5,80 @@
 
 // Add extra styles here
 
+.drr-search-input-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.drr-search-input {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.drr-search-input .govuk-form-group {
+    margin-bottom: 20px;
+}
+
+.drr-filter-disclosure {
+    margin-bottom: 25px;
+    border-top: 1px solid #b1b4b6;
+    border-bottom: 1px solid #b1b4b6;
+}
+
+.drr-filter-disclosure > summary {
+    display: list-item;
+    padding: 12px 0;
+    color: #1d70b8;
+    font-size: 1.1875rem;
+    cursor: pointer;
+}
+
+.drr-filter-result-count {
+    float: right;
+    color: #0b0c0c;
+    font-size: 1rem;
+}
+
+.drr-filter-panel {
+    padding: 0 15px 15px;
+    background: #f3f2f1;
+}
+
+.drr-filter-group {
+    border-bottom: 1px solid #b1b4b6;
+}
+
+.drr-filter-group > summary {
+    padding: 14px 0;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.drr-filter-group__content {
+    padding-bottom: 8px;
+}
+
+.drr-filter-actions {
+    display: block;
+    margin: 20px 0 0;
+}
+
+.drr-filter-actions .govuk-button {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+@media (max-width: 40.0525em) {
+    .drr-search-input-row {
+        display: block;
+    }
+
+    .drr-search-input-row .govuk-button {
+        width: 100%;
+    }
+}
+
 .emailTemplate {
   background-color: #ffffff;
   
@@ -672,6 +746,178 @@ button.govuk-link {
       }
     }
   }
+
+ .app-filter {
+  font-family: "GDS Transport",arial,sans-serif;
+  font-size: 19px;
+}
+
+.app-filter__summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.app-filter__toggle {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: #1a65a6;
+  font-family: inherit;
+  font-size: 19px;
+  line-height: 1.31579;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.app-filter__toggle:hover {
+  color: #003078;
+  text-decoration: underline;
+}
+
+.app-filter__toggle:focus {
+  outline: 3px solid transparent;
+  color: #0b0c0c;
+  background-color: #ffdd00;
+  box-shadow: 0 -2px #ffdd00, 0 4px #0b0c0c;
+}
+
+.app-filter__chevron {
+  display: inline-block;
+    width: 9px;
+    height: 9px;
+  margin: 0 9px 0 3px;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+  vertical-align: -2px;
+}
+
+.app-filter__toggle[aria-expanded="true"] .app-filter__chevron {
+    transform: rotate(225deg);
+}
+
+.app-filter__toggle[aria-expanded="false"] .app-filter__chevron {
+    position: relative;
+    top: -6px;
+}
+
+
+.app-filter__panel {
+  padding: 0 15px 18px;
+        background: #f3f2f1;
+        margin-top:20px;
+}
+
+
+.app-filter__section {
+  border-bottom: 1px solid #b1b4b6;
+}
+
+.app-filter__section-heading {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 66px;
+  padding: 0 0 0 26px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.app-filter__section-heading::-webkit-details-marker {
+  display: none;
+}
+
+.app-filter__section-heading::before {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 27px;
+  width: 9px;
+  height: 9px;
+  border-right: 2px solid #0b0c0c;
+  border-bottom: 2px solid #0b0c0c;
+  transform: rotate(45deg);
+}
+
+.app-filter__section[open] > .app-filter__section-heading::before {
+  top: 31px;
+  transform: rotate(225deg);
+}
+
+.app-filter__section-title {
+  font-weight: 700;
+  font-size: 19px;
+}
+
+.app-filter__selected-count {
+  margin-left: auto;
+  padding-right: 5px;
+  font-size: 16px;
+}
+
+
+
+
+.app-filter__actions {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 30px;
+  align-items: center;
+  padding-top: 20px;
+}
+
+.app-filter__apply {
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.app-filter__clear {
+  text-align: center;
+  font-size: 19px;
+}
+
+
+.app-active-filters {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #b1b4b6;
+}
+
+.app-active-filters__heading {
+  margin-bottom: 10px;
+}
+
+.app-active-filters__list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  padding:0px;
+}
+
+a.app-active-filters__tag {
+  display: inline-block;
+  padding: 9px 10px;
+  border: 1px solid #b1b4b6;
+  border-radius: 5px;
+  color: #0b0c0c;
+  background: #f3f2f1;
+  font-size: 19px;
+  line-height: 1.2;
+  text-decoration: none;
+  margin-right: 10px;
+}
+
+.app-active-filters__tag:hover {
+  background: #b1b4b6;
+}
+
+.app-active-filters__tag:focus {
+  outline: 3px solid #ffdd00;
+  background: #ffdd00;
+  box-shadow: 0 4px #0b0c0c;
+}
 
 
 

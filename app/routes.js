@@ -9,6 +9,47 @@ const router = govukPrototypeKit.requests.setupRouter()
 const customerFormsV2Routes = require('./views/customer-forms/v2/routes')
 const individualInsolvencyRegisterV4Routes = require('./views/individual-insolvency-register/v4/routes')
 
+const checkAndSubmitChangeFields = {
+  'contact-information/contact-details.html': [
+    'case-officer-full-name',
+    'case-officer-email',
+    'case-officer-phone-number'
+  ],
+  'company-information/trading-name.html': [
+    'company-uses-alternative-trading-name-yes',
+    'alternative-trading-name'
+  ],
+  'company-information/dates-traded.html': [
+    'dates-traded-from-day',
+    'dates-traded-to-day'
+  ],
+  'company-information/bank-detail-guard.html': [
+    'holds-company-banking-details-yes'
+  ],
+  'company-information/edit-company-bank-account': [
+    'bank-provider-name',
+    'bank-account-name',
+    'bank-sort-code',
+    'bank-account-number',
+    'holds-unmarked-bank-statements-yes'
+  ],
+  'company-information/company-bank-accounts.html': [
+    'add-another-company-bank-account-yes'
+  ],
+  'company-information/bank-account-analysis.html': [
+    'company-bank-account-analysis-completed-yes'
+  ],
+  'company-information/electronic-records.html': [
+    'holds-electronic-records-yes'
+  ],
+  'company-information/electronic-records-available-guard.html': [
+    'electronic-records-available-yes'
+  ],
+  'company-information/electronic-records-obtain.html': [
+    'electronic-records-obtained-yes'
+  ]
+}
+
 router.use(function (req, res, next) {
   req.session.data = req.session.data || {}
   req.session.data.companyName = req.session.data.companyName || 'Company 1 Ltd'
@@ -16,10 +57,380 @@ router.use(function (req, res, next) {
   next()
 })
 
+router.use('/ipservice/dcrs/v3', function (req, res, next) {
+  const path = req.originalUrl.split('?')[0]
+  const followupPaths = [
+    '/ipservice/dcrs/v3/company-information/dates-traded',
+    '/ipservice/dcrs/v3/company-information/bank-detail-guard',
+    '/ipservice/dcrs/v3/company-information/bank-detail-guard-answer',
+    '/ipservice/dcrs/v3/company-information/company-bank-accounts-answer',
+    '/ipservice/dcrs/v3/company-information/electronic-records'
+  ]
+
+  if (
+    req.method !== 'POST' ||
+    !req.session.data.returnToCheckAndSubmit
+  ) {
+    return next()
+  }
+
+  Object.assign(req.session.data, req.body || {})
+
+  if (
+    followupPaths.includes(path) ||
+    path === '/ipservice/dcrs/v3/company-information/add-company-bank-details' ||
+    path === '/ipservice/dcrs/v3/company-information/save-and-return' ||
+    (path === '/ipservice/dcrs/v3/company-information/electronic-records-answer' && req.body.holdsElectronicRecords === 'yes') ||
+    (path === '/ipservice/dcrs/v3/company-information/electronic-records-available-answer' && req.body.electronicRecordsAvailable === 'yes')
+  ) {
+    return next()
+  }
+
+  delete req.session.data.returnToCheckAndSubmit
+  return res.redirect('/ipservice/dcrs/v3/check-and-submit-report.html')
+})
+
 router.use(customerFormsV2Routes)
 router.use(individualInsolvencyRegisterV4Routes)
 
 // Add your routes here
+
+function dcrsRoutePaths(path) {
+  return [
+    `/ipservice/dcrs/v2/${path}`,
+    `/ipservice/dcrs/v3/${path}`
+  ]
+}
+
+function dcrsRedirect(req, path) {
+  const version = req.originalUrl.startsWith('/ipservice/dcrs/v3/') ? 'v3' : 'v2'
+  return `/ipservice/dcrs/${version}/${path}`
+}
+
+const directorRestrictionFirstNames = [
+  'Alex', 'Amelia', 'Andrew', 'Aisha', 'Ben', 'Chloe', 'Daniel', 'David',
+  'Eleanor', 'Fatima', 'George', 'Hannah', 'Imran', 'James', 'Jasmine',
+  'Joseph', 'Leila', 'Liam', 'Maria', 'Michael', 'Niamh', 'Oliver', 'Olivia', 'Thomas'
+]
+const directorRestrictionLastNames = [
+  'Adams', 'Ahmed', 'Baker', 'Brown', 'Campbell', 'Clarke', 'Davies', 'Evans',
+  'Foster', 'Garcia', 'Green', 'Hall', 'Harris', 'Jackson', 'Khan', 'Lewis',
+  'Morgan', 'Patel', 'Roberts', 'Smith', 'Williams'
+]
+const directorRestrictionTypes = [
+  'Order',
+  'Undertaking'
+]
+const monthNames = [
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December'
+]
+const postcodeLetters = 'ABCDEFGHJKMNPQRSTUVWXYZ'
+const restrictionStreets = ['Market Street', 'Station Road', 'King Street', 'Mill Lane', 'High Street']
+const restrictionLocations = [
+  { town: 'London', postcodeDistrict: 'SW1A' },
+  { town: 'Birmingham', postcodeDistrict: 'B1' },
+  { town: 'Manchester', postcodeDistrict: 'M1' },
+  { town: 'Leeds', postcodeDistrict: 'LS1' },
+  { town: 'Liverpool', postcodeDistrict: 'L1' },
+  { town: 'Sheffield', postcodeDistrict: 'S1' },
+  { town: 'Bristol', postcodeDistrict: 'BS1' },
+  { town: 'Newcastle upon Tyne', postcodeDistrict: 'NE1' },
+  { town: 'Nottingham', postcodeDistrict: 'NG1' },
+  { town: 'Leicester', postcodeDistrict: 'LE1' },
+  { town: 'Southampton', postcodeDistrict: 'SO14' },
+  { town: 'Portsmouth', postcodeDistrict: 'PO1' },
+  { town: 'Brighton', postcodeDistrict: 'BN1' },
+  { town: 'Plymouth', postcodeDistrict: 'PL1' },
+  { town: 'Norwich', postcodeDistrict: 'NR1' },
+  { town: 'York', postcodeDistrict: 'YO1' },
+  { town: 'Oxford', postcodeDistrict: 'OX1' },
+  { town: 'Cambridge', postcodeDistrict: 'CB1' },
+  { town: 'Reading', postcodeDistrict: 'RG1' },
+  { town: 'Luton', postcodeDistrict: 'LU1' },
+  { town: 'Blackpool', postcodeDistrict: 'FY1' },
+  { town: 'Bournemouth', postcodeDistrict: 'BH1' },
+  { town: 'Swindon', postcodeDistrict: 'SN1' },
+  { town: 'Warrington', postcodeDistrict: 'WA1' },
+  { town: 'Glasgow', postcodeDistrict: 'G1' },
+  { town: 'Edinburgh', postcodeDistrict: 'EH1' },
+  { town: 'Aberdeen', postcodeDistrict: 'AB10' },
+  { town: 'Dundee', postcodeDistrict: 'DD1' },
+  { town: 'Cardiff', postcodeDistrict: 'CF10' },
+  { town: 'Swansea', postcodeDistrict: 'SA1' },
+  { town: 'Newport', postcodeDistrict: 'NP20' },
+  { town: 'Belfast', postcodeDistrict: 'BT1' },
+  { town: 'Derry', postcodeDistrict: 'BT48' }
+]
+const directorRestrictionRecords = Array.from({ length: 504 }, function (unused, index) {
+  const firstName = directorRestrictionFirstNames[Math.floor(index / directorRestrictionLastNames.length)]
+  const lastName = directorRestrictionLastNames[index % directorRestrictionLastNames.length]
+  const birthDay = String((index * 7) % 28 + 1).padStart(2, '0')
+  const birthMonth = monthNames[index * 5 % monthNames.length]
+  const birthYear = 1950 + index % 56
+  const restrictionLength = 2 + index % 13
+  const restrictionType = directorRestrictionTypes[index % directorRestrictionTypes.length]
+  const salesIncome = 98697.68 + index * 149.31
+  const eligibleLoan = Math.min(50000, Math.round(salesIncome * 25) / 100)
+  const declaredTurnover = 231000 + index * 275
+  const companyName = `Fictional Trading Company ${index + 1} Ltd`
+  const location = restrictionLocations[index % restrictionLocations.length]
+  const postcode = `${location.postcodeDistrict} ${index % 9 + 1}${postcodeLetters[index % postcodeLetters.length]}${postcodeLetters[index * 7 % postcodeLetters.length]}`
+  const companyAccountsTurnover = 69373 + index * 317
+  const liquidationLiabilities = 113823.44 + index * 725.5
+  const bblLiability = 41118.89 + index * 125.25
+  const restrictionStartDateValue = new Date()
+  restrictionStartDateValue.setHours(0, 0, 0, 0)
+  restrictionStartDateValue.setDate(1)
+  restrictionStartDateValue.setMonth(restrictionStartDateValue.getMonth() - index % 12)
+  restrictionStartDateValue.setDate((index * 13) % 28 + 1)
+  const restrictionEndDateValue = new Date(restrictionStartDateValue)
+  restrictionEndDateValue.setFullYear(restrictionEndDateValue.getFullYear() + restrictionLength)
+  const restrictionStartDate = `${restrictionStartDateValue.getDate()} ${monthNames[restrictionStartDateValue.getMonth()]} ${restrictionStartDateValue.getFullYear()}`
+  const restrictionEndDate = `${restrictionEndDateValue.getDate()} ${monthNames[restrictionEndDateValue.getMonth()]} ${restrictionEndDateValue.getFullYear()}`
+  const restrictionStartSort = restrictionStartDateValue.getTime()
+  const croNumber = String(10000000 + index)
+  const formatCurrency = function (amount) {
+    return amount.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+  }
+  const fullName = `${firstName} ${lastName}`
+
+  return {
+    id: index,
+    croNumber,
+    name: fullName,
+    fullName,
+    dateOfBirth: `${birthDay} ${birthMonth} ${birthYear}`,
+    postcode,
+    lastKnownAddress: `${index % 99 + 1} ${restrictionStreets[index % restrictionStreets.length]}, ${location.town}, ${postcode}`,
+    companyName,
+    restrictionType,
+    restrictionStartDate,
+    restrictionEndDate,
+    restrictionStartTimestamp: restrictionStartDateValue.getTime(),
+    disqualificationLength: `${restrictionLength} years`,
+    restrictionStartSort,
+    startDate: restrictionStartDate,
+    endDate: restrictionEndDate,
+    conductReason: [
+      `On 12 May 2020, ${fullName} caused ${companyName} to breach the terms and conditions of the Bounce Back Loan (BBL) scheme by overstating the company's turnover when applying for a BBL. The company received a £50,000 loan, although ${fullName} knew or ought to have known that it was not eligible for a loan of that amount.`,
+      'Under the BBL scheme, businesses could apply for one loan of between £2,000 and £50,000, subject to a maximum of 25% of turnover. Applicants self-certified their turnover for calendar year 2019. Businesses established after 1 January 2019 could use estimated annual turnover.',
+      `${companyName} was incorporated on 22 October 2012 and could not use estimated turnover. Its accounts show turnover of £${companyAccountsTurnover.toLocaleString('en-GB')} for the year ending 31 December 2019. Bank statement analysis shows sales-related income of £${formatCurrency(salesIncome)} during calendar year 2019. Based on that income, the company could have applied for a loan of no more than £${formatCurrency(eligibleLoan)}.`,
+      `On 12 May 2020, ${fullName} applied for a £50,000 BBL on behalf of ${companyName}, declaring annual turnover of £${declaredTurnover.toLocaleString('en-GB')}. The loan agreement was signed and the funds were credited to the company's bank account on 13 May 2020. The overstatement meant the company received £${formatCurrency(50000 - eligibleLoan)} more than it was entitled to under the scheme.`,
+      `On 29 November 2024, ${companyName} entered creditors' voluntary liquidation with liabilities totalling £${formatCurrency(liquidationLiabilities)}, including £${formatCurrency(bblLiability)} owed in respect of the BBL.`
+    ]
+  }
+})
+
+function normalizeDirectorRestrictionFilters(query) {
+  const searchTerm = String(query.searchTerm || '').trim()
+  const requestedDisqualificationTypes = Array.isArray(query.disqualificationType)
+    ? query.disqualificationType
+    : [query.disqualificationType]
+  const disqualificationTypes = directorRestrictionTypes.filter(function (type) {
+    return requestedDisqualificationTypes.includes(type)
+  })
+  const allowedDateRanges = ['all', '3', '6', '9']
+  const dateRange = allowedDateRanges.includes(query.dateRange) ? query.dateRange : 'all'
+  const allowedSortOrders = ['name-asc', 'name-desc', 'date-asc', 'date-desc']
+  const sortOrder = allowedSortOrders.includes(query.sortOrder) ? query.sortOrder : 'date-desc'
+
+  return { searchTerm, disqualificationTypes, dateRange, sortOrder }
+}
+
+function directorRestrictionQueryString(filters, page) {
+  const query = new URLSearchParams()
+  query.set('searchTerm', filters.searchTerm)
+  filters.disqualificationTypes.forEach(function (type) {
+    query.append('disqualificationType', type)
+  })
+  query.set('dateRange', filters.dateRange)
+  query.set('sortOrder', filters.sortOrder)
+  query.set('page', String(page))
+  return query.toString()
+}
+
+router.get('/director-disqualifications-register/restrictions-details.html', function (req, res) {
+  const recordId = Number.parseInt(req.query.record, 10)
+  const record = directorRestrictionRecords[recordId]
+
+  if (!Number.isInteger(recordId) || recordId < 0 || !record) {
+    return res.redirect('/director-disqualifications-register/search.html')
+  }
+
+  const filters = normalizeDirectorRestrictionFilters(req.query)
+  const requestedPage = Number.parseInt(req.query.page, 10)
+  const page = Number.isInteger(requestedPage) && requestedPage > 0 ? requestedPage : 1
+  const searchHref = `/director-disqualifications-register/search.html?${directorRestrictionQueryString(filters, page)}`
+
+  return res.render('director-disqualifications-register/restrictions-details', {
+    record,
+    searchHref
+  })
+})
+
+router.get('/director-disqualifications-register/search.html', function (req, res) {
+  const filters = normalizeDirectorRestrictionFilters(req.query)
+  const normalizedSearchTerm = filters.searchTerm.toLowerCase()
+  const dateCutoff = new Date()
+  if (filters.dateRange !== 'all') {
+    dateCutoff.setMonth(dateCutoff.getMonth() - Number(filters.dateRange))
+  }
+  const matchingRecords = directorRestrictionRecords.filter(function (record) {
+    const matchesText = !normalizedSearchTerm ||
+      record.name.toLowerCase().includes(normalizedSearchTerm) ||
+      record.lastKnownAddress.toLowerCase().includes(normalizedSearchTerm)
+    const matchesDisqualificationType = !filters.disqualificationTypes.length || filters.disqualificationTypes.includes(record.restrictionType)
+    const matchesDateRange = filters.dateRange === 'all' || record.restrictionStartTimestamp >= dateCutoff.getTime()
+
+    return matchesText && matchesDisqualificationType && matchesDateRange
+  })
+  matchingRecords.sort(function (firstRecord, secondRecord) {
+    if (filters.sortOrder.startsWith('date')) {
+      return filters.sortOrder === 'date-asc'
+        ? firstRecord.restrictionStartSort - secondRecord.restrictionStartSort
+        : secondRecord.restrictionStartSort - firstRecord.restrictionStartSort
+    }
+
+    const nameOrder = firstRecord.fullName.localeCompare(secondRecord.fullName)
+    return filters.sortOrder === 'name-asc' ? nameOrder : -nameOrder
+  })
+  const resultsPerPage = 10
+  const totalResults = matchingRecords.length
+  const totalPages = Math.max(1, Math.ceil(totalResults / resultsPerPage))
+  const requestedPage = Number.parseInt(req.query.page, 10)
+  const currentPage = Number.isInteger(requestedPage)
+    ? Math.min(Math.max(requestedPage, 1), totalPages)
+    : 1
+  const firstRecordIndex = (currentPage - 1) * resultsPerPage
+  const results = matchingRecords.slice(firstRecordIndex, firstRecordIndex + resultsPerPage)
+  const visiblePageNumbers = Array.from(new Set([
+    1,
+    currentPage - 1,
+    currentPage,
+    currentPage + 1,
+    totalPages
+  ].filter(function (pageNumber) {
+    return pageNumber >= 1 && pageNumber <= totalPages
+  }))).sort(function (firstPage, secondPage) {
+    return firstPage - secondPage
+  })
+  const paginationItems = []
+  let previousPageNumber = 0
+
+  visiblePageNumbers.forEach(function (pageNumber) {
+    if (pageNumber - previousPageNumber > 1) {
+      paginationItems.push({ ellipsis: true })
+    }
+    paginationItems.push({
+      number: pageNumber,
+      href: pageHref(pageNumber),
+      current: pageNumber === currentPage
+    })
+    previousPageNumber = pageNumber
+  })
+
+  function pageHref(pageNumber) {
+    return `?${directorRestrictionQueryString(filters, pageNumber)}`
+  }
+
+  results.forEach(function (record) {
+    record.detailsHref = `/director-disqualifications-register/restrictions-details.html?record=${record.id}&${directorRestrictionQueryString(filters, currentPage)}`
+  })
+
+  const appliedFilters = []
+  const activeFilters = []
+  function activeFilterHref(overrides) {
+    const updatedFilters = Object.assign({}, filters, overrides)
+    return `/director-disqualifications-register/search.html?${directorRestrictionQueryString(updatedFilters, 1)}`
+  }
+
+  if (filters.searchTerm) {
+    appliedFilters.push(filters.searchTerm)
+    activeFilters.push({
+      label: `Name, Postcode or Area: ${filters.searchTerm}`,
+      href: activeFilterHref({ searchTerm: '' })
+    })
+  }
+  filters.disqualificationTypes.forEach(function (type) {
+    appliedFilters.push(type)
+    activeFilters.push({
+      label: `Type: ${type}`,
+      href: activeFilterHref({
+        disqualificationTypes: filters.disqualificationTypes.filter(function (selectedType) {
+          return selectedType !== type
+        })
+      })
+    })
+  })
+  if (filters.dateRange !== 'all') {
+    const dateLabel = `Last ${filters.dateRange} months`
+    appliedFilters.push(dateLabel)
+    activeFilters.push({
+      label: `Date: ${dateLabel}`,
+      href: activeFilterHref({ dateRange: 'all' })
+    })
+  }
+
+  res.render('director-disqualifications-register/search', {
+    searchTerm: filters.searchTerm,
+    disqualificationTypes: filters.disqualificationTypes,
+    dateRange: filters.dateRange,
+    appliedFilters,
+    activeFilters,
+    dateRangeOptions: [
+     
+      { value: '3', text: 'Last 3 months', checked: filters.dateRange === '3' },
+      { value: '6', text: 'Last 6 months', checked: filters.dateRange === '6' },
+      { value: '9', text: 'Last 9 months', checked: filters.dateRange === '9' },
+      { value: 'all', text: 'All dates', checked: filters.dateRange === 'all' }
+    ],
+    sortOrder: filters.sortOrder,
+    disqualificationTypeOptions: directorRestrictionTypes.map(function (type) {
+      return { value: type, text: type, checked: filters.disqualificationTypes.includes(type) }
+    }),
+    sortOrderOptions: [
+      { value: 'name-asc', text: 'Name (A to Z)', checked: filters.sortOrder === 'name-asc' },
+      { value: 'name-desc', text: 'Name (Z to A)', checked: filters.sortOrder === 'name-desc' },
+      { value: 'date-asc', text: 'Oldest disqualification date', checked: filters.sortOrder === 'date-asc' },
+      { value: 'date-desc', text: 'Newest disqualification date', checked: filters.sortOrder === 'date-desc' }
+    ],
+    results,
+    totalResults,
+    firstResult: totalResults ? firstRecordIndex + 1 : 0,
+    lastResult: Math.min(firstRecordIndex + results.length, totalResults),
+    currentPage,
+    totalPages,
+    paginationItems,
+    previousPageHref: currentPage > 1 ? pageHref(currentPage - 1) : null,
+    nextPageHref: currentPage < totalPages ? pageHref(currentPage + 1) : null
+  })
+})
+
+router.get('/ipservice/dcrs/v3/prepare-check-and-submit-change', function (req, res) {
+  const destination = req.query.destination
+  const focus = req.query.focus
+  const allowedFields = checkAndSubmitChangeFields[destination]
+
+  if (!allowedFields || !allowedFields.includes(focus)) {
+    return res.redirect('/ipservice/dcrs/v3/check-and-submit-report.html')
+  }
+
+  req.session.data.returnToCheckAndSubmit = true
+
+  if (destination === 'company-information/edit-company-bank-account') {
+    const index = Number.parseInt(req.query.index, 10)
+    const accounts = req.session.data.companyBankAccounts || []
+    if (!Number.isInteger(index) || index < 0 || !accounts[index]) {
+      delete req.session.data.returnToCheckAndSubmit
+      return res.redirect('/ipservice/dcrs/v3/check-and-submit-report.html')
+    }
+
+    return res.redirect(`/ipservice/dcrs/v3/${destination}?index=${index}&focus=${encodeURIComponent(focus)}`)
+  }
+
+  return res.redirect(`/ipservice/dcrs/v3/${destination}#${encodeURIComponent(focus)}`)
+})
 
 router.post('/ipservice/dcrs/v1/company-information/confirm-company', function (req, res) {
   if (req.body.correctCompany === 'yes') {
@@ -37,26 +448,38 @@ router.post('/ipservice/dcrs/v2/company-information/confirm-company', function (
   return res.redirect('/ipservice/dcrs/v2/company-information/add-company-number.html')
 })
 
-router.post('/ipservice/dcrs/v2/director-information/company-directors-answer', function (req, res) {
+router.post(dcrsRoutePaths('director-information/company-directors-answer'), function (req, res) {
   req.session.data.addAnotherDirector = req.body.addAnotherDirector
   if (req.body.addAnotherDirector === 'yes') {
-    return res.redirect('/ipservice/dcrs/v2/director-information/type-of-director-guard.html')
+    return res.redirect(dcrsRedirect(req, 'director-information/type-of-director-guard.html'))
   }
-  return res.redirect('/ipservice/dcrs/v2/report-overview.html')
+  return res.redirect(dcrsRedirect(req, 'report-overview.html'))
 })
 
-router.post('/ipservice/dcrs/v2/director-information/type-of-director-answer', function (req, res) {
+router.post(dcrsRoutePaths('director-information/type-of-director-answer'), function (req, res) {
   req.session.data.directorType = req.body.directorType
-  return res.redirect('/ipservice/dcrs/v2/director-information/director-details.html')
+  req.session.data.directorDeceased = ''
+  return res.redirect(dcrsRedirect(req, 'director-information/director-details.html'))
 })
 
-router.post('/ipservice/dcrs/v2/director-information/director-details-answer', function (req, res) {
+router.post(dcrsRoutePaths('director-information/deceased-director-answer'), function (req, res) {
+  req.session.data.directorDeceased = req.body.directorDeceased
+  const director = req.session.data.pendingCompanyDirector
+  if (director) {
+    director.deceased = req.body.directorDeceased
+    req.session.data.addedCompanyDirectors = req.session.data.addedCompanyDirectors || []
+    req.session.data.addedCompanyDirectors.push(director)
+    delete req.session.data.pendingCompanyDirector
+  }
+  return res.redirect(dcrsRedirect(req, 'director-information/company-directors.html'))
+})
+
+router.post(dcrsRoutePaths('director-information/director-details-answer'), function (req, res) {
   const directorType = req.session.data.directorType || req.body.directorType
   const fullName = directorType === 'corporate'
     ? req.body.directorOrganisationName
     : req.body.directorFullName
-  req.session.data.addedCompanyDirectors = req.session.data.addedCompanyDirectors || []
-  req.session.data.addedCompanyDirectors.push({
+  const director = {
     type: directorType,
     title: directorType === 'individual' ? req.body.directorTitle : 'Corporate',
     fullName,
@@ -72,12 +495,20 @@ router.post('/ipservice/dcrs/v2/director-information/director-details-answer', f
     email: req.body.directorEmail,
     hasPhoneNumber: req.body.directorHasPhoneNumber,
     phone: req.body.directorPhone
-  })
+  }
 
-  return res.redirect('/ipservice/dcrs/v2/director-information/company-directors.html')
+  req.session.data.addedCompanyDirectors = req.session.data.addedCompanyDirectors || []
+  if (directorType === 'individual') {
+    req.session.data.pendingCompanyDirector = director
+    return res.redirect(dcrsRedirect(req, 'director-information/deceased-director-guard.html'))
+  }
+
+  req.session.data.addedCompanyDirectors.push(director)
+
+  return res.redirect(dcrsRedirect(req, 'director-information/company-directors.html'))
 })
 
-router.post('/ipservice/dcrs/v2/company-information/save-and-return', function (req, res) {
+router.post(dcrsRoutePaths('company-information/save-and-return'), function (req, res) {
   Object.assign(req.session.data, req.body)
 
   if (req.session.data.editingCompanyBankAccount) {
@@ -100,7 +531,12 @@ router.post('/ipservice/dcrs/v2/company-information/save-and-return', function (
     delete req.session.data.editingCompanyBankAccount
   }
 
-  return res.redirect('/ipservice/dcrs/v2/report-overview.html')
+  if (req.originalUrl.startsWith('/ipservice/dcrs/v3/') && req.session.data.returnToCheckAndSubmit) {
+    delete req.session.data.returnToCheckAndSubmit
+    return res.redirect('/ipservice/dcrs/v3/check-and-submit-report.html')
+  }
+
+  return res.redirect(dcrsRedirect(req, 'report-overview.html'))
 })
 
 router.post('/ipservice/dcrs/v1/company-information/confirm-address', function (req, res) {
@@ -111,12 +547,16 @@ router.post('/ipservice/dcrs/v1/company-information/confirm-address', function (
   return res.redirect('/ipservice/dcrs/v1/company-information/address-manual.html')
 })
 
-router.post('/ipservice/dcrs/v2/company-information/confirm-address', function (req, res) {
+router.post(dcrsRoutePaths('company-information/confirm-address'), function (req, res) {
   if (req.body.principalTradingAddress === 'yes') {
-    return res.redirect('/ipservice/dcrs/v2/company-information/dates-traded.html')
+    return res.redirect(dcrsRedirect(req, 'company-information/dates-traded.html'))
   }
 
-  return res.redirect('/ipservice/dcrs/v2/company-information/address-manual.html')
+  return res.redirect(dcrsRedirect(req, 'company-information/address-manual.html'))
+})
+
+router.post('/ipservice/dcrs/v3/company-information/confirm-principle-address-answer', function (req, res) {
+  return res.redirect('/ipservice/dcrs/v3/company-information/dates-traded.html')
 })
 
 router.post('/ipservice/dcrs/v1/company-information/bank-detail-guard-answer', function (req, res) {
@@ -127,32 +567,32 @@ router.post('/ipservice/dcrs/v1/company-information/bank-detail-guard-answer', f
   return res.redirect('/ipservice/dcrs/v1/report-overview.html')
 })
 
-router.post('/ipservice/dcrs/v2/company-information/bank-detail-guard-answer', function (req, res) {
+router.post(dcrsRoutePaths('company-information/bank-detail-guard-answer'), function (req, res) {
   if (req.body.holdsCompanyBankingDetails === 'yes') {
-    return res.redirect('/ipservice/dcrs/v2/company-information/company-bank-accounts.html')
+    return res.redirect(dcrsRedirect(req, 'company-information/company-bank-accounts.html'))
   }
 
-  return res.redirect('/ipservice/dcrs/v2/company-information/electronic-records.html')
+  return res.redirect(dcrsRedirect(req, 'company-information/electronic-records.html'))
 })
 
-router.post('/ipservice/dcrs/v2/company-information/electronic-records-answer', function (req, res) {
+router.post(dcrsRoutePaths('company-information/electronic-records-answer'), function (req, res) {
   if (req.body.holdsElectronicRecords === 'yes') {
-    return res.redirect('/ipservice/dcrs/v2/company-information/electronic-records-available-guard.html')
+    return res.redirect(dcrsRedirect(req, 'company-information/electronic-records-available-guard.html'))
   }
 
-  return res.redirect('/ipservice/dcrs/v2/report-overview.html')
+  return res.redirect(dcrsRedirect(req, 'report-overview.html'))
 })
 
-router.post('/ipservice/dcrs/v2/company-information/electronic-records-available-answer', function (req, res) {
+router.post(dcrsRoutePaths('company-information/electronic-records-available-answer'), function (req, res) {
   if (req.body.electronicRecordsAvailable === 'yes') {
-    return res.redirect('/ipservice/dcrs/v2/company-information/electronic-records-obtain.html')
+    return res.redirect(dcrsRedirect(req, 'company-information/electronic-records-obtain.html'))
   }
 
-  return res.redirect('/ipservice/dcrs/v2/report-overview.html')
+  return res.redirect(dcrsRedirect(req, 'report-overview.html'))
 })
 
-router.post('/ipservice/dcrs/v2/company-information/electronic-records-obtain-answer', function (req, res) {
-  return res.redirect('/ipservice/dcrs/v2/report-overview.html')
+router.post(dcrsRoutePaths('company-information/electronic-records-obtain-answer'), function (req, res) {
+  return res.redirect(dcrsRedirect(req, 'report-overview.html'))
 })
 
 router.post('/ipservice/dcrs/v1/company-information/company-bank-accounts-answer', function (req, res) {
@@ -163,26 +603,31 @@ router.post('/ipservice/dcrs/v1/company-information/company-bank-accounts-answer
   return res.redirect('/ipservice/dcrs/v1/report-overview.html')
 })
 
-router.post('/ipservice/dcrs/v2/company-information/company-bank-accounts-answer', function (req, res) {
+router.post(dcrsRoutePaths('company-information/company-bank-accounts-answer'), function (req, res) {
   if (req.body.addAnotherCompanyBankAccount === 'yes') {
     req.session.data.companyBankProviderName = ''
     req.session.data.companyBankAccountName = ''
     req.session.data.companyBankSortCode = ''
     req.session.data.companyBankAccountNumber = ''
     req.session.data.companyBuildingSocietyRollNumber = ''
-    return res.redirect('/ipservice/dcrs/v2/company-information/add-company-bank-details.html')
+    return res.redirect(dcrsRedirect(req, 'company-information/add-company-bank-details.html'))
   }
 
-  return res.redirect('/ipservice/dcrs/v2/company-information/bank-account-analysis.html')
+  if (req.originalUrl.startsWith('/ipservice/dcrs/v3/')) {
+    return res.redirect(dcrsRedirect(req, 'company-information/electronic-records.html'))
+  }
+
+  return res.redirect(dcrsRedirect(req, 'company-information/bank-account-analysis.html'))
 })
 
-router.get('/ipservice/dcrs/v2/company-information/edit-company-bank-account', function (req, res) {
+router.get(dcrsRoutePaths('company-information/edit-company-bank-account'), function (req, res) {
   const index = Number.parseInt(req.query.index, 10)
   const accounts = req.session.data.companyBankAccounts || []
   const account = accounts[index]
 
   if (!Number.isInteger(index) || !account) {
-    return res.redirect('/ipservice/dcrs/v2/company-information/company-bank-accounts.html')
+    delete req.session.data.returnToCheckAndSubmit
+    return res.redirect(dcrsRedirect(req, 'company-information/company-bank-accounts.html'))
   }
 
   req.session.data.companyBankAccountEditIndex = index
@@ -195,22 +640,25 @@ router.get('/ipservice/dcrs/v2/company-information/edit-company-bank-account', f
   req.session.data.holdsUnmarkedBankStatements = account.holdsUnmarkedBankStatements || ''
   req.session.data.companyBankAccountAnalysisCompleted = account.companyBankAccountAnalysisCompleted || ''
 
-  return res.redirect('/ipservice/dcrs/v2/company-information/add-company-bank-details.html')
+  const focus = checkAndSubmitChangeFields['company-information/edit-company-bank-account'].includes(req.query.focus)
+    ? `#${encodeURIComponent(req.query.focus)}`
+    : ''
+  return res.redirect(`${dcrsRedirect(req, 'company-information/add-company-bank-details.html')}${focus}`)
 })
 
-router.get('/ipservice/dcrs/v2/company-information/prepare-remove-bank-account', function (req, res) {
+router.get(dcrsRoutePaths('company-information/prepare-remove-bank-account'), function (req, res) {
   const index = Number.parseInt(req.query.index, 10)
   const accounts = req.session.data.companyBankAccounts || []
 
   if (!Number.isInteger(index) || index < 0 || !accounts[index]) {
-    return res.redirect('/ipservice/dcrs/v2/company-information/company-bank-accounts.html')
+    return res.redirect(dcrsRedirect(req, 'company-information/company-bank-accounts.html'))
   }
 
   req.session.data.removeCompanyBankAccountIndex = index
-  return res.redirect('/ipservice/dcrs/v2/company-information/remove-bank-account.html')
+  return res.redirect(dcrsRedirect(req, 'company-information/remove-bank-account.html'))
 })
 
-router.post('/ipservice/dcrs/v2/company-information/remove-bank-account-answer', function (req, res) {
+router.post(dcrsRoutePaths('company-information/remove-bank-account-answer'), function (req, res) {
   const index = Number.parseInt(req.session.data.removeCompanyBankAccountIndex, 10)
   const accounts = req.session.data.companyBankAccounts || []
 
@@ -219,7 +667,7 @@ router.post('/ipservice/dcrs/v2/company-information/remove-bank-account-answer',
   }
 
   delete req.session.data.removeCompanyBankAccountIndex
-  return res.redirect('/ipservice/dcrs/v2/company-information/company-bank-accounts.html')
+  return res.redirect(dcrsRedirect(req, 'company-information/company-bank-accounts.html'))
 })
 
 function saveCompanyBankAccount(req, account) {
@@ -244,7 +692,8 @@ function saveCompanyBankAccount(req, account) {
   req.session.data.companyBankAccountAnalysisCompleted = ''
 }
 
-router.post('/ipservice/dcrs/v2/company-information/add-company-bank-details', function (req, res) {
+router.post(dcrsRoutePaths('company-information/add-company-bank-details'), function (req, res) {
+  const editingCompanyBankAccount = req.session.data.editingCompanyBankAccount
   const account = {
     companyBankProviderName: req.body.companyBankProviderName,
     companyBankAccountName: req.body.companyBankAccountName,
@@ -255,13 +704,25 @@ router.post('/ipservice/dcrs/v2/company-information/add-company-bank-details', f
     companyBankAccountAnalysisCompleted: req.body.companyBankAccountAnalysisCompleted
   }
 
+  if (req.originalUrl.startsWith('/ipservice/dcrs/v3/')) {
+    saveCompanyBankAccount(req, account)
+    if (req.session.data.returnToCheckAndSubmit) {
+      if (editingCompanyBankAccount) {
+        delete req.session.data.returnToCheckAndSubmit
+        return res.redirect('/ipservice/dcrs/v3/check-and-submit-report.html')
+      }
+      return res.redirect('/ipservice/dcrs/v3/company-information/company-bank-accounts.html')
+    }
+    return res.redirect(dcrsRedirect(req, 'company-information/company-bank-accounts.html'))
+  }
+
   if (String(req.body.holdsUnmarkedBankStatements).toLowerCase() === 'no') {
     req.session.data.companyBankAccountDraft = account
-    return res.redirect('/ipservice/dcrs/v2/company-information/bank-account-analysis.html')
+    return res.redirect(dcrsRedirect(req, 'company-information/bank-account-analysis.html'))
   }
 
   saveCompanyBankAccount(req, account)
-  return res.redirect('/ipservice/dcrs/v2/company-information/company-bank-accounts.html')
+  return res.redirect(dcrsRedirect(req, 'company-information/company-bank-accounts.html'))
 })
 
 

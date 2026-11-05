@@ -1,0 +1,63 @@
+{% extends "layouts/main.html" %}
+
+{% set serviceName = 'Director disqualifications register' %}
+
+{% block pageTitle %}
+  {{ record.fullName }} - {{ serviceName }} - GOV.UK
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: 'Back to search results',
+    href: searchHref
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-l">Disqualification details for {{ record.fullName }}</h1>
+      <p class="govuk-body">This record is fictional and for prototype use only.</p>
+
+      <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">CRO number</dt>
+          <dd class="govuk-summary-list__value">{{ record.croNumber }}</dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Date of birth</dt>
+          <dd class="govuk-summary-list__value">{{ record.dateOfBirth }}</dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Last known address</dt>
+          <dd class="govuk-summary-list__value">{{ record.lastKnownAddress }}</dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Company name</dt>
+          <dd class="govuk-summary-list__value">{{ record.companyName }}</dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Type</dt>
+          <dd class="govuk-summary-list__value">{{ record.restrictionType }}</dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Start date</dt>
+          <dd class="govuk-summary-list__value">{{ record.restrictionStartDate }}</dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">End date</dt>
+          <dd class="govuk-summary-list__value">{{ record.restrictionEndDate }}</dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Disqualification length</dt>
+          <dd class="govuk-summary-list__value">{{ record.disqualificationLength }}</dd>
+        </div>
+      </dl>
+
+      <h2 class="govuk-heading-m">Conduct reason</h2>
+      {% for paragraph in record.conductReason %}
+        <p class="govuk-body">{{ paragraph }}</p>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}

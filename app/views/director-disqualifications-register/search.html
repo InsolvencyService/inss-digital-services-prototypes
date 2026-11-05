@@ -1,0 +1,230 @@
+{% extends "layouts/main.html" %}
+
+{% set serviceName = 'Director disqualifications register' %}
+
+{% block pageTitle %}
+  Search results - {{ serviceName }} - GOV.UK
+{% endblock %}
+
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/pagination/macro.njk" import govukPagination %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: 'Back',
+    href: 'start.html'
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-l">Search the director disqualifications register</h1>
+      <p class="govuk-body">This page lists recent director disqualification results obtained by the Insolvency Service or notified to us.</p>
+
+      <p class="govuk-body">Each result includes:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>the name of the person who was disqualified</li>
+        <li>the date the disqualification started</li>
+        <li>how long the disqualification lasts</li>
+        <li>details of the misconduct</li>
+      </ul>
+
+      <p class="govuk-body">This page may not include every recent disqualification result and should not be used as a complete record.</p>
+      <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
+      <form action="search.html" method="get" role="search" class="drr-search-form">
+        <div class="app-filter">
+          <div class="app-filter__summary">
+            <button
+              class="app-filter__toggle"
+              id="toggle-filters"
+              type="button"
+              aria-expanded="true"
+              aria-controls="filter-panel"
+              hidden>
+              <span class="app-filter__chevron" aria-hidden="true"></span>
+              Filter and sort
+            </button>
+            <span class="app-filter__result-count">{{ totalResults }} results</span>
+          </div>
+
+          <div id="filter-panel" class="app-filter__panel">
+            <details class="app-filter__section">
+              <summary class="app-filter__section-heading">
+                <span class="app-filter__section-title">Sort by</span>
+              </summary>
+              <div class="app-filter__section-content">
+                {{ govukRadios({
+                  idPrefix: "sort-order",
+                  name: "sortOrder",
+                  value: sortOrder,
+                  classes: "govuk-radios--small",
+                  fieldset: {
+                    legend: {
+                      text: "Sort by",
+                      classes: "govuk-visually-hidden"
+                    }
+                  },
+                  items: sortOrderOptions
+                }) }}
+              </div>
+            </details>
+
+            <details class="app-filter__section">
+              <summary class="app-filter__section-heading">
+                <span class="app-filter__section-title">Date</span>
+              </summary>
+              <div class="app-filter__section-content">
+                {{ govukRadios({
+                  idPrefix: "date-range",
+                  name: "dateRange",
+                  value: dateRange,
+                  classes: "govuk-radios--small",
+                  fieldset: {
+                    legend: {
+                      text: "Disqualification start date",
+                      classes: "govuk-visually-hidden"
+                    }
+                  },
+                  items: dateRangeOptions
+                }) }}
+              </div>
+            </details>
+
+            <details class="app-filter__section">
+              <summary class="app-filter__section-heading">
+                <span class="app-filter__section-title">Name, Postcode or Area</span>
+              </summary>
+              <div class="app-filter__section-content">
+                {{ govukInput({
+                  label: {
+                    text: "Name, Postcode or Area",
+                    classes: "govuk-visually-hidden"
+                  },
+                  hint: {
+                    text: "Enter a full or partial name, postcode or area."
+                  },
+                  id: "searchTerm",
+                  name: "searchTerm",
+                  value: searchTerm,
+                  autocomplete: "off",
+                  spellcheck: false
+                }) }}
+              </div>
+            </details>
+
+            <details class="app-filter__section">
+              <summary class="app-filter__section-heading">
+                <span class="app-filter__section-title">Type</span>
+                {% if disqualificationTypes.length %}
+                  <span class="app-filter__selected-count">{{ disqualificationTypes.length }} selected</span>
+                {% endif %}
+              </summary>
+              <div class="app-filter__section-content">
+                {{ govukCheckboxes({
+                  name: "disqualificationType",
+                  classes: "govuk-checkboxes--small",
+                  fieldset: {
+                    legend: {
+                      text: "Disqualification type",
+                      classes: "govuk-visually-hidden"
+                    }
+                  },
+                  items: disqualificationTypeOptions
+                }) }}
+              </div>
+            </details>
+
+            <div class="app-filter__actions">
+              {{ govukButton({
+                text: "Apply",
+                classes: "app-filter__apply"
+              }) }}
+              <a class="govuk-link app-filter__clear" href="search.html">Clear all</a>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      {% if activeFilters.length %}
+        <div class="app-active-filters">
+          <h2 class="govuk-heading-s app-active-filters__heading">Active filters</h2>
+          <ul class="app-active-filters__list">
+            {% for activeFilter in activeFilters %}
+              <li>
+                <a href="{{ activeFilter.href }}" class="app-active-filters__tag">
+                  <span aria-hidden="true">×</span>
+                  <span class="govuk-visually-hidden">Remove filter: </span>
+                  {{ activeFilter.label }}
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+          <p class="govuk-body"><a class="govuk-link" href="search.html">Clear all filters</a></p>
+        </div>
+      {% endif %}
+
+      {% if totalResults %}
+      
+        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
+        <ol class="govuk-list">
+          {% for result in results %}
+            <li>
+              <h2 class="govuk-heading-s"><a class="govuk-link" href="{{ result.detailsHref }}">{{ result.name }}</a></h2>
+              <dl class="govuk-summary-list govuk-summary-list--no-border">
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key govuk-!-padding-top-1 govuk-!-padding-bottom-1">Date of birth</dt>
+                  <dd class="govuk-summary-list__value govuk-!-padding-top-1 govuk-!-padding-bottom-1">{{ result.dateOfBirth }}</dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key govuk-!-padding-top-1 govuk-!-padding-bottom-1">Postcode</dt>
+                  <dd class="govuk-summary-list__value govuk-!-padding-top-1 govuk-!-padding-bottom-1">{{ result.postcode }}</dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key govuk-!-padding-top-1 govuk-!-padding-bottom-1">Company name</dt>
+                  <dd class="govuk-summary-list__value govuk-!-padding-top-1 govuk-!-padding-bottom-1">{{ result.companyName }}</dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key govuk-!-padding-top-1 govuk-!-padding-bottom-1">Disqualification type</dt>
+                  <dd class="govuk-summary-list__value govuk-!-padding-top-1 govuk-!-padding-bottom-1">{{ result.restrictionType }}</dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key govuk-!-padding-top-1 govuk-!-padding-bottom-1">Start date</dt>
+                  <dd class="govuk-summary-list__value govuk-!-padding-top-1 govuk-!-padding-bottom-1">{{ result.startDate }}</dd>
+                </div>
+              </dl>
+            </li>
+            <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
+          {% endfor %}
+        </ol>
+
+        {% if totalPages > 1 %}
+          {{ govukPagination({
+            previous: ({ href: previousPageHref } if previousPageHref),
+            items: paginationItems,
+            next: ({ href: nextPageHref } if nextPageHref)
+          }) }}
+        {% endif %}
+      {% else %}
+        <p class="govuk-body" aria-live="polite">No results found. Check the name or try a different search.</p>
+      {% endif %}
+
+     <!-- class="govuk-heading-m">Find more information</h2>
+      <p class="govuk-body">Read <a class="govuk-link" href="#">Unfit conduct: how to find out if somebody is disqualified or subject to restrictions and why we took the action</a> to find out:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>if someone is disqualified from being a director</li>
+        <li>why someone was disqualified</li>
+        <li>how to get details of misconduct for cases published more than 3 months ago</li>
+      </ul>
+      
+      <h2 class="govuk-heading-m">Report an error</h2>
+      <p class="govuk-body">If you find an error on this page, email <a class="govuk-link" href="mailto:legalservices@insolvency.gov.uk">legalservices@insolvency.gov.uk</a>. Include details of the information you think is wrong.</p>
+
+      <h2 class="govuk-heading-m">Media enquiries</h2>
+      <p class="govuk-body">For media enquiries, email the Press Office at <a class="govuk-link" href="mailto:press.office@insolvency.gsi.gov.uk">press.office@insolvency.gsi.gov.uk</a>.</p> -->
+    </div>
+  </div>
+{% endblock %}
