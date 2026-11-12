@@ -20,6 +20,17 @@
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
+      {% if saved %}
+        <div class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="saved-title" data-module="govuk-notification-banner">
+          <div class="govuk-notification-banner__header">
+            <h2 class="govuk-notification-banner__title" id="saved-title">Success</h2>
+          </div>
+          <div class="govuk-notification-banner__content">
+            <p class="govuk-notification-banner__heading">{% if saved == 'ready' %}The entry is ready to be published{% else %}The entry has been updated.{% endif %}</p>
+            {% if saved == 'ready' %}<p class="govuk-body">The entry will automatically be published on the commencement date</p>{% endif %}
+          </div>
+        </div>
+      {% endif %}
       <h1 class="govuk-heading-l">Disqualification details for {{ record.fullName }}</h1>
       <p class="govuk-body">This record is fictional and for prototype use only.</p>
 
@@ -103,6 +114,7 @@
         <form action="{{ registerBasePath }}/admin/update-publication-readiness" method="post">
           <input type="hidden" name="id" value="{{ record.id }}">
           <input type="hidden" name="returnTo" value="{{ readinessReturnHref }}">
+          <input type="hidden" name="returnToDetails" value="{{ detailsHref }}">
           {{ govukRadios({
             idPrefix: "ready-to-publish",
             name: "readyToPublish",

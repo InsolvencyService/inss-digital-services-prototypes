@@ -24,7 +24,10 @@
             <h2 class="govuk-notification-banner__title" id="saved-title">Success</h2>
           </div>
           <div class="govuk-notification-banner__content">
-            <p class="govuk-notification-banner__heading">{% if saved == 'updated' %}The entry has been updated{% else %}The register entry has been saved.{% endif %}</p>
+            <p class="govuk-notification-banner__heading">{% if saved == 'approved' %}The entry is ready to be published{% elif saved == 'updated' %}The entry has been updated{% else %}The register entry has been saved.{% endif %}</p>
+             {% if saved == 'approved' %}
+               <p class="govuk-body">The entry will automatically be published on the commencement date</p>
+             {% endif %}
           </div>
         </div>
       {% endif %}

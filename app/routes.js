@@ -510,6 +510,9 @@ router.post('/director-disqualifications-register/:version/admin/create', functi
   const records = directorRestrictionRecordsFor(version)
   const record = buildAdminRecord(req.body, nextDirectorRestrictionId(records), null, records)
   records.push(record)
+  if (version === 'v1') {
+    return res.redirect(`${directorRestrictionBasePath(version)}/restrictions-details.html?record=${record.id}&saved=created`)
+  }
   return res.redirect(`${directorRestrictionBasePath(version)}/register.html?saved=created`)
 })
 
@@ -534,7 +537,7 @@ router.get('/director-disqualifications-register/:version/admin/edit.html', func
     dateOfBirthParts: dateToInputParts(record.dateOfBirth),
     restrictionStartDateParts: dateToInputParts(record.restrictionStartDate),
     restrictionEndDateParts: dateToInputParts(record.restrictionEndDate),
-    returnTo: registerReturnUrl(req.query.returnTo, version),
+    returnTo: registerDetailsReturnUrl(req.query.returnTo, version, recordId),
     disqualificationLengthInput: String(record.disqualificationLength || '').match(/^\d{1,2}/)?.[0] || '',
     restrictionTypeOptions: directorRestrictionTypes.map(function (type) {
       return { value: type, text: type, checked: type === record.restrictionType }
@@ -555,7 +558,7 @@ router.post('/director-disqualifications-register/:version/admin/update', functi
   }
 
   records[recordIndex] = buildAdminRecord(req.body, recordId, records[recordIndex], records)
-  const returnUrl = new URL(registerReturnUrl(req.body.returnTo, version), 'http://localhost')
+  const returnUrl = new URL(registerDetailsReturnUrl(req.body.returnTo, version, recordId), 'http://localhost')
   returnUrl.searchParams.set('saved', 'updated')
   return res.redirect(`${returnUrl.pathname}${returnUrl.search}`)
 })
@@ -572,14 +575,18 @@ router.post('/director-disqualifications-register/:version/admin/approve', funct
     return res.redirect(`${directorRestrictionBasePath(version)}/admin/dashboard.html`)
   }
 
-  if (record.approvalStatus === 'New' && req.body.approveEntry === 'yes') {
+  const isApproved = record.approvalStatus === 'New' && req.body.approveEntry === 'yes'
+  if (isApproved) {
     record.approvalStatus = 'Approved'
   }
 
-  const returnTo = req.body.returnTo
+  const returnUrl = new URL(isApproved
     ? registerReturnUrl(req.body.returnTo, version)
-    : `${directorRestrictionBasePath(version)}/register.html?status=new`
-  return res.redirect(returnTo)
+    : registerDetailsReturnUrl(req.body.returnToDetails, version, recordId), 'http://localhost')
+  if (isApproved) {
+    returnUrl.searchParams.set('saved', 'approved')
+  }
+  return res.redirect(`${returnUrl.pathname}${returnUrl.search}`)
 })
 
 router.post('/director-disqualifications-register/v2/admin/update-hide-address', function (req, res) {
@@ -596,7 +603,9 @@ router.post('/director-disqualifications-register/v2/admin/update-hide-address',
     record.hideAddress = req.body.hideAddress === 'yes'
   }
 
-  return res.redirect(registerDetailsReturnUrl(req.body.returnTo, 'v2', recordId))
+  const returnUrl = new URL(registerDetailsReturnUrl(req.body.returnTo, 'v2', recordId), 'http://localhost')
+  returnUrl.searchParams.set('saved', 'updated')
+  return res.redirect(`${returnUrl.pathname}${returnUrl.search}`)
 })
 
 function normalizeDirectorRestrictionFilters(query, isRegisterAdmin) {
@@ -722,7 +731,9 @@ router.post('/director-disqualifications-register/v2/admin/update-conduct-reason
     return paragraph.trim()
   }).filter(Boolean)
 
-  return res.redirect(registerDetailsReturnUrl(req.body.returnTo, 'v2', recordId))
+  const returnUrl = new URL(registerDetailsReturnUrl(req.body.returnTo, 'v2', recordId), 'http://localhost')
+  returnUrl.searchParams.set('saved', 'updated')
+  return res.redirect(`${returnUrl.pathname}${returnUrl.search}`)
 })
 
 router.post('/director-disqualifications-register/v2/admin/update-publication-readiness', function (req, res) {
@@ -740,7 +751,9 @@ router.post('/director-disqualifications-register/v2/admin/update-publication-re
     record.approvalStatus = 'Approved'
   }
 
-  const returnUrl = new URL(registerReturnUrl(req.body.returnTo, 'v2'), 'http://localhost')
+  const returnUrl = new URL(isReadyToPublish
+    ? registerReturnUrl(req.body.returnTo, 'v2')
+    : registerDetailsReturnUrl(req.body.returnToDetails, 'v2', recordId), 'http://localhost')
   if (isReadyToPublish) {
     returnUrl.searchParams.set('saved', 'ready')
   }
@@ -763,8 +776,8 @@ router.get('/director-disqualifications-register/:version/restrictions-details.h
   const requestedPage = Number.parseInt(req.query.page, 10)
   const page = Number.isInteger(requestedPage) && requestedPage > 0 ? requestedPage : 1
   const searchHref = `${basePath}/register.html?${directorRestrictionQueryString(filters, page)}`
-  const editHref = `${basePath}/admin/edit.html?id=${recordId}&returnTo=${encodeURIComponent(searchHref)}`
   const detailsHref = `${basePath}/restrictions-details.html?record=${recordId}&${directorRestrictionQueryString(filters, page)}`
+  const editHref = `${basePath}/admin/edit.html?id=${recordId}&returnTo=${encodeURIComponent(detailsHref)}`
   const readinessReturnHref = searchHref
   const violenceEditHref = version === 'v2'
     ? `${basePath}/admin/change-hide-address.html?id=${recordId}&returnTo=${encodeURIComponent(detailsHref)}`
@@ -779,6 +792,7 @@ router.get('/director-disqualifications-register/:version/restrictions-details.h
     searchHref,
     editHref,
     detailsHref,
+    saved: isRegisterAdmin && ['created', 'updated', 'ready', 'approved'].includes(req.query.saved) ? req.query.saved : '',
     readinessReturnHref,
     violenceEditHref,
     conductReasonEditHref
@@ -920,7 +934,7 @@ router.get('/director-disqualifications-register/:version/register.html', functi
   })
 
   res.render(`director-disqualifications-register/${version}/register`, {
-    saved: isRegisterAdmin && ['created', 'updated', 'ready'].includes(req.query.saved) ? req.query.saved : '',
+    saved: isRegisterAdmin && ['created', 'updated', 'ready', 'approved'].includes(req.query.saved) ? req.query.saved : '',
     searchTerm: filters.searchTerm,
     disqualificationTypes: filters.disqualificationTypes,
     dateRange: filters.dateRange,
