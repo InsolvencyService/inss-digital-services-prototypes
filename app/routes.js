@@ -366,7 +366,7 @@ function directorRestrictionAdminSessionKey(version) {
 }
 
 function directorRestrictionIsAdmin(req) {
-  return req.session[directorRestrictionAdminSessionKey(req.params.version)] === true
+  return req.session.data[directorRestrictionAdminSessionKey(req.params.version)] === true
 }
 
 router.use('/director-disqualifications-register/:version', function (req, res, next) {
@@ -379,25 +379,29 @@ router.use('/director-disqualifications-register/:version', function (req, res, 
   }
 
   const basePath = directorRestrictionBasePath(version)
+  const adminSessionKey = directorRestrictionAdminSessionKey(version)
+  if (typeof req.session.data[adminSessionKey] !== 'boolean') {
+    req.session.data[adminSessionKey] = false
+  }
   res.set('Cache-Control', 'no-store')
   res.locals.registerVersion = version
   res.locals.registerBasePath = basePath
   res.locals.registerPath = `${basePath}/register.html`
   res.locals.registerDashboardPath = `${basePath}/admin/dashboard.html`
   res.locals.registerAdminSignOutPath = `${basePath}/admin/sign-out`
-  res.locals.registerAdmin = directorRestrictionIsAdmin(req)
+  res.locals.registerAdmin = req.session.data[adminSessionKey] === true
   res.locals.registerIsOnRegisterPage = req.originalUrl.split('?')[0] === `${basePath}/register.html`
   res.locals.registerIsOnDashboardPage = req.originalUrl.split('?')[0] === `${basePath}/admin/dashboard.html`
   next()
 })
 
 router.post('/director-disqualifications-register/:version/admin/sign-in', function (req, res) {
-  req.session[directorRestrictionAdminSessionKey(req.params.version)] = true
+  req.session.data[directorRestrictionAdminSessionKey(req.params.version)] = true
   return res.redirect(`${directorRestrictionBasePath(req.params.version)}/admin/dashboard.html`)
 })
 
 router.post('/director-disqualifications-register/:version/admin/sign-out', function (req, res) {
-  delete req.session[directorRestrictionAdminSessionKey(req.params.version)]
+  delete req.session.data[directorRestrictionAdminSessionKey(req.params.version)]
   return res.redirect(`${directorRestrictionBasePath(req.params.version)}/register.html`)
 })
 
