@@ -1,0 +1,46 @@
+{% extends "layouts/main.html" %}
+
+{% set serviceName = 'Director disqualifications register' %}
+{% set serviceUrl = registerPath %}
+
+{% block pageTitle %}
+  Change address withholding - {{ serviceName }} - GOV.UK
+{% endblock %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: 'Back',
+    href: returnTo
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form action="{{ registerBasePath }}/admin/update-hide-address" method="post">
+        <input type="hidden" name="id" value="{{ record.id }}">
+        <input type="hidden" name="returnTo" value="{{ returnTo }}">
+        {{ govukRadios({
+          idPrefix: "hide-address",
+          name: "hideAddress",
+          value: "yes" if record.hideAddress else "no",
+          isPageHeading: true,
+          fieldset: {
+            legend: {
+              text: "Do you want to withhold the person's address?",
+              classes: "govuk-fieldset__legend--l"
+            }
+          },
+          items: [
+            { value: "yes", text: "Yes" },
+            { value: "no", text: "No" }
+          ]
+        }) }}
+        {{ govukButton({ text: "Save and continue" }) }}
+      </form>
+    </div>
+  </div>
+{% endblock %}

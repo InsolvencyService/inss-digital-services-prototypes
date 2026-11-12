@@ -1,0 +1,126 @@
+{% extends "layouts/main.html" %}
+
+{% set serviceName = 'Director disqualifications register' %}
+{% set serviceUrl = registerPath %}
+
+{% block pageTitle %}
+  {{ record.fullName }} - {{ serviceName }} - GOV.UK
+{% endblock %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: 'Back',
+    href: searchHref
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-l">Disqualification details for {{ record.fullName }}</h1>
+      <p class="govuk-body">This record is fictional and for prototype use only.</p>
+
+      <h2 class="govuk-heading-m">Personal details</h2>
+      <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Full name</dt>
+          <dd class="govuk-summary-list__value">{{ record.fullName }}</dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Date of birth</dt>
+          <dd class="govuk-summary-list__value">{{ record.dateOfBirth }}</dd>
+        </div> 
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Last known address</dt>
+          <dd class="govuk-summary-list__value">{% if record.hideAddress and not registerAdmin %}Withheld{% else %}{{ record.lastKnownAddress }}{% if record.hideAddress and registerAdmin %} (Withheld){% endif %}{% endif %}</dd>
+        </div>
+        {% if registerAdmin %}
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Do you want to withhold the person's address?</dt>
+            <dd class="govuk-summary-list__value">{{ 'Yes' if record.hideAddress else 'No' }}</dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="{{ violenceEditHref }}">Change<span class="govuk-visually-hidden"> whether to hide the person's address</span></a></dd>
+          </div>
+        {% endif %}
+       </dl>
+
+      <h2 class="govuk-heading-m">Company details</h2>
+      <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Company name</dt>
+          <dd class="govuk-summary-list__value">{{ record.companyName }}</dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Company number</dt>
+          <dd class="govuk-summary-list__value">{{ record.companyNumber }}</dd>
+        </div>
+        {% if registerAdmin %}
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Status</dt>
+            <dd class="govuk-summary-list__value">{{ status }}</dd>
+          </div>
+        {% endif %}
+         </dl>
+      <h2 class="govuk-heading-m">Disqualification details</h2>
+      <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Type</dt>
+          <dd class="govuk-summary-list__value">{{ record.restrictionType }}</dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Start date</dt>
+          <dd class="govuk-summary-list__value">{{ record.restrictionStartDate }}</dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">End date</dt>
+          <dd class="govuk-summary-list__value">{{ record.restrictionEndDate }}</dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Disqualification length</dt>
+          <dd class="govuk-summary-list__value">{{ record.disqualificationLength }}</dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Conduct reason</dt>
+          <dd class="govuk-summary-list__value">
+            {% if record.conductReason.length %}
+              {% for paragraph in record.conductReason %}
+                <p class="govuk-body">{{ paragraph }}</p>
+              {% endfor %}
+            {% elif registerAdmin %}
+              <p class="govuk-body"><a class="govuk-link" href="{{ conductReasonEditHref }}">Add conduct reason</a></p>
+            {% endif %}
+          </dd>
+          {% if registerAdmin %}
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="{{ conductReasonEditHref }}">{% if record.conductReason.length %}Change{% endif %}<span class="govuk-visually-hidden"> conduct reason</span></a>
+            </dd>
+          {% endif %}
+        </div>
+      </dl>
+      {% if registerAdmin and record.approvalStatus == 'New' and record.conductReason.length %}
+        <form action="{{ registerBasePath }}/admin/update-publication-readiness" method="post">
+          <input type="hidden" name="id" value="{{ record.id }}">
+          <input type="hidden" name="returnTo" value="{{ readinessReturnHref }}">
+          {{ govukRadios({
+            idPrefix: "ready-to-publish",
+            name: "readyToPublish",
+            value: "no",
+            fieldset: {
+              legend: {
+                text: "Is this entry ready to be published?",
+                classes: "govuk-fieldset__legend--m"
+              }
+            },
+            items: [
+              { value: "yes", text: "Yes" },
+              { value: "no", text: "No" }
+            ]
+          }) }}
+          {{ govukButton({ text: "Save and continue" }) }}
+        </form>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

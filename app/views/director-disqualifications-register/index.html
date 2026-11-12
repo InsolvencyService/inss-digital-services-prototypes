@@ -1,0 +1,21 @@
+{% extends "layouts/main.html" %}
+
+{% set serviceName = 'Director disqualifications register' %}
+{% set serviceUrl = '/director-disqualifications-register/index.html' %}
+
+{% block pageTitle %}
+  {{ serviceName }} - prototype versions
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-l">Director disqualifications register</h1>
+      <p class="govuk-body">Choose a prototype version.</p>
+      <h2 class="govuk-heading-m">Approach 1</h2>
+      <p class="govuk-body"><a href="v1/index.html">Manual create entry approach.</a></p>
+      <h2 class="govuk-heading-m">Approach 2</h2>
+      <p class="govuk-body"><a href="v2/index.html">Automated auto created and populated entries approach.</a></p>
+    </div>
+  </div>
+{% endblock %}

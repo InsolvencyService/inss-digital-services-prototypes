@@ -1,0 +1,233 @@
+{% extends "layouts/main.html" %}
+
+{% set serviceName = 'Director disqualifications register administration' %}
+{% set serviceUrl = registerPath %}
+
+{% block pageTitle %}
+  {{ pageHeading }} - {{ serviceName }} - GOV.UK
+{% endblock %}
+
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/date-input/macro.njk" import govukDateInput %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/textarea/macro.njk" import govukTextarea %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: 'Back',
+    href: returnTo
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-l">{{ pageHeading }}</h1>
+ 
+
+      <form action="{{ formAction }}" method="post" novalidate>
+        {% if editing %}
+          <input type="hidden" name="id" value="{{ record.id }}">
+        {% endif %}
+        <input type="hidden" name="returnTo" value="{{ returnTo }}">
+
+ <h2 class="govuk-heading-m">Personal details</h2>
+
+        {{ govukInput({
+          label: {
+            text: "Full name"
+          },
+          id: "full-name",
+          name: "fullName",
+          value: record.fullName,
+          autocomplete: "name",
+          spellcheck: false,
+          attributes: { required: true }
+        }) }}
+
+        {{ govukDateInput({
+          id: "date-of-birth",
+          namePrefix: "dateOfBirth",
+          fieldset: {
+            legend: {
+              text: "Date of birth",
+              classes: "govuk-fieldset__legend--s"
+            }
+          },
+          items: [
+            { name: "day", classes: "govuk-input--width-2", label: "Day", value: dateOfBirthParts.day },
+            { name: "month", classes: "govuk-input--width-2", label: "Month", value: dateOfBirthParts.month },
+            { name: "year", classes: "govuk-input--width-4", label: "Year", value: dateOfBirthParts.year }
+          ]
+        }) }}
+
+        <h2 class="govuk-heading-m">Last known address</h2>
+
+        {{ govukInput({
+          label: {
+            text: "Address line 1"
+          },
+          id: "address-line-1",
+          name: "addressLine1",
+          value: record.addressLine1,
+          autocomplete: "address-line1",
+          spellcheck: false
+        }) }}
+
+        {{ govukInput({
+          label: {
+            text: "Address line 2 (optional)"
+          },
+          id: "address-line-2",
+          name: "addressLine2",
+          value: record.addressLine2,
+          autocomplete: "address-line2",
+          spellcheck: false
+        }) }}
+
+        {{ govukInput({
+          label: {
+            text: "Town or city"
+          },
+          id: "address-town",
+          name: "town",
+          value: record.town,
+          autocomplete: "address-level2",
+          spellcheck: false
+        }) }}
+
+        {{ govukInput({
+          label: {
+            text: "Postcode"
+          },
+          id: "postcode",
+          name: "postcode",
+          value: record.postcode,
+          classes: "govuk-input--width-10",
+          autocomplete: "postal-code",
+          spellcheck: false
+        }) }}
+
+        <h3 class="govuk-heading-s">Person at risk of violence</h3>
+        {{ govukRadios({
+          idPrefix: "hide-address",
+          name: "hideAddress",
+          value: "yes" if record.hideAddress else "no",
+          fieldset: {
+            legend: {
+              text: "Do you want to withhold the person's address?"
+            }
+          },
+          items: [
+            { value: "yes", text: "Yes" },
+            { value: "no", text: "No" }
+          ]
+        }) }}
+
+        <h2 class="govuk-heading-m">Restriction details</h2>
+
+         {{ govukInput({
+          label: {
+            text: "Company number"
+          },
+          hint: {
+            text: "Enter 8 digits. Leave blank when creating an entry to assign the next number."
+          },
+          id: "company-number",
+          name: "companyNumber",
+          value: record.companyNumber,
+          classes: "govuk-input--width-10",
+          inputmode: "numeric",
+          autocomplete: "off",
+          spellcheck: false
+        }) }}
+
+        {{ govukInput({
+          label: {
+            text: "Company name"
+          },
+          id: "company-name",
+          name: "companyName",
+          value: record.companyName,
+          autocomplete: "organization",
+          spellcheck: false
+        }) }}
+
+        {{ govukRadios({
+          idPrefix: "restriction-type",
+          name: "restrictionType",
+          value: record.restrictionType,
+          fieldset: {
+            legend: {
+              text: "Disqualification type",
+              classes: "govuk-fieldset__legend--s"
+            }
+          },
+          items: restrictionTypeOptions
+        }) }}
+
+        {{ govukDateInput({
+          id: "restriction-start-date",
+          namePrefix: "restrictionStartDate",
+          fieldset: {
+            legend: {
+              text: "Start date",
+              classes: "govuk-fieldset__legend--s"
+            }
+          },
+          items: [
+            { name: "day", classes: "govuk-input--width-2", label: "Day", value: restrictionStartDateParts.day },
+            { name: "month", classes: "govuk-input--width-2", label: "Month", value: restrictionStartDateParts.month },
+            { name: "year", classes: "govuk-input--width-4", label: "Year", value: restrictionStartDateParts.year }
+          ]
+        }) }}
+
+        {{ govukDateInput({
+          id: "restriction-end-date",
+          namePrefix: "restrictionEndDate",
+          fieldset: {
+            legend: {
+              text: "End date",
+              classes: "govuk-fieldset__legend--s"
+            }
+          },
+          items: [
+            { name: "day", classes: "govuk-input--width-2", label: "Day", value: restrictionEndDateParts.day },
+            { name: "month", classes: "govuk-input--width-2", label: "Month", value: restrictionEndDateParts.month },
+            { name: "year", classes: "govuk-input--width-4", label: "Year", value: restrictionEndDateParts.year }
+          ]
+        }) }}
+
+        {{ govukInput({
+          label: {
+            text: "Disqualification length in years"
+          },
+          id: "disqualification-length",
+          name: "disqualificationLength",
+          type: "number",
+          value: disqualificationLengthInput,
+          classes: "govuk-input--width-2",
+          min: 1,
+          max: 99,
+          step: 1
+        }) }}
+
+        {{ govukTextarea({
+          label: {
+            text: "Conduct reason"
+          },
+          id: "conduct-reason",
+          name: "conductReason",
+          value: record.conductReason | default([], true) | join("\n\n"),
+          rows: 8
+        }) }}
+
+        <div class="govuk-button-group">
+          {{ govukButton({ text: submitText }) }}
+          <a class="govuk-link" href="dashboard.html">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}

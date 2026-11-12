@@ -162,9 +162,14 @@ const restrictionLocations = [
   { town: 'Belfast', postcodeDistrict: 'BT1' },
   { town: 'Derry', postcodeDistrict: 'BT48' }
 ]
-const directorRestrictionRecords = Array.from({ length: 504 }, function (unused, index) {
-  const firstName = directorRestrictionFirstNames[Math.floor(index / directorRestrictionLastNames.length)]
-  const lastName = directorRestrictionLastNames[index % directorRestrictionLastNames.length]
+const futureUnpublishedRecordCount = 24
+const directorRestrictionSeedRecords = Array.from({ length: 504 }, function (unused, index) {
+  const firstName = index < 15
+    ? directorRestrictionFirstNames[index * 7 % directorRestrictionFirstNames.length]
+    : directorRestrictionFirstNames[Math.floor(index / directorRestrictionLastNames.length)]
+  const lastName = index < 15
+    ? directorRestrictionLastNames[index * 5 % directorRestrictionLastNames.length]
+    : directorRestrictionLastNames[index % directorRestrictionLastNames.length]
   const birthDay = String((index * 7) % 28 + 1).padStart(2, '0')
   const birthMonth = monthNames[index * 5 % monthNames.length]
   const birthYear = 1950 + index % 56
@@ -176,20 +181,25 @@ const directorRestrictionRecords = Array.from({ length: 504 }, function (unused,
   const companyName = `Fictional Trading Company ${index + 1} Ltd`
   const location = restrictionLocations[index % restrictionLocations.length]
   const postcode = `${location.postcodeDistrict} ${index % 9 + 1}${postcodeLetters[index % postcodeLetters.length]}${postcodeLetters[index * 7 % postcodeLetters.length]}`
+  const addressLine1 = `${index % 99 + 1} ${restrictionStreets[index % restrictionStreets.length]}`
+  const addressLine2 = ''
+  const town = location.town
   const companyAccountsTurnover = 69373 + index * 317
   const liquidationLiabilities = 113823.44 + index * 725.5
   const bblLiability = 41118.89 + index * 125.25
   const restrictionStartDateValue = new Date()
   restrictionStartDateValue.setHours(0, 0, 0, 0)
-  restrictionStartDateValue.setDate(1)
-  restrictionStartDateValue.setMonth(restrictionStartDateValue.getMonth() - index % 12)
-  restrictionStartDateValue.setDate((index * 13) % 28 + 1)
+  if (index < futureUnpublishedRecordCount) {
+    restrictionStartDateValue.setDate(restrictionStartDateValue.getDate() + index % 21 + 1)
+  } else {
+    restrictionStartDateValue.setDate(restrictionStartDateValue.getDate() - ((index * 13) % 365 + 1))
+  }
   const restrictionEndDateValue = new Date(restrictionStartDateValue)
   restrictionEndDateValue.setFullYear(restrictionEndDateValue.getFullYear() + restrictionLength)
   const restrictionStartDate = `${restrictionStartDateValue.getDate()} ${monthNames[restrictionStartDateValue.getMonth()]} ${restrictionStartDateValue.getFullYear()}`
   const restrictionEndDate = `${restrictionEndDateValue.getDate()} ${monthNames[restrictionEndDateValue.getMonth()]} ${restrictionEndDateValue.getFullYear()}`
   const restrictionStartSort = restrictionStartDateValue.getTime()
-  const croNumber = String(10000000 + index)
+  const companyNumber = String(10000000 + index)
   const formatCurrency = function (amount) {
     return amount.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
   }
@@ -197,13 +207,18 @@ const directorRestrictionRecords = Array.from({ length: 504 }, function (unused,
 
   return {
     id: index,
-    croNumber,
+    companyNumber,
     name: fullName,
     fullName,
     dateOfBirth: `${birthDay} ${birthMonth} ${birthYear}`,
     postcode,
-    lastKnownAddress: `${index % 99 + 1} ${restrictionStreets[index % restrictionStreets.length]}, ${location.town}, ${postcode}`,
+    addressLine1,
+    addressLine2,
+    town,
+    address: [addressLine1, town].join(', '),
+    lastKnownAddress: [addressLine1, town, postcode].join(', '),
     companyName,
+    approvalStatus: index < 15 ? 'New' : 'Approved',
     restrictionType,
     restrictionStartDate,
     restrictionEndDate,
@@ -222,7 +237,369 @@ const directorRestrictionRecords = Array.from({ length: 504 }, function (unused,
   }
 })
 
-function normalizeDirectorRestrictionFilters(query) {
+function cloneDirectorRestrictionRecords(records) {
+  return records.map(function (record) {
+    return Object.assign({}, record, { conductReason: record.conductReason.slice() })
+  })
+}
+
+const directorRestrictionRecordsByVersion = {
+  v1: cloneDirectorRestrictionRecords(directorRestrictionSeedRecords),
+  v2: cloneDirectorRestrictionRecords(directorRestrictionSeedRecords).map(function (record) {
+    return record.approvalStatus === 'New'
+      ? Object.assign({}, record, { conductReason: [] })
+      : record
+  })
+}
+
+function directorRestrictionRecordsFor(version) {
+  return directorRestrictionRecordsByVersion[version]
+}
+
+function dateToInputParts(dateText) {
+  const dateParts = String(dateText || '').match(/^(\d{1,2})\s+([A-Za-z]+)\s+(\d{4})$/)
+  if (!dateParts) {
+    return { day: '', month: '', year: '' }
+  }
+
+  const month = monthNames.indexOf(dateParts[2]) + 1
+  if (month < 1) {
+    return { day: '', month: '', year: '' }
+  }
+
+  return {
+    day: String(Number(dateParts[1])),
+    month: String(month).padStart(2, '0'),
+    year: dateParts[3]
+  }
+}
+
+function dateFromInputParts(body, namePrefix) {
+  const day = Number(body[`${namePrefix}-day`])
+  const month = Number(body[`${namePrefix}-month`])
+  const year = Number(body[`${namePrefix}-year`])
+  if (!day || month < 1 || month > 12 || !year) {
+    return { value: '', timestamp: 0 }
+  }
+
+  const date = new Date(Date.UTC(year, month - 1, day))
+  if (date.getUTCFullYear() !== year || date.getUTCMonth() !== month - 1 || date.getUTCDate() !== day) {
+    return { value: '', timestamp: 0 }
+  }
+
+  return {
+    value: `${day} ${monthNames[month - 1]} ${year}`,
+    timestamp: date.getTime()
+  }
+}
+
+function nextDirectorRestrictionId(records) {
+  return records.reduce(function (highestId, record) {
+    return Math.max(highestId, record.id)
+  }, -1) + 1
+}
+
+function nextDirectorRestrictionCompanyNumber(records) {
+  const highestCompanyNumber = records.reduce(function (highestNumber, record) {
+    return Math.max(highestNumber, Number(record.companyNumber) || 0)
+  }, 9999999)
+  return String(highestCompanyNumber + 1)
+}
+
+function buildAdminRecord(body, id, existingRecord, records) {
+  const fullName = String(body.fullName || '').trim()
+  const addressLine1 = String(body.addressLine1 || '').trim()
+  const addressLine2 = String(body.addressLine2 || '').trim()
+  const town = String(body.town || '').trim()
+  const postcode = String(body.postcode || '').trim().toUpperCase()
+  const dateOfBirth = dateFromInputParts(body, 'dateOfBirth')
+  const restrictionStartDate = dateFromInputParts(body, 'restrictionStartDate')
+  const restrictionEndDate = dateFromInputParts(body, 'restrictionEndDate')
+  const requestedDisqualificationLength = Number.parseInt(body.disqualificationLength, 10)
+  const disqualificationLength = Number.isInteger(requestedDisqualificationLength) && requestedDisqualificationLength >= 1 && requestedDisqualificationLength <= 99
+    ? `${requestedDisqualificationLength} years`
+    : ''
+  const companyNumber = /^\d{8}$/.test(String(body.companyNumber || '').trim())
+    ? String(body.companyNumber).trim()
+    : existingRecord ? existingRecord.companyNumber : nextDirectorRestrictionCompanyNumber(records)
+  const conductReason = String(body.conductReason || '').split(/\r?\n/).map(function (paragraph) {
+    return paragraph.trim()
+  }).filter(Boolean)
+
+  return Object.assign({}, existingRecord, {
+    id,
+    companyNumber,
+    name: fullName,
+    fullName,
+    dateOfBirth: dateOfBirth.value,
+    hideAddress: body.hideAddress === 'yes',
+    postcode,
+    addressLine1,
+    addressLine2,
+    town,
+    address: [addressLine1, addressLine2, town].filter(Boolean).join(', '),
+    lastKnownAddress: [addressLine1, addressLine2, town, postcode].filter(Boolean).join(', '),
+    companyName: String(body.companyName || '').trim(),
+    approvalStatus: existingRecord
+      ? existingRecord.approvalStatus === 'New' && body.approveEntry === 'yes'
+        ? 'Approved'
+        : existingRecord.approvalStatus || 'Approved'
+      : 'New',
+    restrictionType: directorRestrictionTypes.includes(body.restrictionType) ? body.restrictionType : directorRestrictionTypes[0],
+    restrictionStartDate: restrictionStartDate.value,
+    restrictionEndDate: restrictionEndDate.value,
+    restrictionStartTimestamp: restrictionStartDate.timestamp,
+    restrictionStartSort: restrictionStartDate.timestamp,
+    startDate: restrictionStartDate.value,
+    endDate: restrictionEndDate.value,
+    disqualificationLength,
+    conductReason
+  })
+}
+
+function directorRestrictionBasePath(version) {
+  return `/director-disqualifications-register/${version}`
+}
+
+function directorRestrictionAdminSessionKey(version) {
+  return `directorRegisterAdmin${version.toUpperCase()}`
+}
+
+function directorRestrictionIsAdmin(req) {
+  return req.session[directorRestrictionAdminSessionKey(req.params.version)] === true
+}
+
+router.use('/director-disqualifications-register/:version', function (req, res, next) {
+  const version = req.params.version
+  if (!directorRestrictionRecordsByVersion[version]) {
+    if (['index', 'index.html'].includes(version)) {
+      return next()
+    }
+    return res.redirect('/director-disqualifications-register/index.html')
+  }
+
+  const basePath = directorRestrictionBasePath(version)
+  res.set('Cache-Control', 'no-store')
+  res.locals.registerVersion = version
+  res.locals.registerBasePath = basePath
+  res.locals.registerPath = `${basePath}/register.html`
+  res.locals.registerDashboardPath = `${basePath}/admin/dashboard.html`
+  res.locals.registerAdminSignOutPath = `${basePath}/admin/sign-out`
+  res.locals.registerAdmin = directorRestrictionIsAdmin(req)
+  res.locals.registerIsOnRegisterPage = req.originalUrl.split('?')[0] === `${basePath}/register.html`
+  res.locals.registerIsOnDashboardPage = req.originalUrl.split('?')[0] === `${basePath}/admin/dashboard.html`
+  next()
+})
+
+router.post('/director-disqualifications-register/:version/admin/sign-in', function (req, res) {
+  req.session[directorRestrictionAdminSessionKey(req.params.version)] = true
+  return res.redirect(`${directorRestrictionBasePath(req.params.version)}/admin/dashboard.html`)
+})
+
+router.post('/director-disqualifications-register/:version/admin/sign-out', function (req, res) {
+  delete req.session[directorRestrictionAdminSessionKey(req.params.version)]
+  return res.redirect(`${directorRestrictionBasePath(req.params.version)}/register.html`)
+})
+
+router.use('/director-disqualifications-register/:version/admin', function (req, res, next) {
+  const isDashboard = req.method === 'GET' && ['/dashboard', '/dashboard.html'].includes(req.path)
+  const isV2ViolenceEditPage = req.params.version === 'v2' && req.method === 'GET' && req.path === '/change-hide-address.html'
+  const isV2ViolenceUpdate = req.params.version === 'v2' && req.method === 'POST' && req.path === '/update-hide-address'
+  const isV2ConductReasonEditPage = req.params.version === 'v2' && req.method === 'GET' && req.path === '/change-conduct-reason.html'
+  const isV2ConductReasonUpdate = req.params.version === 'v2' && req.method === 'POST' && req.path === '/update-conduct-reason'
+  const isV2PublicationReadinessUpdate = req.params.version === 'v2' && req.method === 'POST' && req.path === '/update-publication-readiness'
+  const isAdmin = directorRestrictionIsAdmin(req)
+
+  if (!isDashboard && !isV2ViolenceEditPage && !isV2ConductReasonEditPage && !isAdmin) {
+    return res.redirect(`${directorRestrictionBasePath(req.params.version)}/admin/dashboard.html`)
+  }
+  if (req.params.version === 'v2' && !isDashboard && !isV2ViolenceEditPage && !isV2ViolenceUpdate && !isV2ConductReasonEditPage && !isV2ConductReasonUpdate && !isV2PublicationReadinessUpdate) {
+    return res.redirect(`${directorRestrictionBasePath(req.params.version)}/admin/dashboard.html`)
+  }
+  next()
+})
+
+function directorRestrictionStatusKey(record, currentTimestamp) {
+  if (record.approvalStatus === 'New') {
+    return 'new'
+  }
+
+  return record.restrictionStartTimestamp > currentTimestamp ? 'unpublished' : 'published'
+}
+
+function directorRestrictionStatusLabel(status, version) {
+  if (status === 'new' && version === 'v1') {
+    return 'Ready to approve'
+  }
+
+  const statusLabels = {
+    new: 'Review and add conduct reason',
+    unpublished: 'Ready to be published',
+    published: 'Published'
+  }
+  return statusLabels[status] || status
+}
+
+function directorRestrictionStatus(record, currentTimestamp, version) {
+  return directorRestrictionStatusLabel(directorRestrictionStatusKey(record, currentTimestamp), version)
+}
+
+router.get('/director-disqualifications-register/:version/admin/dashboard.html', function (req, res) {
+  const records = directorRestrictionRecordsFor(req.params.version)
+  const isAdmin = directorRestrictionIsAdmin(req)
+  const searchTerm = String(req.query.searchTerm || '').trim()
+  const normalizedSearchTerm = searchTerm.toLowerCase()
+  const currentTimestamp = Date.now()
+  const publishedCount = records.filter(function (record) {
+    return record.approvalStatus === 'Approved' && record.restrictionStartTimestamp <= currentTimestamp
+  }).length
+  const unpublishedCount = records.filter(function (record) {
+    return record.approvalStatus === 'Approved' && record.restrictionStartTimestamp > currentTimestamp
+  }).length
+  const approvedCount = records.filter(function (record) {
+    return record.approvalStatus === 'Approved'
+  }).length
+  const newCount = records.filter(function (record) {
+    return record.approvalStatus === 'New'
+  }).length
+  const results = isAdmin && normalizedSearchTerm
+    ? records.filter(function (record) {
+      return [record.fullName, record.companyNumber, record.companyName, record.lastKnownAddress]
+        .some(function (value) {
+          return String(value || '').toLowerCase().includes(normalizedSearchTerm)
+        })
+    }).slice(0, 100).map(function (record) {
+      return Object.assign({}, record, { status: directorRestrictionStatus(record, currentTimestamp, req.params.version) })
+    })
+    : []
+
+  return res.render(`director-disqualifications-register/${req.params.version}/admin/dashboard`, {
+    searchTerm,
+    results,
+    totalEntries: records.length,
+    publishedCount,
+    unpublishedCount,
+    approvedCount,
+    newCount
+  })
+})
+
+router.get('/director-disqualifications-register/:version/admin/new.html', function (req, res) {
+  const version = req.params.version
+  const basePath = directorRestrictionBasePath(version)
+  return res.render(`director-disqualifications-register/${version}/admin/entry-form`, {
+    pageHeading: 'Create a new register entry',
+    formAction: `${basePath}/admin/create`,
+    submitText: 'Create entry',
+    record: {},
+    editing: false,
+    dateOfBirthParts: dateToInputParts(''),
+    restrictionStartDateParts: dateToInputParts(''),
+    restrictionEndDateParts: dateToInputParts(''),
+    returnTo: registerReturnUrl(req.query.returnTo, version),
+    disqualificationLengthInput: '',
+    restrictionTypeOptions: directorRestrictionTypes.map(function (type) {
+      return { value: type, text: type, checked: type === directorRestrictionTypes[0] }
+    }),
+    saved: false
+  })
+})
+
+router.post('/director-disqualifications-register/:version/admin/create', function (req, res) {
+  const version = req.params.version
+  const records = directorRestrictionRecordsFor(version)
+  const record = buildAdminRecord(req.body, nextDirectorRestrictionId(records), null, records)
+  records.push(record)
+  return res.redirect(`${directorRestrictionBasePath(version)}/register.html?saved=created`)
+})
+
+router.get('/director-disqualifications-register/:version/admin/edit.html', function (req, res) {
+  const version = req.params.version
+  const records = directorRestrictionRecordsFor(version)
+  const recordId = Number.parseInt(req.query.id, 10)
+  const record = records.find(function (item) {
+    return item.id === recordId
+  })
+
+  if (!record) {
+    return res.redirect(`${directorRestrictionBasePath(version)}/admin/dashboard.html`)
+  }
+
+  return res.render(`director-disqualifications-register/${version}/admin/entry-form`, {
+    pageHeading: 'Edit register entry',
+    formAction: `${directorRestrictionBasePath(version)}/admin/update`,
+    submitText: 'Save changes',
+    record,
+    editing: true,
+    dateOfBirthParts: dateToInputParts(record.dateOfBirth),
+    restrictionStartDateParts: dateToInputParts(record.restrictionStartDate),
+    restrictionEndDateParts: dateToInputParts(record.restrictionEndDate),
+    returnTo: registerReturnUrl(req.query.returnTo, version),
+    disqualificationLengthInput: String(record.disqualificationLength || '').match(/^\d{1,2}/)?.[0] || '',
+    restrictionTypeOptions: directorRestrictionTypes.map(function (type) {
+      return { value: type, text: type, checked: type === record.restrictionType }
+    }),
+  })
+})
+
+router.post('/director-disqualifications-register/:version/admin/update', function (req, res) {
+  const version = req.params.version
+  const records = directorRestrictionRecordsFor(version)
+  const recordId = Number.parseInt(req.body.id, 10)
+  const recordIndex = records.findIndex(function (item) {
+    return item.id === recordId
+  })
+
+  if (recordIndex === -1) {
+    return res.redirect(`${directorRestrictionBasePath(version)}/admin/dashboard.html`)
+  }
+
+  records[recordIndex] = buildAdminRecord(req.body, recordId, records[recordIndex], records)
+  const returnUrl = new URL(registerReturnUrl(req.body.returnTo, version), 'http://localhost')
+  returnUrl.searchParams.set('saved', 'updated')
+  return res.redirect(`${returnUrl.pathname}${returnUrl.search}`)
+})
+
+router.post('/director-disqualifications-register/:version/admin/approve', function (req, res) {
+  const version = req.params.version
+  const records = directorRestrictionRecordsFor(version)
+  const recordId = Number.parseInt(req.body.id, 10)
+  const record = records.find(function (item) {
+    return item.id === recordId
+  })
+
+  if (!record) {
+    return res.redirect(`${directorRestrictionBasePath(version)}/admin/dashboard.html`)
+  }
+
+  if (record.approvalStatus === 'New' && req.body.approveEntry === 'yes') {
+    record.approvalStatus = 'Approved'
+  }
+
+  const returnTo = req.body.returnTo
+    ? registerReturnUrl(req.body.returnTo, version)
+    : `${directorRestrictionBasePath(version)}/register.html?status=new`
+  return res.redirect(returnTo)
+})
+
+router.post('/director-disqualifications-register/v2/admin/update-hide-address', function (req, res) {
+  const recordId = Number.parseInt(req.body.id, 10)
+  const record = directorRestrictionRecordsFor('v2').find(function (item) {
+    return item.id === recordId
+  })
+
+  if (!record) {
+    return res.redirect('/director-disqualifications-register/v2/admin/dashboard.html')
+  }
+
+  if (req.body.hideAddress === 'yes' || req.body.hideAddress === 'no') {
+    record.hideAddress = req.body.hideAddress === 'yes'
+  }
+
+  return res.redirect(registerDetailsReturnUrl(req.body.returnTo, 'v2', recordId))
+})
+
+function normalizeDirectorRestrictionFilters(query, isRegisterAdmin) {
   const searchTerm = String(query.searchTerm || '').trim()
   const requestedDisqualificationTypes = Array.isArray(query.disqualificationType)
     ? query.disqualificationType
@@ -233,9 +610,15 @@ function normalizeDirectorRestrictionFilters(query) {
   const allowedDateRanges = ['all', '3', '6', '9']
   const dateRange = allowedDateRanges.includes(query.dateRange) ? query.dateRange : 'all'
   const allowedSortOrders = ['name-asc', 'name-desc', 'date-asc', 'date-desc']
-  const sortOrder = allowedSortOrders.includes(query.sortOrder) ? query.sortOrder : 'date-desc'
+  const requestedStatuses = Array.isArray(query.status) ? query.status : [query.status]
+  const allowedStatuses = ['published', 'unpublished', 'new']
+  const statuses = isRegisterAdmin
+    ? allowedStatuses.filter(function (status) { return requestedStatuses.includes(status) })
+    : []
+  const requestedSortOrder = allowedSortOrders.includes(query.sortOrder) ? query.sortOrder : 'date-desc'
+  const sortOrder = statuses.includes('new') ? 'date-asc' : requestedSortOrder
 
-  return { searchTerm, disqualificationTypes, dateRange, sortOrder }
+  return { searchTerm, disqualificationTypes, dateRange, sortOrder, statuses }
 }
 
 function directorRestrictionQueryString(filters, page) {
@@ -246,44 +629,186 @@ function directorRestrictionQueryString(filters, page) {
   })
   query.set('dateRange', filters.dateRange)
   query.set('sortOrder', filters.sortOrder)
+  filters.statuses.forEach(function (status) {
+    query.append('status', status)
+  })
   query.set('page', String(page))
   return query.toString()
 }
 
-router.get('/director-disqualifications-register/restrictions-details.html', function (req, res) {
-  const recordId = Number.parseInt(req.query.record, 10)
-  const record = directorRestrictionRecords[recordId]
-
-  if (!Number.isInteger(recordId) || recordId < 0 || !record) {
-    return res.redirect('/director-disqualifications-register/search.html')
+function registerReturnUrl(value, version) {
+  const registerPath = `${directorRestrictionBasePath(version)}/register.html`
+  if (!value) {
+    return registerPath
   }
 
-  const filters = normalizeDirectorRestrictionFilters(req.query)
-  const requestedPage = Number.parseInt(req.query.page, 10)
-  const page = Number.isInteger(requestedPage) && requestedPage > 0 ? requestedPage : 1
-  const searchHref = `/director-disqualifications-register/search.html?${directorRestrictionQueryString(filters, page)}`
+  try {
+    const url = new URL(String(value), 'http://localhost')
+    if (url.origin !== 'http://localhost' || url.pathname !== registerPath) {
+      return registerPath
+    }
+    return `${url.pathname}${url.search}`
+  } catch {
+    return registerPath
+  }
+}
 
-  return res.render('director-disqualifications-register/restrictions-details', {
+function registerDetailsReturnUrl(value, version, recordId) {
+  const detailsPath = `${directorRestrictionBasePath(version)}/restrictions-details.html`
+  const fallback = `${detailsPath}?record=${recordId}`
+  if (!value) {
+    return fallback
+  }
+
+  try {
+    const url = new URL(String(value), 'http://localhost')
+    if (
+      url.origin !== 'http://localhost' ||
+      url.pathname !== detailsPath ||
+      url.searchParams.get('record') !== String(recordId)
+    ) {
+      return fallback
+    }
+    return `${url.pathname}${url.search}`
+  } catch {
+    return fallback
+  }
+}
+
+router.get('/director-disqualifications-register/v2/admin/change-hide-address.html', function (req, res) {
+  const recordId = Number.parseInt(req.query.id, 10)
+  const record = directorRestrictionRecordsFor('v2').find(function (item) {
+    return item.id === recordId
+  })
+
+  if (!record) {
+    return res.redirect('/director-disqualifications-register/v2/admin/dashboard.html')
+  }
+
+  return res.render('director-disqualifications-register/v2/admin/change-hide-address', {
     record,
-    searchHref
+    returnTo: registerDetailsReturnUrl(req.query.returnTo, 'v2', recordId)
   })
 })
 
-router.get('/director-disqualifications-register/search.html', function (req, res) {
-  const filters = normalizeDirectorRestrictionFilters(req.query)
+router.get('/director-disqualifications-register/v2/admin/change-conduct-reason.html', function (req, res) {
+  const recordId = Number.parseInt(req.query.id, 10)
+  const record = directorRestrictionRecordsFor('v2').find(function (item) {
+    return item.id === recordId
+  })
+
+  if (!record) {
+    return res.redirect('/director-disqualifications-register/v2/admin/dashboard.html')
+  }
+
+  return res.render('director-disqualifications-register/v2/admin/change-conduct-reason', {
+    record,
+    returnTo: registerDetailsReturnUrl(req.query.returnTo, 'v2', recordId),
+    conductReasonText: (record.conductReason || []).join('\n\n')
+  })
+})
+
+router.post('/director-disqualifications-register/v2/admin/update-conduct-reason', function (req, res) {
+  const recordId = Number.parseInt(req.body.id, 10)
+  const record = directorRestrictionRecordsFor('v2').find(function (item) {
+    return item.id === recordId
+  })
+
+  if (!record) {
+    return res.redirect('/director-disqualifications-register/v2/admin/dashboard.html')
+  }
+
+  record.conductReason = String(req.body.conductReason || '').split(/\r?\n/).map(function (paragraph) {
+    return paragraph.trim()
+  }).filter(Boolean)
+
+  return res.redirect(registerDetailsReturnUrl(req.body.returnTo, 'v2', recordId))
+})
+
+router.post('/director-disqualifications-register/v2/admin/update-publication-readiness', function (req, res) {
+  const recordId = Number.parseInt(req.body.id, 10)
+  const record = directorRestrictionRecordsFor('v2').find(function (item) {
+    return item.id === recordId
+  })
+
+  if (!record) {
+    return res.redirect('/director-disqualifications-register/v2/admin/dashboard.html')
+  }
+
+  const isReadyToPublish = record.approvalStatus === 'New' && record.conductReason.length && req.body.readyToPublish === 'yes'
+  if (isReadyToPublish) {
+    record.approvalStatus = 'Approved'
+  }
+
+  const returnUrl = new URL(registerReturnUrl(req.body.returnTo, 'v2'), 'http://localhost')
+  if (isReadyToPublish) {
+    returnUrl.searchParams.set('saved', 'ready')
+  }
+  return res.redirect(`${returnUrl.pathname}${returnUrl.search}`)
+})
+
+router.get('/director-disqualifications-register/:version/restrictions-details.html', function (req, res) {
+  const version = req.params.version
+  const records = directorRestrictionRecordsFor(version)
+  const basePath = directorRestrictionBasePath(version)
+  const recordId = Number.parseInt(req.query.record, 10)
+  const record = records[recordId]
+  const isRegisterAdmin = directorRestrictionIsAdmin(req)
+
+  if (!Number.isInteger(recordId) || recordId < 0 || !record || (!isRegisterAdmin && record.restrictionStartTimestamp > Date.now())) {
+    return res.redirect(`${basePath}/register.html`)
+  }
+
+  const filters = normalizeDirectorRestrictionFilters(req.query, isRegisterAdmin)
+  const requestedPage = Number.parseInt(req.query.page, 10)
+  const page = Number.isInteger(requestedPage) && requestedPage > 0 ? requestedPage : 1
+  const searchHref = `${basePath}/register.html?${directorRestrictionQueryString(filters, page)}`
+  const editHref = `${basePath}/admin/edit.html?id=${recordId}&returnTo=${encodeURIComponent(searchHref)}`
+  const detailsHref = `${basePath}/restrictions-details.html?record=${recordId}&${directorRestrictionQueryString(filters, page)}`
+  const readinessReturnHref = searchHref
+  const violenceEditHref = version === 'v2'
+    ? `${basePath}/admin/change-hide-address.html?id=${recordId}&returnTo=${encodeURIComponent(detailsHref)}`
+    : ''
+  const conductReasonEditHref = version === 'v2'
+    ? `${basePath}/admin/change-conduct-reason.html?id=${recordId}&returnTo=${encodeURIComponent(detailsHref)}`
+    : ''
+
+  return res.render(`director-disqualifications-register/${version}/restrictions-details`, {
+    record,
+    status: directorRestrictionStatus(record, Date.now(), version),
+    searchHref,
+    editHref,
+    detailsHref,
+    readinessReturnHref,
+    violenceEditHref,
+    conductReasonEditHref
+  })
+})
+
+router.get('/director-disqualifications-register/:version/register.html', function (req, res) {
+  const version = req.params.version
+  const records = directorRestrictionRecordsFor(version)
+  const basePath = directorRestrictionBasePath(version)
+  const isRegisterAdmin = directorRestrictionIsAdmin(req)
+  const filters = normalizeDirectorRestrictionFilters(req.query, isRegisterAdmin)
   const normalizedSearchTerm = filters.searchTerm.toLowerCase()
+  const currentTimestamp = Date.now()
   const dateCutoff = new Date()
   if (filters.dateRange !== 'all') {
     dateCutoff.setMonth(dateCutoff.getMonth() - Number(filters.dateRange))
   }
-  const matchingRecords = directorRestrictionRecords.filter(function (record) {
+  const matchingRecords = records.filter(function (record) {
     const matchesText = !normalizedSearchTerm ||
       record.name.toLowerCase().includes(normalizedSearchTerm) ||
-      record.lastKnownAddress.toLowerCase().includes(normalizedSearchTerm)
+      ((!record.hideAddress || isRegisterAdmin) &&
+        record.lastKnownAddress.toLowerCase().includes(normalizedSearchTerm))
     const matchesDisqualificationType = !filters.disqualificationTypes.length || filters.disqualificationTypes.includes(record.restrictionType)
     const matchesDateRange = filters.dateRange === 'all' || record.restrictionStartTimestamp >= dateCutoff.getTime()
+    const matchesPublicationVisibility = isRegisterAdmin || record.restrictionStartTimestamp <= currentTimestamp
+    const recordStatus = directorRestrictionStatusKey(record, currentTimestamp)
+    const matchesStatus = !filters.statuses.length || filters.statuses.includes(recordStatus)
 
-    return matchesText && matchesDisqualificationType && matchesDateRange
+    return matchesText && matchesDisqualificationType && matchesDateRange && matchesPublicationVisibility && matchesStatus
   })
   matchingRecords.sort(function (firstRecord, secondRecord) {
     if (filters.sortOrder.startsWith('date')) {
@@ -303,7 +828,9 @@ router.get('/director-disqualifications-register/search.html', function (req, re
     ? Math.min(Math.max(requestedPage, 1), totalPages)
     : 1
   const firstRecordIndex = (currentPage - 1) * resultsPerPage
-  const results = matchingRecords.slice(firstRecordIndex, firstRecordIndex + resultsPerPage)
+  const results = matchingRecords.slice(firstRecordIndex, firstRecordIndex + resultsPerPage).map(function (record) {
+    return Object.assign({}, record, { status: directorRestrictionStatus(record, currentTimestamp, version) })
+  })
   const visiblePageNumbers = Array.from(new Set([
     1,
     currentPage - 1,
@@ -335,14 +862,14 @@ router.get('/director-disqualifications-register/search.html', function (req, re
   }
 
   results.forEach(function (record) {
-    record.detailsHref = `/director-disqualifications-register/restrictions-details.html?record=${record.id}&${directorRestrictionQueryString(filters, currentPage)}`
+    record.detailsHref = `${basePath}/restrictions-details.html?record=${record.id}&${directorRestrictionQueryString(filters, currentPage)}`
   })
 
   const appliedFilters = []
   const activeFilters = []
   function activeFilterHref(overrides) {
     const updatedFilters = Object.assign({}, filters, overrides)
-    return `/director-disqualifications-register/search.html?${directorRestrictionQueryString(updatedFilters, 1)}`
+    return `${basePath}/register.html?${directorRestrictionQueryString(updatedFilters, 1)}`
   }
 
   if (filters.searchTerm) {
@@ -371,11 +898,34 @@ router.get('/director-disqualifications-register/search.html', function (req, re
       href: activeFilterHref({ dateRange: 'all' })
     })
   }
+  filters.statuses.forEach(function (status) {
+    activeFilters.push({
+      label: `Status: ${directorRestrictionStatusLabel(status, version)}`,
+      href: activeFilterHref({ statuses: filters.statuses.filter(function (selectedStatus) { return selectedStatus !== status }) })
+    })
+  })
 
-  res.render('director-disqualifications-register/search', {
+  const sortOrderOptions = [
+    { value: 'name-asc', text: 'Name (A to Z)', checked: filters.sortOrder === 'name-asc' },
+    { value: 'name-desc', text: 'Name (Z to A)', checked: filters.sortOrder === 'name-desc' },
+    { value: 'date-asc', text: 'Oldest disqualification date', checked: filters.sortOrder === 'date-asc' },
+    { value: 'date-desc', text: 'Newest disqualification date', checked: filters.sortOrder === 'date-desc' }
+  ]
+  const statusOptions = ['published', 'unpublished', 'new'].map(function (status) {
+    return {
+      value: status,
+      text: directorRestrictionStatusLabel(status, version),
+      checked: filters.statuses.includes(status)
+    }
+  })
+
+  res.render(`director-disqualifications-register/${version}/register`, {
+    saved: isRegisterAdmin && ['created', 'updated', 'ready'].includes(req.query.saved) ? req.query.saved : '',
     searchTerm: filters.searchTerm,
     disqualificationTypes: filters.disqualificationTypes,
     dateRange: filters.dateRange,
+    statuses: filters.statuses,
+    statusOptions: isRegisterAdmin ? statusOptions : [],
     appliedFilters,
     activeFilters,
     dateRangeOptions: [
@@ -389,12 +939,7 @@ router.get('/director-disqualifications-register/search.html', function (req, re
     disqualificationTypeOptions: directorRestrictionTypes.map(function (type) {
       return { value: type, text: type, checked: filters.disqualificationTypes.includes(type) }
     }),
-    sortOrderOptions: [
-      { value: 'name-asc', text: 'Name (A to Z)', checked: filters.sortOrder === 'name-asc' },
-      { value: 'name-desc', text: 'Name (Z to A)', checked: filters.sortOrder === 'name-desc' },
-      { value: 'date-asc', text: 'Oldest disqualification date', checked: filters.sortOrder === 'date-asc' },
-      { value: 'date-desc', text: 'Newest disqualification date', checked: filters.sortOrder === 'date-desc' }
-    ],
+    sortOrderOptions,
     results,
     totalResults,
     firstResult: totalResults ? firstRecordIndex + 1 : 0,

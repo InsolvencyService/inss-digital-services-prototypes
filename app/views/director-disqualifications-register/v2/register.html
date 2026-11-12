@@ -1,6 +1,7 @@
 {% extends "layouts/main.html" %}
 
 {% set serviceName = 'Director disqualifications register' %}
+{% set serviceUrl = registerPath %}
 
 {% block pageTitle %}
   Search results - {{ serviceName }} - GOV.UK
@@ -12,17 +13,24 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/pagination/macro.njk" import govukPagination %}
 
-{% block beforeContent %}
-  {{ govukBackLink({
-    text: 'Back',
-    href: 'start.html'
-  }) }}
-{% endblock %}
+
 
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
-      <h1 class="govuk-heading-l">Search the director disqualifications register</h1>
+      {% if saved %}
+        <div class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="saved-title" data-module="govuk-notification-banner">
+          <div class="govuk-notification-banner__header">
+            <h2 class="govuk-notification-banner__title" id="saved-title">Success</h2>
+          </div>
+          <div class="govuk-notification-banner__content">
+            <p class="govuk-notification-banner__heading">{% if saved == 'ready' %}The entry is ready to be published{% elif saved == 'updated' %}The entry has been updated{% else %}The register entry has been saved.{% endif %}</p>
+            {% if saved == 'ready' %}<p class="govuk-body">The entry will automatically be published on the commencement date</p>{% endif %}
+          </div>
+        </div>
+      {% endif %}
+      <h1 class="govuk-heading-l">Director disqualifications register</h1>
+
       <p class="govuk-body">This page lists recent director disqualification results obtained by the Insolvency Service or notified to us.</p>
 
       <p class="govuk-body">Each result includes:</p>
@@ -35,7 +43,7 @@
 
       <p class="govuk-body">This page may not include every recent disqualification result and should not be used as a complete record.</p>
       <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
-      <form action="search.html" method="get" role="search" class="drr-search-form">
+      <form action="register.html" method="get" role="search" class="drr-search-form">
         <div class="app-filter">
           <div class="app-filter__summary">
             <button
@@ -138,12 +146,36 @@
               </div>
             </details>
 
+            {% if registerAdmin %}
+              <details class="app-filter__section">
+                <summary class="app-filter__section-heading">
+                  <span class="app-filter__section-title">Status</span>
+                  {% if statuses.length %}
+                    <span class="app-filter__selected-count">{{ statuses.length }} selected</span>
+                  {% endif %}
+                </summary>
+                <div class="app-filter__section-content">
+                  {{ govukCheckboxes({
+                    name: "status",
+                    classes: "govuk-checkboxes--small",
+                    fieldset: {
+                      legend: {
+                        text: "Status",
+                        classes: "govuk-visually-hidden"
+                      }
+                    },
+                    items: statusOptions
+                  }) }}
+                </div>
+              </details>
+            {% endif %}
+
             <div class="app-filter__actions">
               {{ govukButton({
                 text: "Apply",
                 classes: "app-filter__apply"
               }) }}
-              <a class="govuk-link app-filter__clear" href="search.html">Clear all</a>
+              <a class="govuk-link app-filter__clear" href="register.html">Clear all</a>
             </div>
           </div>
         </div>
@@ -163,7 +195,7 @@
               </li>
             {% endfor %}
           </ul>
-          <p class="govuk-body"><a class="govuk-link" href="search.html">Clear all filters</a></p>
+          <p class="govuk-body"><a class="govuk-link" href="register.html">Clear all filters</a></p>
         </div>
       {% endif %}
 
@@ -181,7 +213,7 @@
                 </div>
                 <div class="govuk-summary-list__row">
                   <dt class="govuk-summary-list__key govuk-!-padding-top-1 govuk-!-padding-bottom-1">Postcode</dt>
-                  <dd class="govuk-summary-list__value govuk-!-padding-top-1 govuk-!-padding-bottom-1">{{ result.postcode }}</dd>
+                  <dd class="govuk-summary-list__value govuk-!-padding-top-1 govuk-!-padding-bottom-1">{% if result.hideAddress and not registerAdmin %}Address withheld{% else %}{{ result.postcode }}{% if result.hideAddress and registerAdmin %} (Withheld){% endif %}{% endif %}</dd>
                 </div>
                 <div class="govuk-summary-list__row">
                   <dt class="govuk-summary-list__key govuk-!-padding-top-1 govuk-!-padding-bottom-1">Company name</dt>
@@ -195,6 +227,12 @@
                   <dt class="govuk-summary-list__key govuk-!-padding-top-1 govuk-!-padding-bottom-1">Start date</dt>
                   <dd class="govuk-summary-list__value govuk-!-padding-top-1 govuk-!-padding-bottom-1">{{ result.startDate }}</dd>
                 </div>
+                {% if registerAdmin %}
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key govuk-!-padding-top-1 govuk-!-padding-bottom-1">Status</dt>
+                    <dd class="govuk-summary-list__value govuk-!-padding-top-1 govuk-!-padding-bottom-1">{{ result.status }}</dd>
+                  </div>
+                {% endif %}
               </dl>
             </li>
             <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible" />

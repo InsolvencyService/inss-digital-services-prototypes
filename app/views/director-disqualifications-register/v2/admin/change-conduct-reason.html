@@ -1,0 +1,41 @@
+{% extends "layouts/main.html" %}
+
+{% set serviceName = 'Director disqualifications register' %}
+{% set serviceUrl = registerPath %}
+
+{% block pageTitle %}
+  {% if conductReasonText %}Change{% else %}Add{% endif %} conduct reason - {{ serviceName }} - GOV.UK
+{% endblock %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/textarea/macro.njk" import govukTextarea %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: 'Back',
+    href: returnTo
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form action="{{ registerBasePath }}/admin/update-conduct-reason" method="post">
+        <input type="hidden" name="id" value="{{ record.id }}">
+        <input type="hidden" name="returnTo" value="{{ returnTo }}">
+        {{ govukTextarea({
+          label: {
+            text: "Add conduct reason",
+            classes: "govuk-label--l",
+            isPageHeading: true
+          },
+          id: "conduct-reason",
+          name: "conductReason",
+          value: conductReasonText,
+          rows: 8
+        }) }}
+        {{ govukButton({ text: "Save and continue" }) }}
+      </form>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,106 @@
+{% extends "layouts/main.html" %}
+
+{% set serviceName = 'Director disqualifications register' %}
+{% set serviceUrl = registerPath %}
+
+{% block pageTitle %}
+  {{ serviceName }} - GOV.UK
+{% endblock %}
+
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-l">Director disqualifications register</h1>
+      {% if registerAdmin %}
+        {% include "director-disqualifications-register/v1/admin/_admin-toolbar.html" %}
+        <p class="govuk-body">Create a new disqualification entry or find an existing case to update.</p>
+      {% else %}
+        <form action="{{ registerBasePath }}/admin/sign-in" method="post">
+          {{ govukButton({ text: "Sign in as administrator" }) }}
+        </form>
+      {% endif %}
+    </div>
+  </div>
+
+  {% if registerAdmin %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <div class="govuk-summary-card">
+        <div class="govuk-summary-card__title-wrapper">
+          <h2 class="govuk-summary-card__title">Register entries</h2>
+        </div>
+        <div class="govuk-summary-card__content">
+          <p class="govuk-heading-xl govuk-!-margin-bottom-0">{{ totalEntries }}</p>
+          <p class="govuk-body">Total entries in the register</p>
+          <table class="govuk-table">
+            <caption class="govuk-table__caption govuk-visually-hidden">Register publication status</caption>
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header">Status</th>
+                <th scope="col" class="govuk-table__header govuk-table__header--numeric">Total count</th>
+              </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header"><a class="" href="{{ registerPath }}?status=new&amp;sortOrder=date-asc">Ready to approve</a></th>
+                <td class="govuk-table__cell govuk-table__cell--numeric">{{ newCount }}</td>
+              </tr>
+              <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">Ready to be published</th>
+                <td class="govuk-table__cell govuk-table__cell--numeric">{{ unpublishedCount }}</td>
+              </tr>
+              <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">Published</th>
+                <td class="govuk-table__cell govuk-table__cell--numeric">{{ publishedCount }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      {% if searchTerm %}
+        <h2 class="govuk-heading-m">Search results</h2>
+        {% if results.length %}
+          <p class="govuk-body">{{ results.length }} matching case{% if results.length != 1 %}s{% endif %}</p>
+          <div class="govuk-table-responsive">
+            <table class="govuk-table">
+              <caption class="govuk-table__caption govuk-table__caption--m">Cases matching “{{ searchTerm }}”</caption>
+              <thead class="govuk-table__head">
+                <tr class="govuk-table__row">
+                  <th scope="col" class="govuk-table__header">Full name</th>
+                  <th scope="col" class="govuk-table__header">Company number</th>
+                  <th scope="col" class="govuk-table__header">Company</th>
+                  <th scope="col" class="govuk-table__header">Status</th>
+                  <th scope="col" class="govuk-table__header">Action</th>
+                </tr>
+              </thead>
+              <tbody class="govuk-table__body">
+                {% for record in results %}
+                  <tr class="govuk-table__row">
+                    <td class="govuk-table__cell">{{ record.fullName }}</td>
+                    <td class="govuk-table__cell">{{ record.companyNumber }}</td>
+                    <td class="govuk-table__cell">{{ record.companyName }}</td>
+                    <td class="govuk-table__cell">{{ record.status }}</td>
+                    <td class="govuk-table__cell"><a class="govuk-link" href="edit.html?id={{ record.id }}">Edit<span class="govuk-visually-hidden"> {{ record.fullName }}</span></a></td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        {% else %}
+          <p class="govuk-body">No cases found. Check the details and try again.</p>
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
+  {% endif %}
+{% endblock %}

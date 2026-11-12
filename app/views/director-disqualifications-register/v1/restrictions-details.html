@@ -1,0 +1,131 @@
+{% extends "layouts/main.html" %}
+
+{% set serviceName = 'Director disqualifications register' %}
+{% set serviceUrl = registerPath %}
+
+{% block pageTitle %}
+  {{ record.fullName }} - {{ serviceName }} - GOV.UK
+{% endblock %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: 'Back',
+    href: searchHref
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-l">Disqualification details for {{ record.fullName }}</h1>
+      <p class="govuk-body">This record is fictional and for prototype use only.</p>
+
+      <h2 class="govuk-heading-m">Personal details</h2>
+      <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Full name</dt>
+          <dd class="govuk-summary-list__value">{{ record.fullName }}</dd>
+          {% if registerAdmin %}<dd class="govuk-summary-list__actions"><a class="govuk-link" href="{{ editHref }}#full-name">Change<span class="govuk-visually-hidden"> full name</span></a></dd>{% endif %}
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Date of birth</dt>
+          <dd class="govuk-summary-list__value">{{ record.dateOfBirth }}</dd>
+          {% if registerAdmin %}<dd class="govuk-summary-list__actions"><a class="govuk-link" href="{{ editHref }}#date-of-birth-day">Change<span class="govuk-visually-hidden"> date of birth</span></a></dd>{% endif %}
+        </div> 
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Last known address</dt>
+          <dd class="govuk-summary-list__value">{% if record.hideAddress and not registerAdmin %}Withheld{% else %}{{ record.lastKnownAddress }}{% if record.hideAddress and registerAdmin %} (Withheld){% endif %}{% endif %}</dd>
+          {% if registerAdmin %}<dd class="govuk-summary-list__actions"><a class="govuk-link" href="{{ editHref }}#address-line-1">Change<span class="govuk-visually-hidden"> last known address</span></a></dd>{% endif %}
+        </div>
+      
+
+      {% if registerAdmin %}
+     
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Do you want to withhold the person's address?</dt>
+            <dd class="govuk-summary-list__value">{{ 'Yes' if record.hideAddress else 'No' }}</dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="{{ editHref }}#hide-address">Change<span class="govuk-visually-hidden"> person at risk of violence</span></a></dd>
+          </div>
+       
+      {% endif %}
+       </dl>
+
+      <h2 class="govuk-heading-m">Company details</h2>
+      <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Company name</dt>
+          <dd class="govuk-summary-list__value">{{ record.companyName }}</dd>
+          {% if registerAdmin %}<dd class="govuk-summary-list__actions"><a class="govuk-link" href="{{ editHref }}#company-name">Change<span class="govuk-visually-hidden"> company name</span></a></dd>{% endif %}
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Company number</dt>
+          <dd class="govuk-summary-list__value">{{ record.companyNumber }}</dd>
+          {% if registerAdmin %}<dd class="govuk-summary-list__actions"><a class="govuk-link" href="{{ editHref }}#company-number">Change<span class="govuk-visually-hidden"> company number</span></a></dd>{% endif %}
+        </div>
+        {% if registerAdmin %}
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Status</dt>
+            <dd class="govuk-summary-list__value">{{ status }}</dd>
+          </div>
+        {% endif %}
+         </dl>
+      <h2 class="govuk-heading-m">Disqualification details</h2>
+      <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Type</dt>
+          <dd class="govuk-summary-list__value">{{ record.restrictionType }}</dd>
+          {% if registerAdmin %}<dd class="govuk-summary-list__actions"><a class="govuk-link" href="{{ editHref }}#restriction-type">Change<span class="govuk-visually-hidden"> type</span></a></dd>{% endif %}
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Start date</dt>
+          <dd class="govuk-summary-list__value">{{ record.restrictionStartDate }}</dd>
+          {% if registerAdmin %}<dd class="govuk-summary-list__actions"><a class="govuk-link" href="{{ editHref }}#restriction-start-date-day">Change<span class="govuk-visually-hidden"> start date</span></a></dd>{% endif %}
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">End date</dt>
+          <dd class="govuk-summary-list__value">{{ record.restrictionEndDate }}</dd>
+          {% if registerAdmin %}<dd class="govuk-summary-list__actions"><a class="govuk-link" href="{{ editHref }}#restriction-end-date-day">Change<span class="govuk-visually-hidden"> end date</span></a></dd>{% endif %}
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Disqualification length</dt>
+          <dd class="govuk-summary-list__value">{{ record.disqualificationLength }}</dd>
+          {% if registerAdmin %}<dd class="govuk-summary-list__actions"><a class="govuk-link" href="{{ editHref }}#disqualification-length">Change<span class="govuk-visually-hidden"> disqualification length</span></a></dd>{% endif %}
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Conduct reason</dt>
+          <dd class="govuk-summary-list__value">
+            {% for paragraph in record.conductReason %}
+              <p class="govuk-body">{{ paragraph }}</p>
+            {% endfor %}
+          </dd>
+          {% if registerAdmin %}<dd class="govuk-summary-list__actions"><a class="govuk-link" href="{{ editHref }}#conduct-reason">Change<span class="govuk-visually-hidden"> conduct reason</span></a></dd>{% endif %}
+        </div>
+      </dl>
+      {% if registerAdmin and record.approvalStatus == 'New' %}
+        <form action="{{ registerBasePath }}/admin/approve" method="post">
+          <input type="hidden" name="id" value="{{ record.id }}">
+          <input type="hidden" name="returnTo" value="{{ searchHref }}">
+          {{ govukRadios({
+            idPrefix: "approve-entry",
+            name: "approveEntry",
+            value: "no",
+            fieldset: {
+              legend: {
+                text: "Do you want to approve this entry?",
+                classes: "govuk-fieldset__legend--s"
+              }
+            },
+            items: [
+              { value: "yes", text: "Yes" },
+              { value: "no", text: "No" }
+            ]
+          }) }}
+          {{ govukButton({ text: "Save and continue" }) }}
+        </form>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

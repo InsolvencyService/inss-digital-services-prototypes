@@ -1,0 +1,13 @@
+{% if registerAdmin %}
+<div class="govuk-inset-text">
+  <p class="govuk-body">Signed in as administrator (simulated).</p>
+  <div class="govuk-button-group">
+    <form action="{{ registerAdminSignOutPath }}" method="post">
+      {{ govukButton({
+        text: "Sign out",
+        classes: "govuk-button--secondary govuk-!-margin-bottom-0"
+      }) }}
+    </form>
+  </div>
+</div>
+{% endif %}

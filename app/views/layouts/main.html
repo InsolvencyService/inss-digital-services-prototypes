@@ -8,6 +8,10 @@ https://prototype-kit.service.gov.uk/docs/how-to-use-layouts
 
 {% set companyName = data.companyName | default('Company 1 Ltd', true) %}
 {% set companyNumber = data.companyNumber | default('12345678', true) %}
+{% set headerServiceUrl = serviceUrl | default(registerPath | default("start.html")) %}
+{% if registerVersion and not registerAdmin %}
+  {% set headerServiceUrl = false %}
+{% endif %}
 
 {% block header %}
 
@@ -20,7 +24,16 @@ https://prototype-kit.service.gov.uk/docs/how-to-use-layouts
 
 {{ govukServiceNavigation({
   serviceName: serviceName,
-  serviceUrl: "start.html"
+  serviceUrl: headerServiceUrl,
+  navigation: ([{
+    href: registerDashboardPath,
+    text: "Dashboard",
+    current: registerIsOnDashboardPage
+  }, {
+    href: registerPath,
+    text: "Register",
+    current: registerIsOnRegisterPage
+  }] if registerAdmin else [])
 }) }}
 
 
