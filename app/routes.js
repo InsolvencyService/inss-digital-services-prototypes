@@ -293,6 +293,23 @@ function dateFromInputParts(body, namePrefix) {
   }
 }
 
+function dateAfterYears(dateResult, years) {
+  if (!dateResult.value || !Number.isInteger(years) || years < 1 || years > 99) {
+    return { value: '', timestamp: 0 }
+  }
+
+  const startDate = new Date(dateResult.timestamp)
+  const year = startDate.getUTCFullYear() + years
+  const month = startDate.getUTCMonth()
+  const day = Math.min(startDate.getUTCDate(), new Date(Date.UTC(year, month + 1, 0)).getUTCDate())
+  const endDate = new Date(Date.UTC(year, month, day))
+
+  return {
+    value: `${day} ${monthNames[month]} ${year}`,
+    timestamp: endDate.getTime()
+  }
+}
+
 function nextDirectorRestrictionId(records) {
   return records.reduce(function (highestId, record) {
     return Math.max(highestId, record.id)
@@ -314,11 +331,11 @@ function buildAdminRecord(body, id, existingRecord, records) {
   const postcode = String(body.postcode || '').trim().toUpperCase()
   const dateOfBirth = dateFromInputParts(body, 'dateOfBirth')
   const restrictionStartDate = dateFromInputParts(body, 'restrictionStartDate')
-  const restrictionEndDate = dateFromInputParts(body, 'restrictionEndDate')
   const requestedDisqualificationLength = Number.parseInt(body.disqualificationLength, 10)
   const disqualificationLength = Number.isInteger(requestedDisqualificationLength) && requestedDisqualificationLength >= 1 && requestedDisqualificationLength <= 99
     ? `${requestedDisqualificationLength} years`
     : ''
+  const restrictionEndDate = dateAfterYears(restrictionStartDate, requestedDisqualificationLength)
   const companyNumber = /^\d{8}$/.test(String(body.companyNumber || '').trim())
     ? String(body.companyNumber).trim()
     : existingRecord ? existingRecord.companyNumber : nextDirectorRestrictionCompanyNumber(records)
@@ -389,7 +406,7 @@ router.use('/director-disqualifications-register/:version', function (req, res, 
   res.locals.registerPath = `${basePath}/register.html`
   res.locals.registerDashboardPath = `${basePath}/admin/dashboard.html`
   res.locals.registerAdminSignOutPath = `${basePath}/admin/sign-out`
-  res.locals.registerAdmin = req.session.data[adminSessionKey] === true
+  res.locals.registerAdmin = directorRestrictionIsAdmin(req)
   res.locals.registerIsOnRegisterPage = req.originalUrl.split('?')[0] === `${basePath}/register.html`
   res.locals.registerIsOnDashboardPage = req.originalUrl.split('?')[0] === `${basePath}/admin/dashboard.html`
   next()
@@ -499,7 +516,6 @@ router.get('/director-disqualifications-register/:version/admin/new.html', funct
     editing: false,
     dateOfBirthParts: dateToInputParts(''),
     restrictionStartDateParts: dateToInputParts(''),
-    restrictionEndDateParts: dateToInputParts(''),
     returnTo: registerReturnUrl(req.query.returnTo, version),
     disqualificationLengthInput: '',
     restrictionTypeOptions: directorRestrictionTypes.map(function (type) {
@@ -540,7 +556,6 @@ router.get('/director-disqualifications-register/:version/admin/edit.html', func
     editing: true,
     dateOfBirthParts: dateToInputParts(record.dateOfBirth),
     restrictionStartDateParts: dateToInputParts(record.restrictionStartDate),
-    restrictionEndDateParts: dateToInputParts(record.restrictionEndDate),
     returnTo: registerDetailsReturnUrl(req.query.returnTo, version, recordId),
     disqualificationLengthInput: String(record.disqualificationLength || '').match(/^\d{1,2}/)?.[0] || '',
     restrictionTypeOptions: directorRestrictionTypes.map(function (type) {

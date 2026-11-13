@@ -183,22 +183,6 @@
           ]
         }) }}
 
-        {{ govukDateInput({
-          id: "restriction-end-date",
-          namePrefix: "restrictionEndDate",
-          fieldset: {
-            legend: {
-              text: "End date",
-              classes: "govuk-fieldset__legend--s"
-            }
-          },
-          items: [
-            { name: "day", classes: "govuk-input--width-2", label: "Day", value: restrictionEndDateParts.day },
-            { name: "month", classes: "govuk-input--width-2", label: "Month", value: restrictionEndDateParts.month },
-            { name: "year", classes: "govuk-input--width-4", label: "Year", value: restrictionEndDateParts.year }
-          ]
-        }) }}
-
         {{ govukInput({
           label: {
             text: "Disqualification length in years"

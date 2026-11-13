@@ -20,8 +20,18 @@
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
-      <h1 class="govuk-heading-l">Disqualification details for {{ record.fullName }}</h1>
+      <h1 class="govuk-heading-l">Disqualification details forcccc {{ record.fullName }}</h1>
       <p class="govuk-body">This record is fictional and for prototype use only.</p>
+
+      {% if registerAdmin %}
+      <h2 class="govuk-heading-m">Entry progress</h2>
+      <div class="govuk-summary-list">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Status</dt>
+            <dd class="govuk-summary-list__value">{{ status }}</dd>
+          </div>
+      </div>
+        {% endif %}
 
       <h2 class="govuk-heading-m">Personal details</h2>
       <dl class="govuk-summary-list">
@@ -65,12 +75,6 @@
           <dd class="govuk-summary-list__value">{{ record.companyNumber }}</dd>
           {% if registerAdmin %}<dd class="govuk-summary-list__actions"><a class="govuk-link" href="{{ editHref }}#company-number">Change<span class="govuk-visually-hidden"> company number</span></a></dd>{% endif %}
         </div>
-        {% if registerAdmin %}
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">Status</dt>
-            <dd class="govuk-summary-list__value">{{ status }}</dd>
-          </div>
-        {% endif %}
          </dl>
       <h2 class="govuk-heading-m">Disqualification details</h2>
       <dl class="govuk-summary-list">
@@ -87,7 +91,6 @@
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">End date</dt>
           <dd class="govuk-summary-list__value">{{ record.restrictionEndDate }}</dd>
-          {% if registerAdmin %}<dd class="govuk-summary-list__actions"><a class="govuk-link" href="{{ editHref }}#restriction-end-date-day">Change<span class="govuk-visually-hidden"> end date</span></a></dd>{% endif %}
         </div>
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">Disqualification length</dt>
