@@ -34,6 +34,17 @@
       <h1 class="govuk-heading-l">Disqualification details for {{ record.fullName }}</h1>
       <p class="govuk-body">This record is fictional and for prototype use only.</p>
 
+      
+      {% if registerAdmin %}
+      <h2 class="govuk-heading-m">Entry progress</h2>
+      <div class="govuk-summary-list">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Status</dt>
+            <dd class="govuk-summary-list__value">{{ status }}</dd>
+          </div>
+      </div>
+        {% endif %}
+
       <h2 class="govuk-heading-m">Personal details</h2>
       <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row">
@@ -67,12 +78,6 @@
           <dt class="govuk-summary-list__key">Company number</dt>
           <dd class="govuk-summary-list__value">{{ record.companyNumber }}</dd>
         </div>
-        {% if registerAdmin %}
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">Status</dt>
-            <dd class="govuk-summary-list__value">{{ status }}</dd>
-          </div>
-        {% endif %}
          </dl>
       <h2 class="govuk-heading-m">Disqualification details</h2>
       <dl class="govuk-summary-list">
